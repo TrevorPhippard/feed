@@ -13,11 +13,7 @@ module.exports = (sequelize:any, DataTypes:any) => {
   class Deployment extends Model<DeploymentAttributes> 
 
   implements DeploymentAttributes{
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     id!: number;
     parter_deployed_to!: string;
     body!: string;
@@ -26,6 +22,12 @@ module.exports = (sequelize:any, DataTypes:any) => {
 
     static associate(models:any) {
       // define association here
+      Deployment.belongsToMany(models.partner,{
+        through:'partnerDeployments'
+      })
+      Deployment.belongsToMany(models.user,{
+        through:'userDeployment'
+      })
     }
   }
   Deployment.init({

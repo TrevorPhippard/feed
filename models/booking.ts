@@ -11,17 +11,20 @@ module.exports = (sequelize:any, DataTypes:any) => {
   class Booking extends Model<BookingAttributes> 
 
   implements BookingAttributes{
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     id!: number;
     username!: string;
     role!: string;
 
     static associate(models:any) {
       // define association here
+      Booking.belongsToMany(models.partners,{
+        through:'current_booking'
+      })
+
+      Booking.belongsToMany(models.user,{
+        through:'userBooking'
+      })
     }
   }
   Booking.init({

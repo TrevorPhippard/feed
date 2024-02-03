@@ -11,21 +11,16 @@ module.exports = (sequelize:any, DataTypes:any) => {
   class Partner extends Model<PartnerAttributes> 
 
   implements PartnerAttributes{
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+   
     id!: number;
     name!: string;
     current_booking!: string;
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
+
     static associate(models:any) {
       // define association here
+      Partner.belongsToMany(models.deployment,{
+        through:'partnerDeployments'
+      })
     }
   }
   Partner.init({
