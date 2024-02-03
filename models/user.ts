@@ -22,10 +22,10 @@ module.exports = (sequelize:any, DataTypes:any) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models:any) {
-      User.belongsToMany(models.booking,{
+      User.belongsToMany(models.Booking,{
         through:'userBooking'
       })
-      User.belongsToMany(models.deployment,{
+      User.belongsToMany(models.Deployment,{
         through:'userDeployment'
       })
       // define association here

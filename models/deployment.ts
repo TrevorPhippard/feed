@@ -22,10 +22,10 @@ module.exports = (sequelize:any, DataTypes:any) => {
 
     static associate(models:any) {
       // define association here
-      Deployment.belongsToMany(models.partner,{
+      Deployment.belongsToMany(models.Partner,{
         through:'partnerDeployments'
       })
-      Deployment.belongsToMany(models.user,{
+      Deployment.belongsToMany(models.User,{
         through:'userDeployment'
       })
     }

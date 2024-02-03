@@ -18,7 +18,7 @@ module.exports = (sequelize:any, DataTypes:any) => {
 
     static associate(models:any) {
       // define association here
-      Partner.belongsToMany(models.deployment,{
+      Partner.belongsToMany(models.Deployment,{
         through:'partnerDeployments'
       })
     }

@@ -17,12 +17,13 @@ module.exports = (sequelize:any, DataTypes:any) => {
     role!: string;
 
     static associate(models:any) {
+      console.log(models)
       // define association here
-      Booking.belongsToMany(models.partners,{
+      Booking.belongsToMany(models.Partner,{
         through:'current_booking'
       })
 
-      Booking.belongsToMany(models.user,{
+      Booking.belongsToMany(models.User,{
         through:'userBooking'
       })
     }
