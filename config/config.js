@@ -5,7 +5,7 @@ export default {
         storage:  '../database_test.sqlite',
         host: 'localhost',
         dialect: 'sqlite',
-        logging: console.log
+        // logging: console.log
     },
     production: {
       username: "root",

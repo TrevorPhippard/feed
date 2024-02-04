@@ -1,5 +1,6 @@
 'use strict';
-import { Model } from 'sequelize';
+import { Model, DataTypes } from 'sequelize'
+import sequelize from '../models/sequelize';
 
 interface PartnerAttributes {
   id: number;
@@ -7,7 +8,6 @@ interface PartnerAttributes {
   current_booking: string;
 }
 
-module.exports = (sequelize:any, DataTypes:any) => {
   class Partner extends Model<PartnerAttributes> 
 
   implements PartnerAttributes{
@@ -42,5 +42,4 @@ module.exports = (sequelize:any, DataTypes:any) => {
     sequelize,
     modelName: 'Partner',
   });
-  return Partner;
-};
+  export default  Partner;
