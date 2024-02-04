@@ -1,22 +1,27 @@
 import express from 'express';
-const app = express();
-const port = process.env.PORT || 3000;
+import bodyParser from 'body-parser';
+import cors from 'cors';
+
 import sequelize from './models/sequelize';
-import { users } from './seeders/users';
 
 import bookingRoutes from './routes/bookingRoutes';
 import deploymentRoutes from './routes/deploymentRoutes';
 import partnerRoutes from './routes/partnerRoutes';
 import userRoutes from './routes/userRoutes';
 
-import bodyParser from 'body-parser';
-import cors from 'cors';
+// import { users } from './seeders/users';
+
+const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(cors())
 app.use('/images', express.static('photos'));
 
 
-// app.use(cors(corsOptions));
+/** ---------------------------------------------------------------------------
+ *  @bodyparser
+ * --------------------------------------------------------------------------- */
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -29,6 +34,24 @@ app.use(bodyParser.urlencoded({
   parameterLimit: 1000000,
 }));
 
+/** ---------------------------------------------------------------------------
+ *  @Seeder
+ * --------------------------------------------------------------------------- */
+
+// const createUsers = () => {
+//     users.map(user => {
+//         db.User.create(user).then(function (user: { toJSON: () => any; }) {
+//             // you can now access the newly created user
+//             console.log('success', user.toJSON());
+//             })
+//             .catch(function (err: any) {
+//                 // print the error details
+//                 console.log(err);
+//             });
+//     })
+// }
+
+// createUsers();
 /** ---------------------------------------------------------------------------
  *  @Routes
  * --------------------------------------------------------------------------- */
