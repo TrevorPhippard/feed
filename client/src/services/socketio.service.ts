@@ -5,12 +5,12 @@ class SocketioService {
   constructor() {}
 
   setupSocketConnection(token: any, room: any, username: any) {
-    // console.log(import.meta.env.VITE_SOCKET_ENDPOINT)
+    console.log(import.meta.env.VITE_SOCKET_ENDPOINT)
     this.socket = io(import.meta.env.VITE_SOCKET_ENDPOINT, {
       auth: { token },
       withCredentials: true,
       extraHeaders: {
-        "my-custom-header": "abcd"
+        "socket-header": "abcd"
       }
     });
     console.log(`Connecting socket...`, username);
@@ -37,6 +37,7 @@ class SocketioService {
   }
 
   subscribeToUsersPassage(cb: (err: null, data: any) => any) {
+    console.log('geher')
     this.socket.on('join', (msg: any) => cb(null, msg) );
     this.socket.on('enteredRoom', (msg: any) => cb(null, msg) );
     this.socket.on('disconnected', (msg: any) => cb(null, msg) );
