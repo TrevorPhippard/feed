@@ -1,12 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-
-var inputs = ref([{
-    name: '',
-    party: ''
-}])
-
-
 </script>
 
 <template>

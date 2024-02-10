@@ -1,17 +1,17 @@
 <script setup lang="ts">
 
 import { ref, computed } from "vue";
-import { useStore } from '../store/main.ts';
+import { useEditorStore } from '../store/editorStore.ts';
 
-const store = useStore();
+const store = useEditorStore();
 
-const file = ref(null);
+const file = ref();
 
-const fileName = computed(() => file.value?.name);
-const fileExtension = computed(() => fileName.value?.substr(fileName.value?.lastIndexOf(".") + 1));
+const fileName = computed(() => file.value.name);
+const fileExtension = computed(() => fileName.value.substring(fileName.value?.lastIndexOf(".") + 1));
 const fileMimeType = computed(() => file.value?.type);
 
-const uploadFile = (event: { target: { files: null[]; }; }) => {
+const uploadFile = (event:any) => {
   file.value = event.target.files[0];
 };
 

@@ -1,23 +1,27 @@
 <script setup lang="ts">
 
 import { ref } from 'vue'
-import { useStore } from '../store/main.ts';
+import { useAuthStore } from '../store/authStore.ts';
 import { useRouter } from 'vue-router';
 
-const store = useStore();
+const store = useAuthStore();
 const router = useRouter();
 
 const email = ref();
 const password = ref();
+const error = ref('');
 
 function submitToken() {
   const formData = {
-    "email": email.value,
+    "email":  email.value,
     "password": password.value
   }
 
   store.login(formData).then(function(){
     router.push({ path: '/profile' })
+  }).catch(function(res){
+    console.error(res.response)
+    error.value = 'error';
   });
 };
 
@@ -39,6 +43,7 @@ function goToRegstrationPage(){
           <button  @click="submitToken" type="submit" class="login-button">Login</button>
         </div>
       </form>
+      <p class="error">{{error}}</p>
     </div>
   </div>
 </template>
@@ -90,4 +95,7 @@ body {
   cursor: pointer;
 }
 
+.error{
+  color:  var(--error);
+}
 </style>

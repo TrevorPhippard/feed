@@ -7,6 +7,7 @@ class UploadFilesService {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = async () => {
+        // @ts-ignore
         const encodedFile = reader.result.split(",")[1];
         const data = {
           file: encodedFile,

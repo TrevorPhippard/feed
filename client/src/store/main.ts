@@ -27,17 +27,47 @@ export const useStore = defineStore('main', {
     token: import.meta.env.VITE_TOKEN,
     socketEndpoint: import.meta.env.VITE_SOCKET_ENDPOINT,
     roomId: 'myRandomChatRoomId',
-    avatar: '',
-    email: '',
-    Id: 0,
-    memberSince: '',
     loggedIn: false,
     user: {
-      user_name: '', 
+      user_name: '',
       token: ''
     },
-    currentSlide:{},
-    gameData:{}
+    profileInfo: {
+      avatar: '',
+      email: '',
+      Id: 0,
+      memberSince: '',
+    },
+    gameData: {
+      gameName:'quizathon'
+    },
+    editorData: {
+      gameName: 'quizathon',
+      triviaData: [{
+        name: 'slide 1',
+        type: 'checkbox',
+        question: 'Q1:  Whose that wonderful girl, could she be any sweeter?',
+        options: [
+          { choice: 'Nanalan', correct: false },
+          { choice: 'Sweet Pea', correct: true },
+          { choice: 'Mona', correct: false },
+          { choice: 'Russer', correct: false },
+          { choice: 'mr.woca', correct: false }
+        ],
+        bgImg: import.meta.env.VITE_SOCKET_ENDPOINT + "img-0906.jpg"
+      }, {
+        name: 'slide 2',
+        type: 'checkbox',
+        question: 'Q2:  what will we do with feefer?',
+        options: [
+          { choice: 'Put in water', correct: false },
+          { choice: 'ask Russer', correct: false },
+          { choice: 'NANA!!!!', correct: true },
+          { choice: 'mr.woca?', correct: false }
+        ],
+        bgImg: import.meta.env.VITE_SOCKET_ENDPOINT + "img-0905.jpg"
+      }],
+    }
   }),
 
   actions: {
@@ -45,12 +75,9 @@ export const useStore = defineStore('main', {
       this.user = JSON.parse(cookieData).data;
       this.token = this.user.token;
     },
-
-    upload(data:any){
+    upload(data: any) {
       UploadService.upload(data);
     },
-
-
     login(user: User | null) {
       return AuthService.login(user).then(
         (user: any) => {
@@ -58,7 +85,7 @@ export const useStore = defineStore('main', {
 
           this.user = user;
           this.loggedIn = true;
-          localStorage.setItem("user", JSON.stringify({data:this.user}));
+          localStorage.setItem("user", JSON.stringify({ data: this.user }));
           SocketioService.setupSocketConnection(this.user.token);
 
           return Promise.resolve(user);
@@ -79,7 +106,7 @@ export const useStore = defineStore('main', {
 
           console.log('log in successful')
 
-          localStorage.setItem("user", JSON.stringify({data:this.user}));
+          localStorage.setItem("user", JSON.stringify({ data: this.user }));
           SocketioService.setupSocketConnection(this.user.token);
 
           return Promise.resolve(user);
@@ -99,6 +126,8 @@ export const useStore = defineStore('main', {
     getToken: state => state.user.token,
     getEndPoint: state => state.socketEndpoint,
     getRoom: state => state.roomId,
-    getAvatar: state => state.avatar,
+    getProfileInfo: state => state.profileInfo,
+    gameData: state => state.gameData,
+    editorData: state => state.editorData
   }
 })

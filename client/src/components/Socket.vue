@@ -4,19 +4,19 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import SocketioService from '../services/socketio.service.js';
 import MsgService from '../services/msg.service.js';
 
-import { useStore } from '../store/main.ts';
+import { useAuthStore } from '../store/authStore.ts';
+import { useGameStore } from '../store/gameStore.ts';
+
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 
-const store = useStore();
+const authStore = useAuthStore();
+const gameStore = useGameStore();
+
 const router = useRouter();
 
-const {
-  getusername: username,
-  getToken: token,
-  getRoom: roomId,
-  getAvatar: avatar
-} = storeToRefs(store)
+const { getusername: username, getToken: token } = storeToRefs(authStore)
+const { getRoom: roomId } = storeToRefs(gameStore)
 
 const inputMessageText = ref('')
 const messages = ref([]);
@@ -25,15 +25,17 @@ onMounted(function () {
   if (token.value) {
     SocketioService.setupSocketConnection(token.value, roomId.value, username.value);
     SocketioService.subscribeToMessages((_err, data) => {
+      // @ts-ignore
       messages.value.push(data);
     });
 
     SocketioService.subscribeToUsersPassage((_err, data) => {
       console.log('user::',data);
     });
+    
     MsgService.fetchMessages(roomId.value)
       .then(result => {
-        result.map(data => {
+        result.map((data: { id: any; user_id: any; message_body: any; }) => {
           return {
             message: {
               id: data.id,
@@ -41,9 +43,8 @@ onMounted(function () {
               msg: data.message_body
             }
           }
-        }).map(data => {
-          // console.log(data)
-          return messages.value.push(data);
+        }).map((data: never) => {
+           return messages.value.push(data);
         })
       })
   } else {
@@ -57,7 +58,6 @@ function submitMessage() {
 
   const message = {
     roomId: roomId.value,
-    avatar: avatar.value,
     displayName: username.value,
     msg: inputMessageText.value
   }
@@ -70,13 +70,17 @@ function submitMessage() {
   });
 }
 
+function filterMessage(info: { message: any; }){
+  return info.message
+}
+
 </script>
 <template>
   <div>
     <div class="box">
       <div class="messages">
-        <div v-for="info in messages" :key="info.id">
-          <strong> {{ info.message.displayName }}: </strong>{{ info.message.msg }}
+        <div v-for="(info, key) in messages" :key="key">
+          <strong> {{  filterMessage(info).displayName }}: </strong>{{  filterMessage(info).msg }}
         </div>
       </div>
       <form class="input-div" @submit.prevent="submitMessage">

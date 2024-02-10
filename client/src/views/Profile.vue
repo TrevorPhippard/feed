@@ -5,6 +5,7 @@ import Info from '../components/Info.vue';
 import Contacts from '../components/Contacts.vue';
 import Socket from '../components/Socket.vue';
 import NavBar from '../components/NavBar.vue'; 
+import GameLauncher from "../components/GameLauncher.vue";
 
 </script>
 
@@ -19,11 +20,14 @@ import NavBar from '../components/NavBar.vue';
           <hr/>
           <ImageUploader/>
           </div>
-        <div class="card-box">
+          <div class="card-box">
           <Contacts/>
           </div>
       </div>
       <div id="m-col">
+        <div class="card-box">
+          <GameLauncher/>
+          </div>
         <div class="card-box" >
           <Socket/>
         </div>

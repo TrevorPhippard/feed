@@ -4,7 +4,7 @@ class SocketioService {
   socket: any;
   constructor() {}
 
-  setupSocketConnection(token: any, room: any, username: any) {
+  setupSocketConnection(token: any, room?: any , username?: any) {
     console.log(import.meta.env.VITE_SOCKET_ENDPOINT)
     this.socket = io(import.meta.env.VITE_SOCKET_ENDPOINT, {
       auth: { token },
@@ -15,7 +15,9 @@ class SocketioService {
     });
     console.log(`Connecting socket...`, username);
     
-    this.socket.emit('join', { roomId: room, userId: username, socketId: this.socket.id });
+    if(room){
+      this.socket.emit('join', { roomId: room, userId: username, socketId: this.socket.id });
+    }
   }
 
    joinRoom(room: any, username: any) {

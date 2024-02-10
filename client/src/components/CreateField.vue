@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import BooleanChoice from './answers/BooleanChoice.vue';
+// import BooleanChoice from './answers/BooleanChoice.vue';
 import CheckboxChoice from './answers/CheckboxChoice.vue';
-import RadioChoice from './answers/RadioChoice.vue';
+// import RadioChoice from './answers/RadioChoice.vue';
 
+
+ defineProps({ data: Object, })
 
 var selected = ref('')
 
@@ -12,19 +14,19 @@ var selected = ref('')
 <template>
         <h3>Create Question</h3>
         <label for="question">Question:</label>
-        <textarea id="question" name="question" rows="4" placeholder="write question here"></textarea>
+        <textarea id="question" name="question" rows="4" placeholder="write question here" :value="data ?data.question:''"></textarea>
 
         <p>Question Type</p>
         <select v-model="selected">
             <option value="">Please select one</option>
-            <option>Boolean</option>
+            <!-- <option>Boolean</option> -->
             <option>Checkbox</option>
-            <option>Radio</option>
+            <!-- <option>Radio</option> -->
         </select>
 
-        <BooleanChoice v-if="selected == 'Boolean'" />
+        <!-- <BooleanChoice v-if="selected == 'Boolean'" /> -->
         <CheckboxChoice v-if="selected == 'Checkbox'" />
-        <RadioChoice v-if="selected == 'Radio'" />
+        <!-- <RadioChoice v-if="selected == 'Radio'" /> -->
 
 </template>
 

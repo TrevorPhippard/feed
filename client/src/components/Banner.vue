@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
-import { useStore } from '../store/main.ts';
+import { useAuthStore } from '../store/authStore.ts';
 import { storeToRefs } from 'pinia';
 
-const store = useStore();
+const store = useAuthStore();
 
 const {
   getusername: username,
@@ -19,7 +19,7 @@ const {
     </div>
     <div id="profile-d">
       <div id="profile-pic">
-        <img src="https://random-d.uk/api/randomimg?t=1704509234856">
+        <img src="">
       </div>
       <div id="u-name">{{username}}</div>
     </div>

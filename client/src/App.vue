@@ -1,25 +1,21 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
-import { useStore } from './store/main.ts';
+import { useAuthStore } from './store/authStore.ts';
 import { storeToRefs } from 'pinia';
-import TriviaEditor from './views/TriviaEditor.vue'
 
 const location = useRoute();
 const router = useRouter();
-const store = useStore();
+const store = useAuthStore();
 
-const {
-  getusername: username,
-  getToken: token
-} = storeToRefs(store)
+const { getToken: token } = storeToRefs(store)
 
 
 onMounted(function () {
   var cookie =  localStorage.getItem("user");
   if(cookie) {store.setUser(cookie)};
   if (token) {
-    router.push({ path: '/profile' })
+    // router.push({ path: '/profile' })
   } else {
     router.push({ path: '/' })
   }
@@ -31,8 +27,7 @@ onMounted(function () {
 <div id="page-container">
 
  <div id="content-wrap">
-        <TriviaEditor/>
-       <!--     <router-view />-->
+           <router-view />
     </div>
     <footer id="footer">
        <p>current path: {{ location.path }}</p>

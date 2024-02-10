@@ -1,31 +1,41 @@
 <script setup lang="ts">
-import { useStore } from '../store/main.ts';
+import { useAuthStore } from '../store/authStore.ts';
 import { storeToRefs } from 'pinia';
-const store = useStore();
+const store = useAuthStore();
 const {
   getusername: username,
 } = storeToRefs(store)
 
+var placeholderAvatar = import.meta.env.VITE_API_ENDPOINT + '/images/b.jpg'
+
+
 </script>
 
 <template>
-    <div class="card-header">
+  <div class="card-header">
+
     <div>
-        <i class="icons" id="icon-info">&#9990;</i>
-        <span>Intro</span>
+      <img class="profile-pic" :src="placeholderAvatar">
     </div>
-      <div class="lb-action"><i class="materiaiconscons">edit</i></div>
+    <div>
+      <i class="icons" id="icon-info">&#9990;</i>
+      <span>Intro</span>
     </div>
+    <div class="lb-action"><i class="materiaiconscons">edit</i></div>
+  </div>
 
-    
-    <div id="i-box">
-      <div id="u-occ">Username: {{username}}</div>
-      <div id="u-occ">First you get the water, than you get the wemons</div>
-      <div id="u-loc"><i class="materiaiconscons">location: </i><a href="#">Pond</a>, <a href="#">Plesantville</a></div>
-    </div>
-
+  <div id="i-box">
+    <div id="u-occ">Username: {{ username }}</div>
+    <div id="u-occ">First you get the water, than you get the wemons</div>
+    <div id="u-loc"><i class="materiaiconscons">location: </i><a href="#">Pond</a>, <a href="#">Plesantville</a></div>
+  </div>
 </template>
 <style scoped>
+.profile-pic {
+  height: 150px;
+  width: 150px;
+}
+
 #icon-info {
   margin-right: 10px;
 }
@@ -77,5 +87,4 @@ const {
   color: #ccc;
   font-size: 18px;
 }
-
 </style>

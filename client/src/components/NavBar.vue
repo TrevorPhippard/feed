@@ -10,6 +10,8 @@ function logout() {
   router.push({ path: '/' })
 }
 
+var placeholderAvatar = import.meta.env.VITE_API_ENDPOINT + '/images/b.jpg'
+
 </script>
 
 <template>
@@ -24,7 +26,8 @@ function logout() {
       </div>
         <ul>
           <li class="user-section">
-            <a href="#" id="p-link"><img src="../assets/duck-0.jpg"></a>
+            <a href="#" id="p-link">
+              <img :src="placeholderAvatar"></a>
             <span>{{username}}</span>
           </li>
           <li v-for="(route, index) in router.options.routes" :key="index">

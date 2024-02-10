@@ -1,20 +1,14 @@
 <script setup lang="ts">
+// @ts-ignore
 import draggable from 'vuedraggable';
 import { ref } from 'vue';
+import { useEditorStore } from '../store/editorStore.ts';
+
+var store = useEditorStore();
 
 defineProps({
     itemsContent: Array,
 })
-
-
-
-const emit = defineEmits<{
-  (e: 'slide-action', id: number): void
-  (e: 'slide-move', value: string): void
-  (e: 'slide-add', value: string): void
-  (e: 'slide-remove', value: string): void
-  (e: 'slide-edit', value: number): void
-}>()
 
 const slide = ref(0);
 const isEdit = ref(100);
@@ -22,7 +16,7 @@ const textModel = ref()
 
 function showSlide(index:number) {
     slide.value = index;
-    emit('slide-action',index)
+    store.onSlideAction(index)
 }
 
 function setEditMode(index:number) {
@@ -33,35 +27,34 @@ function setEditMode(index:number) {
     }
 }
 
-function onEnter(e:Event){
-    emit('slide-edit',isEdit.value, textModel )
+function onEnter(){
+    store.onSlideEdit(isEdit.value, textModel.value)
     isEdit.value = 100;
 }
 
 function add() {
-    emit('slide-add')
+    store.onSlideAdd()
 }
 
 function remove() {
-    emit('slide-remove', slide.value)
+    store.onSlideRemove()
 }
 
-function changeOrder(event) {
+function changeOrder(event:any) {
     const { newIndex, oldIndex } = event.moved;
-    if (newIndex !== oldIndex)  emit('slide-move', newIndex,oldIndex)
+    if (newIndex !== oldIndex)  store.onSlideMove(newIndex, oldIndex)
 
 }
 
 </script>
 <template>
-        {{ itemsContent[slide] }}
         <draggable :list="itemsContent" :animation="100" ghost-class="invisable-card" group="list" class="sortable-list "
             tag="ul" @change="changeOrder">
             <template #item="{ element, index }">
                 <li @mouseup="showSlide(index)"
                     @dblclick="setEditMode(index)"
                 >
-                    <span> {{ element.name }}</span>
+                    <span v-if="isEdit !== index" > {{ element.name }}</span>
                     <input v-if="isEdit === index" 
                     @keyup.enter="onEnter"
                     type="text" 
