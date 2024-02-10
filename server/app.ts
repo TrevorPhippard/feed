@@ -21,7 +21,7 @@ const app = express();
 const port = 3000;
 
 app.use(cors())
-app.use('/images', express.static('photos'));
+app.use('/images', express.static('images'));
 
 // jwt secret
 const JWT_SECRET = process.env.JWT_SECRET ;
@@ -36,9 +36,9 @@ app.use(bodyParser.urlencoded({
   extended: true
 })); 
 
-app.use(bodyParser.json({limit:'50mb',}));
+app.use(bodyParser.json({limit:'150mb',}));
 app.use(bodyParser.urlencoded({
-  limit:'50mb',
+  limit:'150mb',
   extended:true,
   parameterLimit: 1000000,
 }));
@@ -49,21 +49,20 @@ app.use(bodyParser.urlencoded({
  *  @Routes
  * --------------------------------------------------------------------------- */
 
+
+
+
+app.use('/api',userRoutes);
+app.use('/api',msgRoutes);
+app.use('/api',roomRoutes);
+app.use('/api',fileRoutes);
+
 // app.use(function (req, res) {
 //   console.log(req.originalUrl)
 //   res.status(404).send({
 //     url: req.originalUrl + ' not found'
 //   });
 // });
-
-
-app.use('/api',userRoutes);
-app.use('/api',fileRoutes);
-app.use('/api',msgRoutes);
-app.use('/api',roomRoutes);
-
-
-
 /** ---------------------------------------------------------------------------
  *  @Sockets
  * --------------------------------------------------------------------------- */

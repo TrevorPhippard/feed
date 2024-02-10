@@ -1,8 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Auth from '../components/Auth.vue'
-import Chat from '../components/Chat.vue'
-import Register from '../components/Register.vue'
-import Profile from '../components/Profile.vue'
+import Auth from '../views/Auth.vue'
+import Register from '../views/Register.vue'
+import Profile from '../views/Profile.vue'
 
 
 const routes = [
@@ -17,6 +16,10 @@ const routes = [
     }, {
         path:'/',
         name:'/auth',
+        component: Auth
+    }, {
+        path:'/',
+        name:'/editor',
         component: Auth
     }
 ]

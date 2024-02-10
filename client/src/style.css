@@ -19,6 +19,7 @@
 
 * {
   outline: none;
+  box-sizing: border-box;
 }
 
 body {
@@ -44,8 +45,6 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {
@@ -137,7 +136,7 @@ a {
 
 
 ::placeholder {
-  color: #f1f1f1;
+  color: rgba(250, 250, 250, 0.5);
 }
 
 
@@ -183,16 +182,74 @@ header {
   vertical-align: middle;
 }
 
-.card-header {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
+
+.card {
+  /* background-color: #fff; */
+  width: 100%;
+  display: table;
+  border-radius: .2rem;
+  box-shadow: rgb(150, 150, 150) 0px 1px 3px;
+  width: 350px;
+  padding: 10px;
+  font-family: 'roboto', sans-serif;
 }
 
-.card-header span {
+.x-button {
+  border-radius: 50%;
+  padding: 0px 5px 2px 3px;
+  border: 2px solid #ccc;
+  color: #ccc;
   position: relative;
+  font-size: 15px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.x-button:hover {
+  border: 2px solid #ccc;
+  background-color: #ccc;
+  color: #333;
+}
+
+
+
+
+.form-group input {
+  padding: 0;
+  height: initial;
+  width: initial;
+  margin-bottom: 0;
+  display: none;
+  cursor: pointer;
+}
+
+.form-group label {
+  position: relative;
+  cursor: pointer;
+}
+
+.form-group label:before {
+  position: relative;
+  content:'';
+  -webkit-appearance: none;
+  background-color: transparent;
+  border: 2px solid #ccc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.form-group input:checked + label:after {
+  content: '';
+  display: block;
+  position: absolute;
   top: 2px;
-  color: #707070;
-  font-size: 18px;
+  left: 9px;
+  width: 6px;
+  height: 14px;
+  border: solid #ccc;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
-

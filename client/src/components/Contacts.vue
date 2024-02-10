@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import duck0 from  '../assets//duck-0.jpg';
-import duck1 from  '../assets//duck-1.jpg';
-import duck2 from  '../assets//duck-2.jpg';
-import duck3 from  '../assets//duck-3.jpg';
-import duck4 from  '../assets//duck-4.jpg';
+
 </script>
 
 <template>
@@ -19,7 +15,6 @@ import duck4 from  '../assets//duck-4.jpg';
     <li id="profile-2" class="contact">3</li>
     <li id="profile-3" class="contact">4</li>
     <li id="profile-4" class="contact">5</li>
-
   </ul>
 </template>
 <style scoped>

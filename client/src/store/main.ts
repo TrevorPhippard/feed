@@ -36,6 +36,8 @@ export const useStore = defineStore('main', {
       user_name: '', 
       token: ''
     },
+    currentSlide:{},
+    gameData:{}
   }),
 
   actions: {

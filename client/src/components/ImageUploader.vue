@@ -28,7 +28,7 @@ const submitFile = async () => {
 <template>
   <div>
     <input type="file" @change="uploadFile" />
-    <button @click="submitFile">Submit</button>
+    <button @click="submitFile">upload</button>
   </div>
 </template>
 

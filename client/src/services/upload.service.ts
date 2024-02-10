@@ -15,7 +15,7 @@ class UploadFilesService {
           fileMimeType: fileMimeType,
         };
         try {
-          const endpoint = import.meta.env.VITE_API_ENDPOINT + '/upload:test';
+          const endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/upload';
           const response = await axios.post(endpoint, data);
           console.log(response.data);
         } catch (error) {

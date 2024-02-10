@@ -3,6 +3,7 @@ import { onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from './store/main.ts';
 import { storeToRefs } from 'pinia';
+import TriviaEditor from './views/TriviaEditor.vue'
 
 const location = useRoute();
 const router = useRouter();
@@ -27,27 +28,32 @@ onMounted(function () {
 </script>
 
 <template>
-  <div id="page-container">
-    <div id="content-wrap">
-      <router-view />
+<div id="page-container">
+
+ <div id="content-wrap">
+        <TriviaEditor/>
+       <!--     <router-view />-->
     </div>
     <footer id="footer">
        <p>current path: {{ location.path }}</p>
-    </footer>
+    </footer> 
   </div>
 
-
-  <!-- <HelloWorld msg="Vite + Vue" /> -->
 </template>
 
 <style scoped>
+
+
 #page-container {
   position: relative;
   min-height: 100vh;
+
 }
 
 #content-wrap {
   padding-bottom: 2.5rem;
+  padding-top:20px;
+  padding-left:20px;
   /* Footer height */
 }
 

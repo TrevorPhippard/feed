@@ -37,7 +37,6 @@ class SocketioService {
   }
 
   subscribeToUsersPassage(cb: (err: null, data: any) => any) {
-    console.log('geher')
     this.socket.on('join', (msg: any) => cb(null, msg) );
     this.socket.on('enteredRoom', (msg: any) => cb(null, msg) );
     this.socket.on('disconnected', (msg: any) => cb(null, msg) );

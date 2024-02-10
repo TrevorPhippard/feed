@@ -4,7 +4,7 @@ import fs, { exists } from "fs"
 //set Storage Engine
 const storage = multer.diskStorage({
     destination: (req, file, callback) =>{
-        const dir = `./tmp/${req.params.id.split(':')[1]}`;
+        const dir = `./images`;
         fs.exists(dir, (exists)=>{
             if(!exists){
                 return fs.mkdir(dir, (error)=> callback(error, dir));
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({
-    storage
+    storage:storage
 }).single("file")
 
 export default upload;

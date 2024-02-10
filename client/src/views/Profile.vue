@@ -1,8 +1,8 @@
 <script setup lang="ts">
 
-import ImageUploader from './ImageUploader.vue';
-import Info from './Info.vue';
-import Contacts from './Contacts.vue';
+import ImageUploader from '../components/ImageUploader.vue';
+import Info from '../components/Info.vue';
+import Contacts from '../components/Contacts.vue';
 import Socket from '../components/Socket.vue';
 import NavBar from '../components/NavBar.vue'; 
 
