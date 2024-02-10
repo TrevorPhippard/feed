@@ -47,8 +47,7 @@ onMounted(function () {
 
 #content-wrap {
   padding-bottom: 2.5rem;
-  padding-top:20px;
-  padding-left:20px;
+
   /* Footer height */
 }
 

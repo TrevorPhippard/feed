@@ -4,28 +4,39 @@ import { ref } from 'vue';
 import CheckboxChoice from './answers/CheckboxChoice.vue';
 // import RadioChoice from './answers/RadioChoice.vue';
 
+import { useEditorStore } from '../store/editorStore.ts';
 
- defineProps({ data: Object, })
+var props =  defineProps({ data: Object, })
+var store = useEditorStore();
 
-var selected = ref('')
+var selected = ref('');
+const questionText = ref(props.data ?props.data.question:'')
+
+function updateQuestion(){
+    store.updateSlideQuestion( questionText.value)
+}
 
 </script>
 
 <template>
         <h3>Create Question</h3>
         <label for="question">Question:</label>
-        <textarea id="question" name="question" rows="4" placeholder="write question here" :value="data ?data.question:''"></textarea>
-
+        <textarea v-model="questionText" 
+            name="question"
+            rows="4" 
+            placeholder="write question here" 
+            @input="updateQuestion"
+        />
         <p>Question Type</p>
         <select v-model="selected">
-            <option value="">Please select one</option>
+            <!-- <option value="">Please select one</option> -->
             <!-- <option>Boolean</option> -->
             <option>Checkbox</option>
             <!-- <option>Radio</option> -->
         </select>
 
         <!-- <BooleanChoice v-if="selected == 'Boolean'" /> -->
-        <CheckboxChoice v-if="selected == 'Checkbox'" />
+        <CheckboxChoice :data="data"/>
         <!-- <RadioChoice v-if="selected == 'Radio'" /> -->
 
 </template>

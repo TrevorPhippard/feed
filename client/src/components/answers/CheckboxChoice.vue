@@ -1,19 +1,30 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useEditorStore } from '../../store/editorStore.ts';
+
+var store = useEditorStore();
+
+defineProps({ data: Object, })
 
 var inputs = ref([{
     name: '',
     party: ''
 }])
 
-function add() {
-    inputs.value.push({
-        name: '',
-        party: ''
-    })
+function addChoice() {
+    store.addChoice()
+
 }
-function remove(index: number) {
-    inputs.value.splice(index, 1)
+function removeChoice(index: number) {
+    store.removeChoice(index)
+}
+
+function updateChoice(e: any){
+    store.updateChoice(e)
+}
+
+function updateCheck(e: any){
+    store.updateCheck(e)
 }
 
 </script>
@@ -21,19 +32,29 @@ function remove(index: number) {
 <template>
         <div class="form">
             <p> Answer: </p>
+            <div class="form-group" v-if="data" v-for="(input, k) in data.options" :key="k">
+                <span>{{ k+1 }})</span>
+                <textarea 
+                placeholder="option" 
+                type="text" 
+                :id="'opt_'+k" 
+                :value="input.choice"
+                @input="updateChoice"
+                ></textarea>
 
-            <div class="form-group" v-for="(input, k) in inputs" :key="k">
-                <span>{{ k }}</span>
-                <textarea placeholder="option" type="text" v-model="input.name"></textarea>
-
-                <input type="checkbox" :id="'opt_'+k" name="'opt_'+k" :value="k">
-                <label :for="'opt_'+k"> Correct</label><br>
+                <input 
+                type="checkbox" 
+                :id="'check_'+k" 
+                :checked="input.correct"
+                @input="updateCheck"
+                >
+                <label :for="'check_'+k"> Correct</label><br>
                 <span>
-                    <i class="x-button" @click="remove(k)" v-show="k || (!k && inputs.length > 1)">×</i>
+                    <i class="x-button" @click="removeChoice(k)" v-show="k || (!k && inputs.length > 1)">×</i>
                 </span>
             </div>
         </div>
-        <button @click="add">Add fields</button>
+        <button @click="addChoice">Add fields</button>
 </template>
 
 <style scoped>
