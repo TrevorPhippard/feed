@@ -13,19 +13,19 @@ const error = ref('');
 
 function submitToken() {
   const formData = {
-    "email":  email.value,
+    "email": email.value,
     "password": password.value
   }
 
-  store.login(formData).then(function(){
+  store.login(formData).then(function () {
     router.push({ path: '/profile' })
-  }).catch(function(res){
+  }).catch(function (res) {
     console.error(res.response)
     error.value = 'error';
   });
 };
 
-function goToRegstrationPage(){
+function goToRegstrationPage() {
   router.push({ path: '/register' })
 }
 
@@ -39,11 +39,11 @@ function goToRegstrationPage(){
         <input type="email" placeholder="E-Mail" v-model="email" required>
         <input type="password" placeholder="password" v-model="password" required>
         <div class="buttons">
-          <button  @click="goToRegstrationPage" class="register-button">Register</button>
-          <button  @click="submitToken" type="submit" class="login-button">Login</button>
+          <button @click="goToRegstrationPage" class="register-button">Register</button>
+          <button @click="submitToken" type="submit" class="login-button">Login</button>
         </div>
       </form>
-      <p class="error">{{error}}</p>
+      <p class="error">{{ error }}</p>
     </div>
   </div>
 </template>
@@ -63,7 +63,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 90vh;
+  width: 100vw;
 }
 
 .buttons {
@@ -81,7 +82,7 @@ body {
   cursor: pointer;
 }
 
-.login-button:hover{
+.login-button:hover {
   background-color: var(--accent1-hover);
 }
 
@@ -95,7 +96,7 @@ body {
   cursor: pointer;
 }
 
-.error{
-  color:  var(--error);
+.error {
+  color: var(--error);
 }
 </style>

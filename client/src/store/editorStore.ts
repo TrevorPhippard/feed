@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 
 import UploadService from "../services/upload.service.js";
+import EditorService from '../services/editor.service'
 
 declare global {
 
@@ -13,43 +14,30 @@ declare global {
   }
 }
 
+
 export const useEditorStore = defineStore('editor', {
   state: () => ({
-      gameName: 'quizathon',
-      showSlide:0,
-      slides: [{
-        name: 'slide 1',
-        type: 'checkbox',
-        question: 'Q1:  Whose that wonderful girl, could she be any sweeter?',
-        options: [
-          { choice: 'Nanalan', correct: false },
-          { choice: 'Sweet Pea', correct: true },
-          { choice: 'Mona', correct: false },
-          { choice: 'Russer', correct: false },
-          { choice: 'mr.woca', correct: false }
-        ],
-        bgImg: import.meta.env.VITE_API_ENDPOINT +"/images"+ "/img-0906.jpg"
-      }, {
-        name: 'slide 2',
-        type: 'checkbox',
-        question: 'Q2:  what will we do with feefer?',
-        options: [
-          { choice: 'Put in water', correct: false },
-          { choice: 'ask Russer', correct: false },
-          { choice: 'NANA!!!!', correct: true },
-          { choice: 'mr.woca?', correct: false }
-        ],
-        bgImg: import.meta.env.VITE_API_ENDPOINT+"/images" + "/img-0905.jpg"
-      }],
+    gameName: '',
+    showSlide: 0,
+    slides: [{
+      name: 'slide 1',
+      type: 'checkbox',
+      question: '',
+      options: [
+        { choice: '', correct: false },
+      ],
+      bgImg: import.meta.env.VITE_API_ENDPOINT + "/images" + "/img-0906.jpg"
+    }
+  ],
   }),
 
   actions: {
     upload(data: any) {
       UploadService.upload(data);
     },
-    blankSlideInfo(){
-       return { 
-        name: 'slide '+(Number(this.slides.length)+1),
+    blankSlideInfo() {
+      return {
+        name: 'slide ' + (Number(this.slides.length) + 1),
         type: '',
         question: '',
         options: [],
@@ -57,48 +45,69 @@ export const useEditorStore = defineStore('editor', {
       }
     },
 
+    updateGameName(name: string) {
+      this.gameName = name
+    },
+
+    saveGameToDatabase(){
+      EditorService.postTrivia({
+        gameName:this.gameName,
+        user_id:'editor',
+        slides:JSON.stringify(this.slides),
+      })
+    },
+
+    fetchGameFromDatabase(){
+      EditorService.fetchTrivia().then(data=>{
+        console.log(data[0].gameName)
+        this.gameName =data[0].gameName
+        this.slides = JSON.parse(data[0].slides)
+      });
+
+    },
+
     /** edit slides actions */
-   
-    onSlideAdd(){
+    onSlideAdd() {
       this.slides.push(this.blankSlideInfo())
     },
-    onSlideAction(id:number){
+    onSlideAction(id: number) {
       console.log(id)
-      this.showSlide =id;
+      this.showSlide = id;
     },
-    onSlideMove(id:number, id2:number){
-      console.log(id,id2)
+    onSlideMove(id: number, id2: number) {
+      console.log(id, id2)
     },
-    onSlideRemove(){
+    onSlideRemove() {
       this.slides.splice(this.showSlide, 1);
     },
-    onSlideEdit(index:number, text:string){
+    onSlideEdit(index: number, text: string) {
       this.slides[index].name = text;
     },
-    updateSlideQuestion(text:string){
+    updateSlideQuestion(text: string) {
       this.slides[this.showSlide].question = text;
     },
- 
-    /** edit checkbox actions */
 
-    addChoice(){
+    /** edit checkbox actions */
+    addChoice() {
       this.slides[this.showSlide].options.push({
-         choice: '', correct: false 
-        })
+        choice: '',
+        correct: false
+      })
     },
-    removeChoice(index:number){
+    removeChoice(index: number) {
       this.slides[this.showSlide].options.splice(index, 1);
     },
-    updateChoice(e:any){
-      var index = (e.target.id.split('opt_'))[0];
+    updateChoice(e: any) {
+      var index = (e.target.id.split('opt_'))[1];
       this.slides[this.showSlide].options[Number(index)].choice = e.target.value;
     },
-    updateCheck(e:any){
+    updateCheck(e: any) {
       var index = (e.target.id.split('check_'))[1];
       this.slides[this.showSlide].options[Number(index)].correct = e.target.checked;
     }
   },
   getters: {
+    editorName: state => state.gameName,
     editorSlides: state => state.slides,
     editorCurrentSlides: state => state.slides[state.showSlide]
   }

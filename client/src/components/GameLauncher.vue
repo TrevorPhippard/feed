@@ -16,12 +16,10 @@ const games = ref([
     { gameName: 'animeTrivia' },
     { gameName: 'superheroTrivia' },
     { gameName: 'historyTrivia' }
-
 ]);
 
-
-function selectGame() {
-    store
+function selectGame(index:number) {
+    console.log(store,index )
 }
 
 function launch() {

@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize'
-  
+
 // Connect to SQLite database
 const sequelize = new Sequelize({
     dialect: 'sqlite',

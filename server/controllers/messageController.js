@@ -2,26 +2,26 @@ import Message from '../models/message.model';
 
 
 // add message output: { user, channel, msg }
-export const addMsgToRoom = (message, req) => {
+export const addMsgToRoom = (req, res) => {
 
-    const {displayName, roomId, msg} = message
+    const { displayName, roomId, msg } = req
 
 
     //Build the user object to write to database
-    const newMessage = { 
-        user_id: displayName, 
-        room_id: roomId, 
-        message_body: msg 
+    const newMessage = {
+        user_id: displayName,
+        room_id: roomId,
+        message_body: msg
     }
 
 
     Message.create(newMessage)
         .then(savedUser => {
-            const myOptions = { status: 200, statusText: savedUser.id};
+            const myOptions = { status: 200, statusText: savedUser.id };
             new Response(myOptions)
         })
-        .catch(err =>{
-            const myOptions = { status: 500, statusText: err.message};
+        .catch(err => {
+            const myOptions = { status: 500, statusText: err.message };
             new Response(myOptions)
         });
 }
@@ -44,7 +44,7 @@ export const getMessageById = async (req, res) => {
     try {
         const messageId = req.params.roomId.split(':')[1];
 
-        const message = await Message.findAll({room_id:messageId});
+        const message = await Message.findAll({ room_id: messageId });
         if (!message) {
             res.status(404).send('message not found');
         } else {

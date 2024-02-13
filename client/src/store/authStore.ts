@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import AuthService from '../services/auth.service'
-import SocketioService from '../services/socketio.service.js';
+import SocketioService from '../services/socketio.service';
 
 declare global {
 

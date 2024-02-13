@@ -2,26 +2,26 @@
 
 import { ref } from 'vue'
 import { useAuthStore } from '../store/authStore.ts';
-import {  useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 const store = useAuthStore();
 const router = useRouter();
 
-const  username = ref();
-const  email = ref();
-const  password = ref();
+const username = ref();
+const email = ref();
+const password = ref();
 const error = ref('');
 
 function submitToken() {
-    const  formData = {
-        "username": username.value,
-        "email": email.value,
-        "password": password.value
-    }
+  const formData = {
+    "username": username.value,
+    "email": email.value,
+    "password": password.value
+  }
 
-  store.register(formData).then(function(){
+  store.register(formData).then(function () {
     router.push({ path: '/profile' })
-  }).catch(function(res){
+  }).catch(function (res) {
     console.error(res.response)
     error.value = 'error';
   });
@@ -38,10 +38,10 @@ function submitToken() {
         <input type="email" placeholder="email" v-model="email" required>
         <input type="password" placeholder="password" v-model="password" required>
         <div class="buttons">
-          <button  @click="submitToken" type="submit" class="login-button">Register</button>
+          <button @click="submitToken" type="submit" class="login-button">Register</button>
         </div>
       </form>
-      <p class="error">{{error}}</p>
+      <p class="error">{{ error }}</p>
     </div>
   </div>
 </template>
@@ -61,7 +61,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 90vh;
+  width: 100vw;
 }
 
 
@@ -89,8 +90,7 @@ body {
   cursor: pointer;
 }
 
-.error{
-  color:  var(--error);
+.error {
+  color: var(--error);
 }
-
 </style>

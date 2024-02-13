@@ -5,11 +5,11 @@ import Room from '../models/room.model';
 export const addRoom = (id, userId, roomId, msgs) => {
 
     //Build the room object to write to database
-    const newRoom = { 
+    const newRoom = {
         id: id,
-        user_id: userId, 
-        room_id: roomId, 
-        msgs:  msgs
+        user_id: userId,
+        room_id: roomId,
+        msgs: msgs
     }
 
     Room.create(newRoom)
@@ -52,16 +52,16 @@ export const getRoomById = async (req, res) => {
 export const updateRoomById = async (req, res) => {
     try {
         const roomId = req.params.id;
-        const { id,user_id, room_id, room_body } = req.body;
+        const { id, user_id, room_id, room_body } = req.body;
         const room = await Room.findByPk(roomId);
         if (!room) {
             res.status(404).send('room not found');
         } else {
-                room.id = id,
-                room.user_id = user_id, 
-                room.room_id = room_id, 
-                room.msgs =  room_body
-                await room.save();
+            room.id = id,
+                room.user_id = user_id,
+                room.room_id = room_id,
+                room.msgs = room_body
+            await room.save();
             res.json({ room: 'room updated successfully', room });
         }
     } catch (error) {

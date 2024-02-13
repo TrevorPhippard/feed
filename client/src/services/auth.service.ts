@@ -9,8 +9,8 @@ interface User {
 class AuthService {
   endpoint: string;
 
-  constructor(){
-    this.endpoint = import.meta.env.VITE_API_ENDPOINT+'/api/auth/';
+  constructor() {
+    this.endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/auth/';
   }
 
   login(user: User | null) {
@@ -22,7 +22,7 @@ class AuthService {
 
   register(user: User | null) {
     return axios.post(this.endpoint + 'signup', user).then(response => {
-        return response.data;
+      return response.data;
     });
   }
 }

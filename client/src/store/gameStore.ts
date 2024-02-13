@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import GameService from '../services/game.service'
 
 declare global {
 
@@ -17,11 +18,14 @@ export const useGameStore = defineStore('game', {
     socketEndpoint: import.meta.env.VITE_SOCKET_ENDPOINT,
     roomId: 'myRandomChatRoomId',
     gameData: {
-      gameName:'quizathon'
+      gameName: 'quizathon'
     },
   }),
 
   actions: {
+    launchGame(){
+      GameService.fetchAndLaunchGame('?')
+    }
   },
   getters: {
     getEndPoint: state => state.socketEndpoint,

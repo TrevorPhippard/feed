@@ -1,4 +1,4 @@
-import {  addMsgToRoom } from '../controllers/messageController';
+import { addMsgToRoom } from '../controllers/messageController';
 
 var socketIO = function (io, socket, onlineUsers) {
   // connect to server

@@ -7,6 +7,7 @@ import userRoutes from './routes/userRoutes';
 import fileRoutes from './routes/fileRoutes';
 import msgRoutes from './routes/msgRoutes';
 import roomRoutes from './routes/roomRoutes';
+import triviaRoutes from './routes/triviaRoutes';
 
 import socketRoutes from './routes/socketIO'
 
@@ -14,8 +15,7 @@ const jwt = require('jsonwebtoken');
 const dotEnv = require("dotenv")
 
 
-dotEnv.config()
-;
+dotEnv.config();
 
 const app = express();
 const port = 3000;
@@ -51,18 +51,18 @@ app.use(bodyParser.urlencoded({
 
 
 
-
+app.use('/api',fileRoutes);
 app.use('/api',userRoutes);
 app.use('/api',msgRoutes);
 app.use('/api',roomRoutes);
-app.use('/api',fileRoutes);
+app.use('/api',triviaRoutes);
 
-// app.use(function (req, res) {
-//   console.log(req.originalUrl)
-//   res.status(404).send({
-//     url: req.originalUrl + ' not found'
-//   });
-// });
+app.use(function (req, res) {
+  console.log(req.originalUrl)
+  res.status(404).send({
+    url: req.originalUrl + ' not found'
+  });
+});
 /** ---------------------------------------------------------------------------
  *  @Sockets
  * --------------------------------------------------------------------------- */

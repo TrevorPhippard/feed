@@ -22,6 +22,7 @@ const inputMessageText = ref('')
 const messages = ref([]);
 
 onMounted(function () {
+  
   if (token.value) {
     SocketioService.setupSocketConnection(token.value, roomId.value, username.value);
     SocketioService.subscribeToMessages((_err, data) => {
@@ -30,9 +31,9 @@ onMounted(function () {
     });
 
     SocketioService.subscribeToUsersPassage((_err, data) => {
-      console.log('user::',data);
+      console.log('user::', data);
     });
-    
+
     MsgService.fetchMessages(roomId.value)
       .then(result => {
         result.map((data: { id: any; user_id: any; message_body: any; }) => {
@@ -44,7 +45,7 @@ onMounted(function () {
             }
           }
         }).map((data: never) => {
-           return messages.value.push(data);
+          return messages.value.push(data);
         })
       })
   } else {
@@ -70,7 +71,7 @@ function submitMessage() {
   });
 }
 
-function filterMessage(info: { message: any; }){
+function filterMessage(info: { message: any; }) {
   return info.message
 }
 
@@ -80,7 +81,7 @@ function filterMessage(info: { message: any; }){
     <div class="box">
       <div class="messages">
         <div v-for="(info, key) in messages" :key="key">
-          <strong> {{  filterMessage(info).displayName }}: </strong>{{  filterMessage(info).msg }}
+          <strong> {{ filterMessage(info).displayName }}: </strong>{{ filterMessage(info).msg }}
         </div>
       </div>
       <form class="input-div" @submit.prevent="submitMessage">

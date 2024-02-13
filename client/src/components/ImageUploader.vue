@@ -11,16 +11,16 @@ const fileName = computed(() => file.value.name);
 const fileExtension = computed(() => fileName.value.substring(fileName.value?.lastIndexOf(".") + 1));
 const fileMimeType = computed(() => file.value?.type);
 
-const uploadFile = (event:any) => {
+const uploadFile = (event: any) => {
   file.value = event.target.files[0];
 };
 
 const submitFile = async () => {
   store.upload({
-      file: file.value, 
-      fileName: fileName.value, 
-      fileExtension: fileExtension.value,
-      fileMimeType: fileMimeType.value
+    file: file.value,
+    fileName: fileName.value,
+    fileExtension: fileExtension.value,
+    fileMimeType: fileMimeType.value
   })
 };
 
@@ -34,8 +34,8 @@ const submitFile = async () => {
 
 <style scoped>
 #icon-info {
-    background-image: url("https://random-d.uk/api/randomimg?t=1704509234856");
-    background-position: 0 -87px;
-    margin-right: 10px;
+  background-image: url("https://random-d.uk/api/randomimg?t=1704509234856");
+  background-position: 0 -87px;
+  margin-right: 10px;
 }
 </style>

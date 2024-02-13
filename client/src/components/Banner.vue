@@ -13,7 +13,7 @@ const {
 </script>
 
 <template>
-<div id="profile-upper">
+  <div id="profile-upper">
     <div id="profile-banner-image">
       <img src="" alt="Banner image">
     </div>
@@ -21,15 +21,13 @@ const {
       <div id="profile-pic">
         <img src="">
       </div>
-      <div id="u-name">{{username}}</div>
+      <div id="u-name">{{ username }}</div>
     </div>
     <div id="black-grd"></div>
   </div>
 </template>
 
 <style scoped>
-
-
 /* Profile image header */
 #profile-upper {
   position: relative;
@@ -101,5 +99,6 @@ const {
   background: linear-gradient(rgba(0, 0, 0, 0) 71%, rgba(0, 0, 0, 0.53));
   z-index: 1;
 }
+
 /* Profile image header finished */
 </style>

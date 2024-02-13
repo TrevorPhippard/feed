@@ -6,45 +6,44 @@ import CheckboxChoice from './answers/CheckboxChoice.vue';
 
 import { useEditorStore } from '../store/editorStore.ts';
 
-var props =  defineProps({ data: Object, })
+var props = defineProps({ data: Object, })
 var store = useEditorStore();
 
 var selected = ref('');
-const questionText = ref(props.data ?props.data.question:'')
+const questionText = ref(props.data ? props.data.question : '')
 
-function updateQuestion(){
-    store.updateSlideQuestion( questionText.value)
+function updateQuestion() {
+    store.updateSlideQuestion(questionText.value)
 }
 
 </script>
 
 <template>
-        <h3>Create Question</h3>
-        <label for="question">Question:</label>
-        <textarea v-model="questionText" 
-            name="question"
-            rows="4" 
-            placeholder="write question here" 
-            @input="updateQuestion"
-        />
-        <p>Question Type</p>
-        <select v-model="selected">
-            <!-- <option value="">Please select one</option> -->
-            <!-- <option>Boolean</option> -->
-            <option>Checkbox</option>
-            <!-- <option>Radio</option> -->
-        </select>
+    <h4>Create Question</h4>
+    <label for="question">Question:</label>
+    <textarea v-model="questionText" name="question" rows="4" placeholder="write question here" @input="updateQuestion" />
+    <p>Question Type</p>
+    <select v-model="selected">
+        <!-- <option value="">Please select one</option> -->
+        <!-- <option>Boolean</option> -->
+        <option>Checkbox</option>
+        <!-- <option>Radio</option> -->
+    </select>
 
-        <!-- <BooleanChoice v-if="selected == 'Boolean'" /> -->
-        <CheckboxChoice :data="data"/>
-        <!-- <RadioChoice v-if="selected == 'Radio'" /> -->
-
+    <!-- <BooleanChoice v-if="selected == 'Boolean'" /> -->
+    <CheckboxChoice :data="data" />
+    <!-- <RadioChoice v-if="selected == 'Radio'" /> -->
 </template>
 
 <style scoped>
+h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
 textarea {
     display: block;
-    width: 90%;
+    width: 100%;
     padding: 10px;
 }
 

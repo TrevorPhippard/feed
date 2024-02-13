@@ -12,8 +12,8 @@ const { getToken: token } = storeToRefs(store)
 
 
 onMounted(function () {
-  var cookie =  localStorage.getItem("user");
-  if(cookie) {store.setUser(cookie)};
+  var cookie = localStorage.getItem("user");
+  if (cookie) { store.setUser(cookie) };
   if (token) {
     // router.push({ path: '/profile' })
   } else {
@@ -24,21 +24,17 @@ onMounted(function () {
 </script>
 
 <template>
-<div id="page-container">
-
- <div id="content-wrap">
-           <router-view />
+  <div id="page-container">
+    <div id="content-wrap">
+      <router-view />
     </div>
     <footer id="footer">
-       <p>current path: {{ location.path }}</p>
-    </footer> 
+      <p>current path: {{ location.path }}</p>
+    </footer>
   </div>
-
 </template>
 
 <style scoped>
-
-
 #page-container {
   position: relative;
   min-height: 100vh;

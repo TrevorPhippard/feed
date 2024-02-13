@@ -14,20 +14,20 @@ const slide = ref(0);
 const isEdit = ref(100);
 const textModel = ref()
 
-function showSlide(index:number) {
+function showSlide(index: number) {
     slide.value = index;
     store.onSlideAction(index)
 }
 
-function setEditMode(index:number) {
-    if(isEdit.value === index){
+function setEditMode(index: number) {
+    if (isEdit.value === index) {
         isEdit.value = 100;
-    }else{
+    } else {
         isEdit.value = index;
     }
 }
 
-function onEnter(){
+function onEnter() {
     store.onSlideEdit(isEdit.value, textModel.value)
     isEdit.value = 100;
 }
@@ -40,33 +40,27 @@ function remove() {
     store.onSlideRemove()
 }
 
-function changeOrder(event:any) {
+function changeOrder(event: any) {
     const { newIndex, oldIndex } = event.moved;
-    if (newIndex !== oldIndex)  store.onSlideMove(newIndex, oldIndex)
+    if (newIndex !== oldIndex) store.onSlideMove(newIndex, oldIndex)
 
 }
 
 </script>
 <template>
-        <draggable :list="itemsContent" :animation="100" ghost-class="invisable-card" group="list" class="sortable-list "
-            tag="ul" @change="changeOrder">
-            <template #item="{ element, index }">
-                <li @mouseup="showSlide(index)"
-                    @dblclick="setEditMode(index)"
-                >
-                    <span v-if="isEdit !== index" > {{ element.name }}</span>
-                    <input v-if="isEdit === index" 
-                    @keyup.enter="onEnter"
-                    type="text" 
-                    placeholder="rename slide"
-                    v-model="textModel"
-                    >
-                </li>
-            </template>
-        </draggable>
-        <button @click="add">create slide</button>
-        <button @click="remove">remove selected</button>
-
+    <h4>Order Slides</h4>
+    <draggable :list="itemsContent" :animation="100" ghost-class="invisable-card" group="list" class="sortable-list "
+        tag="ul" @change="changeOrder">
+        <template #item="{ element, index }">
+            <li @mouseup="showSlide(index)" @dblclick="setEditMode(index)">
+                <span v-if="isEdit !== index"> {{ element.name }}</span>
+                <input v-if="isEdit === index" @keyup.enter="onEnter" type="text" placeholder="rename slide"
+                    v-model="textModel">
+            </li>
+        </template>
+    </draggable>
+    <button @click="add">create slide</button>
+    <button @click="remove">remove selected</button>
 </template>
 <style>
 .sortable-list {
@@ -90,8 +84,8 @@ function changeOrder(event:any) {
     opacity: 0.2;
 }
 
-button + button{
-    margin-left:10px
+button+button {
+    margin-left: 10px
 }
 </style>
 

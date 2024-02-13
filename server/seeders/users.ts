@@ -4,7 +4,7 @@ export const users = [
     {
         username: 'Test Testenhaus',
         role: 'mock data'
-    },{
+    }, {
         username: 'Tessa McTesterson',
         role: 'mock data'
     }

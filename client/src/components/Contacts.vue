@@ -52,20 +52,22 @@
   background-size: cover;
 }
 
-.profile-0{
-background-image: url("../assets//duck-0.jpg");
-}
-.profile-1{
-background-image: url("../assets//duck-1.jpg");
-}
-.profile-2{
-background-image: url("../assets//duck-2.jpg");
-}
-.profile-3{
-background-image: url("../assets//duck-3.jpg");
-}
-.profile-4{
-background-image: url("../assets//duck-4.jpg");
+.profile-0 {
+  background-image: url("../assets//duck-0.jpg");
 }
 
-</style>
+.profile-1 {
+  background-image: url("../assets//duck-1.jpg");
+}
+
+.profile-2 {
+  background-image: url("../assets//duck-2.jpg");
+}
+
+.profile-3 {
+  background-image: url("../assets//duck-3.jpg");
+}
+
+.profile-4 {
+  background-image: url("../assets//duck-4.jpg");
+}</style>

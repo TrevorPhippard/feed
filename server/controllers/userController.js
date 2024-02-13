@@ -56,7 +56,7 @@ export const signInUser = async (req, res) => {
 
     //Return the token in a header called 'auth-token'. Add auth-token to any future requests to protected routes
     res.header("auth-token", token).send({
-      user_name: user.username, 
+      user_name: user.username,
       token: token
     });
   } catch (err) {

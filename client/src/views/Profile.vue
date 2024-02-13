@@ -4,37 +4,37 @@ import ImageUploader from '../components/ImageUploader.vue';
 import Info from '../components/Info.vue';
 import Contacts from '../components/Contacts.vue';
 import Socket from '../components/Socket.vue';
-import NavBar from '../components/NavBar.vue'; 
+import NavBar from '../components/NavBar.vue';
 import GameLauncher from "../components/GameLauncher.vue";
 
 </script>
 
 <template>
-<main>
-  <NavBar />
-  <div id="main-content">
-    <div class="column_container">
-      <div  >
-        <div class="card-box">
-          <Info/>
-          <hr/>
-          <ImageUploader/>
+  <main>
+    <NavBar />
+    <div id="main-content">
+      <div class="column_container">
+        <div>
+          <div class="card-box">
+            <Info />
+            <hr />
+            <ImageUploader />
           </div>
           <div class="card-box">
-          <Contacts/>
+            <Contacts />
           </div>
-      </div>
-      <div id="m-col">
-        <div class="card-box">
-          <GameLauncher/>
+        </div>
+        <div id="m-col">
+          <div class="card-box">
+            <GameLauncher />
           </div>
-        <div class="card-box" >
-          <Socket/>
+          <div class="card-box">
+            <Socket />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</main>
+  </main>
 </template>
 
 <style scoped>
@@ -43,5 +43,4 @@ import GameLauncher from "../components/GameLauncher.vue";
   background-color: #fff;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
 }
-
 </style>
