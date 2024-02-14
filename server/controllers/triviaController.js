@@ -30,7 +30,7 @@ export const getAllTrivias = async (req, res) => {
 // Controller for getting a Trivia by ID
 export const getTriviaById = async (req, res) => {
     try {
-        const triviaId = req.params.id;
+        const triviaId = Number(req.params.id.split(':')[1]);
         const trivia = await Trivia.findByPk(triviaId);
         if (!Trivia) {
             res.status(404).send('trivia not found');
@@ -47,9 +47,9 @@ export const getTriviaById = async (req, res) => {
 // updating a Trivia
 export const updateTriviaById = async (req, res) => {
     try {
-        const triviaId = req.params.id;
+        const triviaId = Number(req.params.id.split(':')[1]);
         const { id, gameName, slides, user_id } = req.body;
-        const trivia = await trivia.findByPk(triviaId);
+        const trivia = await Trivia.findByPk(triviaId);
         if (!trivia) {
             res.status(404).send('Trivia not found');
         } else {
@@ -71,7 +71,7 @@ export const updateTriviaById = async (req, res) => {
 export const removeTriviaByTrivia = async (req, res) => {
     try {
         const triviaId = req.params.trivia;
-        const trivia = await trivia.findByPk(triviaId);
+        const trivia = await Trivia.findByPk(triviaId);
         if (!trivia) {
             res.status(404).send('Trivia not found');
         } else {

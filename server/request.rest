@@ -93,7 +93,14 @@ GET http://localhost:3000/api/editor  HTTP/1.1
 
 ###
 
-GET http://localhost:3000/api/editor:1  HTTP/1.1
+PUT http://localhost:3000/api/editor:2  HTTP/1.1
+Content-Type: application/json
+
+{
+"gameName": "The Name of the Game",
+"slides":"[{\"name\":\"slide 1\",\"type\":\"checkbox\",\"question\":\"testset1\",\"options\":[{\"choice\":\"erstesrt\",\"correct\":true},{\"choice\":\"zxadfasdf\",\"correct\":false}],\"bgImg\":\"http://localhost:3000/images/img-0906.jpg\"},{\"name\":\"slide 2\",\"type\":\"\",\"question\":\"testset2\",\"options\":[{\"choice\":\"gesgteste\",\"correct\":false},{\"choice\":\"estesrt\",\"correct\":true}],\"bgImg\":\"http://localhost:3000/images/img-0906.jpg\"}]",
+"user_id": "editor"
+}
 
 ###
 

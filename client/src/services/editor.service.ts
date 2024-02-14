@@ -22,10 +22,11 @@ class EditorService {
   }
 
   postTrivia(data:any) {
-    return axios.post(this.endpoint,data )
-      .then(response => {
-        return response.data;
-      });
+    return axios.post(this.endpoint,data ).then(response =>  response.data)
+  }
+
+  updateTrivia(data:any, index:number| boolean) {
+    return  axios.put(this.endpoint+":"+index, data ).then(response =>  response.data);
   }
 }
 

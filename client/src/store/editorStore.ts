@@ -17,6 +17,7 @@ declare global {
 
 export const useEditorStore = defineStore('editor', {
   state: () => ({
+    gameId:false,
     gameName: '',
     showSlide: 0,
     slides: [{
@@ -50,20 +51,26 @@ export const useEditorStore = defineStore('editor', {
     },
 
     saveGameToDatabase(){
-      EditorService.postTrivia({
+
+     var sendData = {
         gameName:this.gameName,
         user_id:'editor',
         slides:JSON.stringify(this.slides),
-      })
+      } 
+
+      if(this.gameId){
+        EditorService.updateTrivia(sendData, this.gameId)
+      }else{
+        EditorService.postTrivia(sendData)
+      }
     },
 
     fetchGameFromDatabase(){
       EditorService.fetchTrivia().then(data=>{
-        console.log(data[0].gameName)
+        this.gameId =data[0].id
         this.gameName =data[0].gameName
         this.slides = JSON.parse(data[0].slides)
       });
-
     },
 
     /** edit slides actions */

@@ -42,7 +42,7 @@ export const getAllMessages = async (req, res) => {
 export const getMessageById = async (req, res) => {
 
     try {
-        const messageId = req.params.roomId.split(':')[1];
+        const messageId = Number(req.params.id.split(':')[1]);
 
         const message = await Message.findAll({ room_id: messageId });
         if (!message) {
@@ -60,16 +60,16 @@ export const getMessageById = async (req, res) => {
 // updating a user
 export const updateMessageById = async (req, res) => {
     try {
-        const msgId = req.params.id;
+        const msgId = Number(req.params.id.split(':')[1]);
         const { id, user_id, room_id, message_body } = req.body;
         const msg = await Message.findByPk(msgId);
         if (!msg) {
             res.status(404).send('msg not found');
         } else {
-            msg.id = id,
-                msg.user_id = username,
-                msg.room_id = role,
-                msg.message_body = role,
+                msg.id = id,
+                msg.user_id = user_id,
+                msg.room_id = room_id,
+                msg.message_body = message_body,
                 await msg.save();
             res.json({ message: 'msg updated successfully', msg });
         }

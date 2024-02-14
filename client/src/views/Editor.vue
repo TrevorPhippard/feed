@@ -9,23 +9,18 @@ import ImageUploader from '../components/ImageUploader.vue';
 import { storeToRefs } from 'pinia';
 import { useEditorStore } from '../store/editorStore.ts';
 import NavBar from '../components/NavBar.vue';
-
-
-const gameNameText = ref('')
-
-function updateGameName() {
-    store.updateGameName(gameNameText.value)
-}
+import ClickInput from '../components/ClickInput.vue';
 
 var store = useEditorStore();
-
-
-
 const {
-    editorName: name,
+    editorName: gameName,
     editorSlides: slides,
     editorCurrentSlides: currentSlide
 } = storeToRefs(store);
+
+function updateGameName(value:string) {
+    store.updateGameName(value);
+}
 
 onMounted(function () {
     store.fetchGameFromDatabase();
@@ -38,8 +33,14 @@ onMounted(function () {
     <div class="dashboard">
         <div class="control">
             <div class="card">
-                <h4>Name: {{ name }}</h4>
-                <input v-model="gameNameText" name="question" placeholder="trivia name" @input="updateGameName" />
+                <ClickInput
+                label="Name:" 
+                placeholder="trivia name" 
+                :text="gameName" 
+                @input-submit="updateGameName"
+                @input-edit="updateGameName"
+
+                />
                 <h4>background image</h4>
                 <ImageUploader />
 

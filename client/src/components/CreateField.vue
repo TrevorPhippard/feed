@@ -29,10 +29,9 @@ function updateQuestion() {
         <option>Checkbox</option>
         <!-- <option>Radio</option> -->
     </select>
-
     <!-- <BooleanChoice v-if="selected == 'Boolean'" /> -->
-    <CheckboxChoice :data="data" />
     <!-- <RadioChoice v-if="selected == 'Radio'" /> -->
+    <CheckboxChoice :data="data" />
 </template>
 
 <style scoped>

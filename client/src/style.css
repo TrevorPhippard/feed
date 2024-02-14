@@ -15,6 +15,7 @@
   --accent1: #2f19be;
   --accent1-hover: #535bf2;
   --error: #f50;
+  --button-hover: #1B1B1B;
 }
 
 
@@ -70,6 +71,7 @@ button {
 }
 button:hover {
   border-color: #646cff;
+  background-color: var( --button-hover);
 }
 button:focus,
 button:focus-visible {
