@@ -28,6 +28,10 @@ class EditorService {
   updateTrivia(data:any, index:number| boolean) {
     return  axios.put(this.endpoint+":"+index, data ).then(response =>  response.data);
   }
+
+  deleteTrivia(data:any, index:number| boolean) {
+    return  axios.delete(this.endpoint+":"+index, data ).then(response =>  response.data);
+  }
 }
 
 export default new EditorService();

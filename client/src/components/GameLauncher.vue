@@ -3,41 +3,48 @@
 import draggable from 'vuedraggable';
 import { ref } from 'vue';
 import { useEditorStore } from '../store/editorStore.ts';
+import { storeToRefs } from 'pinia';
 
 var store = useEditorStore();
+
+const {
+    getGameList: gameList,
+} = storeToRefs(store);
 
 defineProps({
     itemsContent: Array,
 })
 
+
 const games = ref([
-    { gameName: 'weirdTrivia' },
-    { gameName: 'musicTrivia' },
-    { gameName: 'animeTrivia' },
-    { gameName: 'superheroTrivia' },
-    { gameName: 'historyTrivia' }
+gameList
 ]);
 
 function selectGame(index:number) {
     console.log(store,index )
 }
 
-function launch() {
-    console.log('add')
+function launchGame(index:number) {
+    console.log('launch:',index)
 }
 
-function edit() {
-    console.log('edit')
+function edit(index:number) {
+    console.log('edit:',index)
+}
+
+function deleteGame(index:number) {
+    console.log('delete:',index)
 }
 
 </script>
 <template>
     <ul class="game-list">
-        <li v-for="(info, key, index) in games" :key="key" @mouseup="selectGame(index)" @keyup.enter="launch">
-            {{ info.gameName }}
+        <li v-for="(info, key) in gameList" :key="key">
+            <p>{{ info.gameName }}</p>
             <span>
-                <button @click="edit">edit</button>
-                <button @click="launch">Launch</button>
+                <button @click="edit(info.id)">edit</button>
+                <button @click="launchGame(info.id)">Launch</button>
+                <button @click="deleteGame(info.id)">delete</button>
             </span>
         </li>
     </ul>

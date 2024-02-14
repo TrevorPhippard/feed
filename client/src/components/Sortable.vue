@@ -10,6 +10,7 @@ defineProps({
     itemsContent: Array,
 })
 
+
 const slide = ref(0);
 const isEdit = ref(100);
 const textModel = ref()
@@ -17,14 +18,6 @@ const textModel = ref()
 function showSlide(index: number) {
     slide.value = index;
     store.onSlideAction(index)
-}
-
-function setEditMode(index: number) {
-    if (isEdit.value === index) {
-        isEdit.value = 100;
-    } else {
-        isEdit.value = index;
-    }
 }
 
 function onEnter() {
@@ -43,7 +36,6 @@ function remove() {
 function changeOrder(event: any) {
     const { newIndex, oldIndex } = event.moved;
     if (newIndex !== oldIndex) store.onSlideMove(newIndex, oldIndex)
-
 }
 
 </script>
@@ -52,10 +44,14 @@ function changeOrder(event: any) {
     <draggable :list="itemsContent" :animation="100" ghost-class="invisable-card" group="list" class="sortable-list "
         tag="ul" @change="changeOrder">
         <template #item="{ element, index }">
-            <li @mouseup="showSlide(index)" @dblclick="setEditMode(index)">
-                <span v-if="isEdit !== index"> {{ element.name }}</span>
-                <input v-if="isEdit === index" @keyup.enter="onEnter" type="text" placeholder="rename slide"
-                    v-model="textModel">
+            <li @mouseup="showSlide(index)">
+              {{ element.name }}
+                <ClickInput
+                label="Name:" 
+                placeholder="trivia name" 
+                :text="element.name" 
+                @input-submit="onEnter"
+                />
             </li>
         </template>
     </draggable>

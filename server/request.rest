@@ -75,6 +75,8 @@ Content-Type: application/json
 
 
 
+### uploader ------------------------------------------------------
+
 ###
 
 POST http://localhost:3000/api/upload:tester HTTP/1.1
@@ -86,6 +88,7 @@ Content-Type: application/json
     "role": "ttteesssttting ttteesssttting"
 }
 
+### Editor ------------------------------------------------------
 
 ###
 
@@ -112,6 +115,5 @@ Content-Type: application/json
 "slides":"[{\"name\":\"slide 1\",\"type\":\"checkbox\",\"question\":\"testset1\",\"options\":[{\"choice\":\"erstesrt\",\"correct\":true},{\"choice\":\"zxadfasdf\",\"correct\":false}],\"bgImg\":\"http://localhost:3000/images/img-0906.jpg\"},{\"name\":\"slide 2\",\"type\":\"\",\"question\":\"testset2\",\"options\":[{\"choice\":\"gesgteste\",\"correct\":false},{\"choice\":\"estesrt\",\"correct\":true}],\"bgImg\":\"http://localhost:3000/images/img-0906.jpg\"}]",
 "user_id": "editor"
 }
-
 
 

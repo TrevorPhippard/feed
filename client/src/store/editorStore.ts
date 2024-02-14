@@ -28,8 +28,8 @@ export const useEditorStore = defineStore('editor', {
         { choice: '', correct: false },
       ],
       bgImg: import.meta.env.VITE_API_ENDPOINT + "/images" + "/img-0906.jpg"
-    }
-  ],
+    }],
+    gameAr:[]
   }),
 
   actions: {
@@ -51,8 +51,7 @@ export const useEditorStore = defineStore('editor', {
     },
 
     saveGameToDatabase(){
-
-     var sendData = {
+      var sendData = {
         gameName:this.gameName,
         user_id:'editor',
         slides:JSON.stringify(this.slides),
@@ -60,16 +59,24 @@ export const useEditorStore = defineStore('editor', {
 
       if(this.gameId){
         EditorService.updateTrivia(sendData, this.gameId)
+        .then((msg: any) =>  console.log('response msg::', msg))
       }else{
         EditorService.postTrivia(sendData)
+        .then((msg: any) =>  console.log('response msg::', msg))
       }
     },
 
     fetchGameFromDatabase(){
       EditorService.fetchTrivia().then(data=>{
-        this.gameId =data[0].id
-        this.gameName =data[0].gameName
-        this.slides = JSON.parse(data[0].slides)
+        this.gameAr = data.filter(x=>x.Trivia_id !==  'test').map((x:any)=>({id:x.id,gameName:x.gameName }))
+      });
+    },
+
+    fetchGameById(index:number){
+      EditorService.fetchTriviaById(index).then(data=>{
+        this.gameId =data.id
+        this.gameName =data.gameName
+        this.slides = JSON.parse(data.slides)
       });
     },
 
@@ -78,7 +85,6 @@ export const useEditorStore = defineStore('editor', {
       this.slides.push(this.blankSlideInfo())
     },
     onSlideAction(id: number) {
-      console.log(id)
       this.showSlide = id;
     },
     onSlideMove(id: number, id2: number) {
@@ -116,6 +122,7 @@ export const useEditorStore = defineStore('editor', {
   getters: {
     editorName: state => state.gameName,
     editorSlides: state => state.slides,
-    editorCurrentSlides: state => state.slides[state.showSlide]
+    editorCurrentSlides: state => state.slides[state.showSlide],
+    getGameList: state => state.gameAr
   }
 })

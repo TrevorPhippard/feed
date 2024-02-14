@@ -80,7 +80,7 @@ export const getAllUsers = async (req, res) => {
 // Controller for getting a user by ID
 export const getUserById = async (req, res) => {
   try {
-    const userId = Number(req.params.id.split(':')[1]);
+    const userId = req.params.id;
     const user = await User.findByPk(userId);
     if (!user) {
       res.status(404).send('User not found');
@@ -97,7 +97,7 @@ export const getUserById = async (req, res) => {
 // updating a user
 export const updateUserById = async (req, res) => {
   try {
-    const userId = Number(req.params.id.split(':')[1]);
+    const userId = req.params.id;
     const { id, username, role } = req.body;
     const user = await User.findByPk(userId);
     if (!user) {
@@ -120,7 +120,7 @@ export const updateUserById = async (req, res) => {
 // deleting a user by ID
 export const deleteUserById = async (req, res) => {
   try {
-    const userId = Number(req.params.id.split(':')[1]);
+    const userId = req.params.id;
     const user = await User.findByPk(userId);
     if (!user) {
       res.status(404).send('User not found');

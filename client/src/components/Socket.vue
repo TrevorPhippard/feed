@@ -20,6 +20,7 @@ const { getRoom: roomId } = storeToRefs(gameStore)
 
 const inputMessageText = ref('')
 const messages = ref([]);
+const msg = ref();
 
 onMounted(function () {
   
@@ -68,8 +69,13 @@ function submitMessage() {
     console.log(cb);
     // @ts-ignore
     inputMessageText.value = '';
+    scrollToBottom();
   });
 }
+
+  function scrollToBottom() {
+        msg.value.scrollTop = msg.value.scrollHeight;
+  }
 
 function filterMessage(info: { message: any; }) {
   return info.message
@@ -79,7 +85,7 @@ function filterMessage(info: { message: any; }) {
 <template>
   <div>
     <div class="box">
-      <div class="messages">
+      <div class="messages" ref="msg">
         <div v-for="(info, key) in messages" :key="key">
           <strong> {{ filterMessage(info).displayName }}: </strong>{{ filterMessage(info).msg }}
         </div>
@@ -91,15 +97,13 @@ function filterMessage(info: { message: any; }) {
     </div>
   </div>
 </template>
-
-
 <style>
+
 .App {
   padding: 1rem;
 }
 
 .box {
-  width: fit-content;
   height: 400px;
   border: solid 1px #000;
   display: flex;
@@ -117,11 +121,17 @@ function filterMessage(info: { message: any; }) {
 
 .messages {
   padding: 10px;
+  width:100%;
   flex-grow: 1;
   text-align: left;
   background-color: #1a1a1a;
+  overflow: scroll;
+  overflow-anchor: auto !important; 
 }
 
+.messages *{
+  overflow-anchor: none;
+}
 .input-div {
   display: flex;
   width: 100%;

@@ -34,7 +34,7 @@ export const getAllRooms = async (req, res) => {
 // Controller for getting a room by ID
 export const getRoomById = async (req, res) => {
     try {
-        const roomId = Number(req.params.id.split(':')[1]);
+        const roomId =req.params.id;
         const room = await Room.findByPk(roomId);
         if (!room) {
             res.status(404).send('room not found');

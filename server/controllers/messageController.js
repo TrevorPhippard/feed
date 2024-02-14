@@ -40,9 +40,8 @@ export const getAllMessages = async (req, res) => {
 
 // Controller for getting a user by ID
 export const getMessageById = async (req, res) => {
-
     try {
-        const messageId = Number(req.params.id.split(':')[1]);
+        const messageId = req.params.id;
 
         const message = await Message.findAll({ room_id: messageId });
         if (!message) {

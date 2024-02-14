@@ -15,7 +15,7 @@ onMounted(function () {
   var cookie = localStorage.getItem("user");
   if (cookie) { store.setUser(cookie) };
   if (token) {
-    // router.push({ path: '/profile' })
+    router.push({ path: '/profile' })
   } else {
     router.push({ path: '/' })
   }

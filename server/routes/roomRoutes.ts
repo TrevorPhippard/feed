@@ -5,7 +5,7 @@ import { addRoom, getAllRooms, getRoomById, updateRoomById, removeroomByRoom } f
 const router = express.Router();
 
 // request previous messages
-router.route('/rooms/:id').get(getRoomById)
+router.route('/rooms:id').get(getRoomById)
     .post(updateRoomById)
     .delete(removeroomByRoom);
 

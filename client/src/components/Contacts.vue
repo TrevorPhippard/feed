@@ -5,8 +5,6 @@
 <template>
   <div class="card-header">
     <div>
-      <i class="icons" id="icon-contacts">&#9731;</i>
-      <span>Contacts Online</span>
     </div>
   </div>
   <ul class="contact-list">
@@ -70,4 +68,5 @@
 
 .profile-4 {
   background-image: url("../assets//duck-4.jpg");
-}</style>
+}
+</style>

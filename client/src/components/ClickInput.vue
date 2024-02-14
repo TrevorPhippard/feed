@@ -8,27 +8,21 @@ var props = defineProps({
     index: Number
 })
 
-const emit = defineEmits([ 'input-submit', 'input-edit'])
+const emit = defineEmits([ 'input-submit'])
 
 const textModel = ref(props.text)
 const isEdit = ref(false);
 
 function onEnter(){
-    console.log(1)
     emit('input-submit',textModel.value )
     isEdit.value = !isEdit.value;
 }
 
 function setEditMode(){
-    console.log('-')
     isEdit.value = !isEdit.value;
-    // emit('input-edit', textModel.value )
 }
 
 </script>
-
-
-
 <template>
     <div class="editable" @dblclick="setEditMode">
        <h4> {{ label }} <span v-if="!isEdit"> {{ text }}</span>

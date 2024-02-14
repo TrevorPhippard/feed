@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
 
 import Preview from '../components/Preview.vue'
 import Sortable from '../components/Sortable.vue'
@@ -22,10 +21,6 @@ function updateGameName(value:string) {
     store.updateGameName(value);
 }
 
-onMounted(function () {
-    store.fetchGameFromDatabase();
-})
-
 </script>
 
 <template>
@@ -38,20 +33,16 @@ onMounted(function () {
                 placeholder="trivia name" 
                 :text="gameName" 
                 @input-submit="updateGameName"
-                @input-edit="updateGameName"
-
                 />
                 <h4>background image</h4>
                 <ImageUploader />
-
             </div>
             <div class="card">
                 <Sortable :itemsContent="slides"></Sortable>
             </div>
             <div class="card">
-                <CreateField class="col-right" :data="currentSlide"></CreateField>
+                <CreateField class="col-right" :slideData="currentSlide"></CreateField>
             </div>
-            
         </div>
         <div class="save">
             <div class="card">
@@ -61,11 +52,9 @@ onMounted(function () {
                 <button @click="store.saveGameToDatabase">Save</button>
             </div>
         </div>
-
         <div class="preview">
-                <Preview :data="currentSlide"></Preview>
+            <Preview :data="currentSlide"></Preview>
         </div>
-   
     </div>
 </template>
 

@@ -6,32 +6,34 @@ import CheckboxChoice from './answers/CheckboxChoice.vue';
 
 import { useEditorStore } from '../store/editorStore.ts';
 
-var props = defineProps({ data: Object, })
+var props = defineProps({ slideData: Object, })
 var store = useEditorStore();
 
 var selected = ref('');
-const questionText = ref(props.data ? props.data.question : '')
+const questionText = ref(props.slideData ? props.slideData.question : '')
 
 function updateQuestion() {
     store.updateSlideQuestion(questionText.value)
 }
 
 </script>
-
 <template>
-    <h4>Create Question</h4>
-    <label for="question">Question:</label>
-    <textarea v-model="questionText" name="question" rows="4" placeholder="write question here" @input="updateQuestion" />
-    <p>Question Type</p>
-    <select v-model="selected">
-        <!-- <option value="">Please select one</option> -->
-        <!-- <option>Boolean</option> -->
-        <option>Checkbox</option>
-        <!-- <option>Radio</option> -->
-    </select>
-    <!-- <BooleanChoice v-if="selected == 'Boolean'" /> -->
-    <!-- <RadioChoice v-if="selected == 'Radio'" /> -->
-    <CheckboxChoice :data="data" />
+    <div v-if="props.slideData">
+        <h4>Create Question</h4>
+        <label for="question">Question: </label>
+        <i>{{ props.slideData.question }}</i>
+        <textarea v-model="questionText" name="question" rows="4" placeholder="write question here" @input="updateQuestion" />
+        <p>Question Type</p>
+        <select v-model="selected">
+            <!-- <option value="">Please select one</option> -->
+            <!-- <option>Boolean</option> -->
+            <option>Checkbox</option>
+            <!-- <option>Radio</option> -->
+        </select>
+        <!-- <BooleanChoice v-if="selected == 'Boolean'" /> -->
+        <!-- <RadioChoice v-if="selected == 'Radio'" /> -->
+        <CheckboxChoice :data="slideData" />
+    </div>
 </template>
 
 <style scoped>
@@ -44,6 +46,7 @@ textarea {
     display: block;
     width: 100%;
     padding: 10px;
+    margin-top:10px;
 }
 
 .title,
