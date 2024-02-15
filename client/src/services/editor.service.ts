@@ -9,28 +9,34 @@ class EditorService {
 
   fetchTrivia() {
     return axios.get(this.endpoint)
-      .then(response => {
-        return response.data;
-      });
+    .then(response =>  response.data)
+    .catch(error=> error.toJSON());
   }
 
   fetchTriviaById(triviaId: number) {
     return axios.get(this.endpoint + `:${triviaId}`)
-      .then(response => {
-        return response.data;
-      });
+    .then(response =>  response.data)
+    .catch(error=> error.toJSON());
   }
 
   postTrivia(data:any) {
-    return axios.post(this.endpoint,data ).then(response =>  response.data)
+    return axios.post(this.endpoint,data )
+    .then(response =>  response.data)
+    .catch(error=> error.toJSON());
+
   }
 
   updateTrivia(data:any, index:number| boolean) {
-    return  axios.put(this.endpoint+":"+index, data ).then(response =>  response.data);
+    return  axios.put(this.endpoint+":"+index, data )
+    .then(response =>  response.data)
+    .catch(error=> error.toJSON());
+
   }
 
   deleteTrivia(data:any, index:number| boolean) {
-    return  axios.delete(this.endpoint+":"+index, data ).then(response =>  response.data);
+    return  axios.delete(this.endpoint+":"+index, data )
+    .then(response =>  response.data)
+    .catch(error=> error.toJSON());
   }
 }
 

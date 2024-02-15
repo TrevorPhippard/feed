@@ -1,28 +1,20 @@
-import axios from "axios";
+import axios from 'axios';
 
 class UploadFilesService {
-  async upload(data: any) {
-    const { file, fileName, fileExtension, fileMimeType } = data;
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = async () => {
-      // @ts-ignore
-      const encodedFile = reader.result.split(",")[1];
-      const data = {
-        file: encodedFile,
-        fileName: fileName,
-        fileExtension: fileExtension,
-        fileMimeType: fileMimeType,
-      };
+  async upload(formData: any) {
+    const endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/upload:id';
       try {
-        const endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/upload';
-        const response = await axios.post(endpoint, data);
-        console.log(response.data);
+        axios.post(endpoint, formData)
+        .then(function (result) {
+          console.log(result);
+        }, function (error) {
+          console.log(error);
+        });
       } catch (error) {
         console.error(error);
       }
-    };
+
+
   }
 
   async getFiles(filename: string) {

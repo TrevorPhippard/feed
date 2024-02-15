@@ -6,7 +6,7 @@ const {
   getusername: username,
 } = storeToRefs(store)
 
-var placeholderAvatar = import.meta.env.VITE_API_ENDPOINT + '/images/b.jpg'
+var placeholderAvatar = import.meta.env.VITE_API_ENDPOINT + '/api/images/b.jpg'
 
 
 </script>

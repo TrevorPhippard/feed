@@ -9,7 +9,7 @@ import msgRoutes from './routes/msgRoutes';
 import roomRoutes from './routes/roomRoutes';
 import triviaRoutes from './routes/triviaRoutes';
 
-import socketRoutes from './routes/socketIO'
+import socketRoutes from './routes/socketIO';
 
 const jwt = require('jsonwebtoken');
 const dotEnv = require("dotenv")
@@ -21,7 +21,7 @@ const app = express();
 const port = 3000;
 
 app.use(cors())
-app.use('/images', express.static('images'));
+app.use('/api/images', express.static('images'));
 
 // jwt secret
 const JWT_SECRET = process.env.JWT_SECRET ;

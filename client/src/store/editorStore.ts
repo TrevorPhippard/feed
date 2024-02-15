@@ -27,7 +27,7 @@ export const useEditorStore = defineStore('editor', {
       options: [
         { choice: '', correct: false },
       ],
-      bgImg: import.meta.env.VITE_API_ENDPOINT + "/images" + "/img-0906.jpg"
+      bgImg: import.meta.env.VITE_API_ENDPOINT + "/api/images/img-0906.jpg"
     }],
     gameAr:[]
   }),
@@ -42,7 +42,7 @@ export const useEditorStore = defineStore('editor', {
         type: '',
         question: '',
         options: [],
-        bgImg: "http://localhost:3000/images/img-0906.jpg"
+        bgImg: "http://localhost:3000/api/images/img-0906.jpg"
       }
     },
 
@@ -68,15 +68,21 @@ export const useEditorStore = defineStore('editor', {
 
     fetchGameFromDatabase(){
       EditorService.fetchTrivia().then(data=>{
-        this.gameAr = data.filter(x=>x.Trivia_id !==  'test').map((x:any)=>({id:x.id,gameName:x.gameName }))
+        if(data.length){
+          this.gameAr = data
+          .filter((x:any)=>x.Trivia_id !==  'test')
+          .map((x:any)=>({id:x.id,gameName:x.gameName }))
+        }
       });
     },
 
     fetchGameById(index:number){
       EditorService.fetchTriviaById(index).then(data=>{
-        this.gameId =data.id
-        this.gameName =data.gameName
-        this.slides = JSON.parse(data.slides)
+        if(data){
+          this.gameId =data.id
+          this.gameName =data.gameName
+          this.slides =  data.slides ? JSON.parse(data.slides) : data.slides
+        }
       });
     },
 

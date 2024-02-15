@@ -2,25 +2,28 @@ import multer from "multer";
 import fs, { exists } from "fs"
 
 //set Storage Engine
-const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        const dir = `./images`;
-        fs.exists(dir, (exists) => {
-            if (!exists) {
-                return fs.mkdir(dir, (error) => callback(error, dir));
-            }
-            return callback(null, dir)
 
-        })
-    },
-    filename: function (req, file, callback) {
-        let newFileName = Date.now() + '_' + file.originalname;
-        callback(null, newFileName)
+/** ---------------------------------------------------------------------------
+ *  @multer
+ * --------------------------------------------------------------------------- */
+var storage = multer.diskStorage(
+    {
+        destination: './uploads/',
+        filename: function ( req, file, cb ) {
+            console.log(file)
+            //req.body is empty...
+            //How could I get the new_file_name property sent from client here?
+            cb( null, file.originalname );
+        }
     }
-});
+);
 
-const upload = multer({
-    storage: storage
-}).single("file")
+var upload = multer( { storage: storage } );
 
-export default upload;
+
+
+// const upload = multer({
+//     storage: storage
+// }).single("file")
+
+export default upload.single('file');
