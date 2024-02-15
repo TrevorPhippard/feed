@@ -1,0 +1,123 @@
+### Booking ------------------------------------------------------
+
+# app.use('/api',bookingRoutes);
+
+###
+
+GET http://localhost:3000/api/room  HTTP/1.1
+
+
+###
+
+POST http://localhost:3000/api/room HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"2",
+    "username": "test t estt tes", 
+    "role": "ttteesssttting ttteesssttting"
+}
+
+###
+
+DELETE http://localhost:3000/api/room:23 HTTP/1.1
+Content-Type: application/json
+
+### Deployment ------------------------------------------------------
+###
+
+GET http://localhost:3000/api/messages  HTTP/1.1
+
+
+###
+
+GET http://localhost:3000/api/messages:myRandomChatRoomId  HTTP/1.1
+
+###
+
+POST http://localhost:3000/api/messages HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"1",
+    "parter_deployed_to": "23", 
+    "body": "23", 
+    "user_id": "23", 
+    "status": "23", 
+}
+
+###
+
+DELETE http://localhost:3000/api/messages:23 HTTP/1.1
+Content-Type: application/json
+
+
+### User ------------------------------------------------------
+###
+
+GET http://localhost:3000/api/users  HTTP/1.1
+
+###
+
+POST http://localhost:3000/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"1",
+    "username": "23", 
+    "role": "ttteesssttting ttteesssttting"
+}
+
+###
+
+DELETE http://localhost:3000/api/users:23 HTTP/1.1
+Content-Type: application/json
+
+
+
+### uploader ------------------------------------------------------
+###
+
+GET http://localhost:3000/api/upload:1 HTTP/1.1
+
+
+###
+
+POST http://localhost:3000/api/upload:tester HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"1",
+    "username": "23", 
+    "role": "ttteesssttting ttteesssttting"
+}
+
+### Editor ------------------------------------------------------
+
+###
+
+GET http://localhost:3000/api/editor  HTTP/1.1
+
+###
+
+PUT http://localhost:3000/api/editor:2  HTTP/1.1
+Content-Type: application/json
+
+{
+"gameName": "The Name of the Game",
+"slides":"[{\"name\":\"slide 1\",\"type\":\"checkbox\",\"question\":\"testset1\",\"options\":[{\"choice\":\"erstesrt\",\"correct\":true},{\"choice\":\"zxadfasdf\",\"correct\":false}],\"bgImg\":\"http://localhost:3000/images/img-0906.jpg\"},{\"name\":\"slide 2\",\"type\":\"\",\"question\":\"testset2\",\"options\":[{\"choice\":\"gesgteste\",\"correct\":false},{\"choice\":\"estesrt\",\"correct\":true}],\"bgImg\":\"http://localhost:3000/images/img-0906.jpg\"}]",
+"user_id": "editor"
+}
+
+###
+
+POST http://localhost:3000/api/editor HTTP/1.1
+Content-Type: application/json
+
+{
+"gameName": "The Name of the Game",
+"slides":"[{\"name\":\"slide 1\",\"type\":\"checkbox\",\"question\":\"testset1\",\"options\":[{\"choice\":\"erstesrt\",\"correct\":true},{\"choice\":\"zxadfasdf\",\"correct\":false}],\"bgImg\":\"http://localhost:3000/images/img-0906.jpg\"},{\"name\":\"slide 2\",\"type\":\"\",\"question\":\"testset2\",\"options\":[{\"choice\":\"gesgteste\",\"correct\":false},{\"choice\":\"estesrt\",\"correct\":true}],\"bgImg\":\"http://localhost:3000/images/img-0906.jpg\"}]",
+"user_id": "editor"
+}
+
+
