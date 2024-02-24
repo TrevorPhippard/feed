@@ -42,9 +42,9 @@ function deleteGame(index:number) {
         <li v-for="(info, key) in gameList" :key="key">
             <p>{{ info.gameName }}</p>
             <span>
-                <button @click="edit(info.id)">edit</button>
+                <button @click="edit(info.id)">Edit</button>
                 <button @click="launchGame(info.id)">Launch</button>
-                <button @click="deleteGame(info.id)">delete</button>
+                <button @click="deleteGame(info.id)">Delete</button>
             </span>
         </li>
     </ul>
