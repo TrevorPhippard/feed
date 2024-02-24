@@ -81,8 +81,13 @@ export const updateMessageById = async (req, res) => {
 
 // deleting a user by ID
 export const removeMsgByRoom = async (req, res) => {
+
     try {
-        const roomId = req.params.room;
+        const room = req.params.roomId.split(':')[1]
+
+        const roomId = Number(room);
+        console.log('roomId:',roomId)
+
         const message = await Message.findByPk(roomId);
         if (!message) {
             res.status(404).send('message not found');
