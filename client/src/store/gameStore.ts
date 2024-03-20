@@ -18,13 +18,13 @@ export const useGameStore = defineStore('game', {
     socketEndpoint: import.meta.env.VITE_SOCKET_ENDPOINT,
     roomId: 'myRandomChatRoomId',
     gameData: {
-      gameName: 'quizathon'
+      gameName: 'let us go',
     },
   }),
 
   actions: {
     launchGame(){
-      GameService.fetchAndLaunchGame('?')
+      GameService.fetchAndLaunchGame(1);
     }
   },
   getters: {

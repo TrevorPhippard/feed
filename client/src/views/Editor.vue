@@ -9,6 +9,9 @@ import { storeToRefs } from 'pinia';
 import { useEditorStore } from '../store/editorStore.ts';
 import NavBar from '../components/NavBar.vue';
 import ClickInput from '../components/ClickInput.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 var store = useEditorStore();
 const {
@@ -19,6 +22,12 @@ const {
 
 function updateGameName(value:string) {
     store.updateGameName(value);
+}
+
+function saveGameToDatabase(){
+    store.saveGameToDatabase();
+    router.push({ path: '/profile' })
+
 }
 
 </script>
@@ -34,13 +43,13 @@ function updateGameName(value:string) {
                 :text="gameName" 
                 @input-submit="updateGameName"
                 />
-                <h4>background image</h4>
-                <ImageUploader />
             </div>
             <div class="card">
                 <Sortable :itemsContent="slides"></Sortable>
             </div>
             <div class="card">
+                <ImageUploader />
+                <br/>
                 <CreateField class="col-right" :slideData="currentSlide"></CreateField>
             </div>
         </div>
@@ -49,7 +58,7 @@ function updateGameName(value:string) {
                 <h4>Save Trivia </h4>
                 <i>save changes and return to home to launch game</i>
                 <hr/>
-                <button @click="store.saveGameToDatabase">Save</button>
+                <button @click="saveGameToDatabase">Save</button>
             </div>
         </div>
         <div class="preview">
@@ -64,16 +73,17 @@ function updateGameName(value:string) {
     width: 95%;
 }
 
+
 .dashboard {
   display: grid; 
-  height: 80vh;
-  grid-template-columns: 1fr 1fr 1.2fr; 
+  height: 88vh;
+  grid-template-columns: .35fr .65fr; 
   grid-template-rows: 1fr 1.6fr 0.4fr; 
   gap: 0px 0px; 
   grid-template-areas: 
-    "control preview preview"
-    "control preview preview"
-    "save preview preview"; 
+    "control  preview "
+    "control  preview "
+    "save  preview "; 
 }
 .control { 
     grid-area: control;

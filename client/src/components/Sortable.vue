@@ -44,7 +44,7 @@ function changeOrder(event: any) {
     <draggable :list="itemsContent" :animation="100" ghost-class="invisable-card" group="list" class="sortable-list "
         tag="ul" @change="changeOrder">
         <template #item="{ element, index }">
-            <li @mouseup="showSlide(index)">
+            <li :class="{ active: index == slide }" @mouseup="showSlide(index)">
               {{ element.name }}
                 <ClickInput
                 label="Name:" 
@@ -65,15 +65,19 @@ function changeOrder(event: any) {
 }
 
 .sortable-list li {
-    background-color: rgba(40, 40, 40, 1);
+    background-color: var(--accent-bg);
     min-width: 100px;
     padding: 4px 10px;
     border-radius: 3px;
     border: 1px solid #555;
+    cursor:grab
 }
 
 .sortable-list *+* {
     margin-top: 10px;
+}
+.sortable-list li.active{
+    color: var(--accent1-hover);
 }
 
 .invisable-card {

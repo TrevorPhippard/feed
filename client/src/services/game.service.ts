@@ -1,19 +1,14 @@
 import axios from 'axios';
+const endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/game';
+const headers = { "content-type":"application/json"}
 
-class GameService {
-  endpoint: string;
-
-  constructor() {
-    this.endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/game';
-  }
-
-  fetchAndLaunchGame(roomId: string) {
-    return axios.get(this.endpoint + `:${roomId}`)
+const GameService = {
+  fetchAndLaunchGame:(roomId: string)=> {
+    return axios.get(endpoint + `:${roomId}`)
       .then(response => {
         return response.data;
       });
   }
-
 }
 
-export default new GameService();
+export default GameService;

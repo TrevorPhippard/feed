@@ -28,9 +28,6 @@ onMounted(function () {
     <div id="content-wrap">
       <router-view />
     </div>
-    <footer id="footer">
-      <p>current path: {{ location.path }}</p>
-    </footer>
   </div>
 </template>
 

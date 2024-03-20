@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Auth from '../views/Auth.vue'
-import Register from '../views/Register.vue'
+import Auth from '../views/SignIn.vue'
+import Register from '../views/SignUp.vue'
 import Profile from '../views/Profile.vue'
 import Editor from '../views/Editor.vue'
+import Game from '../views/Game.vue'
 
 
 const routes = [
+    {
+        path: '/game',
+        name: '/game',
+        component: Game
+    },
     {
         path: '/profile',
         name: '/profile',
@@ -15,12 +21,12 @@ const routes = [
         name: '/editor',
         component: Editor
     }, {
-        path: '/register',
-        name: '/register',
+        path: '/signup',
+        name: '/signup',
         component: Register
     }, {
         path: '/',
-        name: '/auth',
+        name: '/signin',
         component: Auth
     }
 ]

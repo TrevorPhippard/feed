@@ -27,12 +27,10 @@ function submitToken() {
   });
 };
 
-
 </script>
 
 <template>
-  <div class="container">
-    <div class="card-black">
+    <div class="card-bg">
       <form @submit.prevent="">
         <input type="text" placeholder="username" v-model="username" required>
         <input type="email" placeholder="email" v-model="email" required>
@@ -43,28 +41,9 @@ function submitToken() {
       </form>
       <p class="error">{{ error }}</p>
     </div>
-  </div>
 </template>
 
 <style scoped>
-body {
-  margin: 0;
-  padding: 0;
-  background: #f5f5f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 90vh;
-  width: 100vw;
-}
-
 
 .buttons {
   display: flex;
@@ -72,23 +51,24 @@ body {
   gap: 10px;
 }
 
-.login-button {
-  padding: 10px 20px;
-  background-color: #2f19be;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+button {
+    display: block;
+    font-size: clamp(14px, 1.5vw, 18px);
+    border: 1px solid #f1f1f1;
+    border-radius: 5px;
+    background: transparent;
+    color: #fff;
+    margin: 10px auto 0;
+    padding: 12px 20px;
+    cursor: pointer;
 }
 
-.register-button {
-  padding: 10px 20px;
-  background-color: #fff;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
+
+button:hover {
+  background-color: var(--accent1-hover);
 }
+
+
 
 .error {
   color: var(--error);

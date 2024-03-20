@@ -4,18 +4,23 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #2d2d2d;
+  color: #38362e;
+  background-color: #d4d9e1;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --accent1: #2f19be;
+  --accent1: #e4ecef;
   --accent1-hover: #535bf2;
   --error: #f50;
-  --button-hover: #1B1B1B;
+  --button-bg: #9395ad;
+  --button-hover: #e5e7ff;
+  --button-text-hover: #4a4c76;
+  --accent-bg: #e9ebee;
+  --input-bg: #bbb7c0;
+  --input-text: #38362e;
 }
 
 
@@ -65,12 +70,13 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--button-bg);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--button-text-hover);
+  color:var(--button-text-hover);
   background-color: var( --button-hover);
 }
 button:focus,
@@ -78,9 +84,7 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-.card-black {
-  padding: 2em;
-}
+
 
 
 @media (prefers-color-scheme: light) {
@@ -96,7 +100,6 @@ button:focus-visible {
   }
 }
 
-
 .card-black {
   width: 300px;
   background-color: #2a2a2a;
@@ -106,6 +109,13 @@ button:focus-visible {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.card-bg{
+  margin-top: 50px;
+  padding: 10px;
+  width: 300px;
+  background-color: rgba(0,0,0,0.4);
+  border-radius: 4px;
+}
 form {
   display: flex;
   flex-direction: column;
@@ -115,8 +125,13 @@ form {
 input {
   padding: 10px;
   border: none;
-  background-color: transparent;
   border-bottom: 1px solid #ccc;
+}
+input,
+select,
+textarea{
+  color: var(--input-text);
+  background-color: var(--input-bg);
 }
 
 @media (max-width: 480px) {
@@ -150,7 +165,7 @@ a {
 /* Header */
 header {
   padding: 10px 0px;
-  background-color: #242424;
+  background-color: var(--button-text-hover);
 }
 
 
@@ -182,6 +197,10 @@ header {
   width: 350px;
   padding: 10px;
   font-family: 'roboto', sans-serif;
+}
+.card h4,
+.card p{
+  margin:0
 }
 
 .x-button {

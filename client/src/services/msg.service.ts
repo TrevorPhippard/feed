@@ -1,25 +1,22 @@
 import axios from 'axios';
+var endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/messages';
+const headers = { "content-type":"application/json"}
 
-class msgService {
-  endpoint: string;
+const msgService = {
 
-  constructor() {
-    this.endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/messages';
-  }
-
-  fetchMessages(roomId: string) {
-    return axios.get(this.endpoint + `:${roomId}`)
+  fetchMessages :(roomId: string) =>{
+    return axios.get(endpoint + `:${roomId}`)
       .then(response => {
         return response.data;
       });
-  }
+  },
 
-  postMessages() {
-    return axios.post(this.endpoint)
+  postMessages :()=> {
+    return axios.post(endpoint)
       .then(response => {
         return response.data;
       });
   }
 }
 
-export default new msgService();
+export default msgService;

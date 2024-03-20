@@ -4,54 +4,120 @@ import { useEditorStore } from '../store/editorStore.ts';
 
 const store = useEditorStore();
 
-const file = ref();
-const message = ref(' ');
+const isDragging = ref(false);
+const file = ref(false);
 
-function onSelect() {
-  const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
-  const fileMeta = file.value.files[0];
+function remove(){
+  file.value = false;
+  console.log('removed', file.value)
+}
 
-  if (!allowedTypes.includes(fileMeta.type)) {
-    message.value = "Filetype is wrong!!"
-  }else if (fileMeta.size > 500000) {
-    message.value = 'Too large, max size allowed is 500kb'
+function dragover(e){
+  e.preventDefault();
+  isDragging.value = true;
+}
+
+function dragLeave(){
+  isDragging.value = false;
+}
+
+function drop(e){
+  e.preventDefault();
+  onChange(e)
+  isDragging.value = false;
+}
+
+
+function onChange(event) {
+  if(event.type == "drop"){
+    file.value = event.dataTransfer.files[0]
   }else{
-    message.value = ''
+    file.value = event.target.files[0];
   }
 }
 
 async function onSubmit() {
-  
   const formData = new FormData();
   formData.append("file", file.value.files[0]);
-  formData.append("id", 7878);
-
+  formData.append("id", 'test1');
+  formData.append("test","good")
   store.upload(formData)
-  message.value = 'Uploaded!!'
 }
 
 </script>
 <template>
-  <div class="file">
+    <h4>background image</h4>
     <form @submit.prevent="onSubmit" enctype="multipart/form-data">
-      <div class="fields">
-        <label>Upload File</label><br />
-        <input type="file" ref="file" @change="onSelect" />
-      </div>
-      <div class="fields">
-        <button :disabled=" message !== ''" >Submit</button>
-      </div>
-      <div class="message">
-        <h5>{{ message }}</h5>
+      <div class="dropzone-container" @dragover="dragover" @dragleave="dragLeave" @drop="drop">
+          <input 
+          name="file"
+          id="fileInput"
+          type="file" 
+          ref="file"
+          accept=".png,.jpeg,.gif"
+          @change="onChange" 
+          placeholder="Select Files" />
+        <label for="fileInput" class="file-label" v-if="!file.value">
+          <div v-if="isDragging">Release to drop file here.</div>
+          <div v-else>
+            <h2>Drop File</h2>
+            <p>or</p>
+            <a class="button">browse files</a>
+          </div>
+        </label>
+        <div class="prelaod" v-if="file.value">
+          <p :title="file.name"> {{ file.files[0].name }}</p>
+          <input type="submit" value="Submit">
+        </div>
       </div>
     </form>
-  </div>
 </template>
 
 <style scoped>
-#icon-info {
-  background-image: url("https://random-d.uk/api/randomimg?t=1704509234856");
-  background-position: 0 -87px;
-  margin-right: 10px;
+
+.dropzone-container{
+	display: flex;
+	/* justify-content: center; */
 }
+
+.file-label{
+  padding: 12px;
+  border: 2px dashed #bbb7c0;
+  background-color: #c6ccd5;
+}
+.file-label *{
+  margin: 0;
+  padding: 6px 12px;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+input {
+  display: none;
+}
+
+.button{
+  display: inline-block;
+  padding: 0px;
+  margin: 0px;
+  color: var(--input-text);
+  text-decoration: underline;
+}
+
+.prelaod input[type="submit"]{
+  position: relative;
+	cursor: pointer;
+  display: block;
+}
+
+.prelaod{
+  display: flex;
+  gap:10px
+}
+/* Plugin Style End */
+
 </style>

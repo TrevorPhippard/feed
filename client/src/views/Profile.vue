@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 
-// import ImageUploader from '../components/ImageUploader.vue';
 import Info from '../components/Info.vue';
 import Socket from '../components/Socket.vue';
 import NavBar from '../components/NavBar.vue';
@@ -66,7 +65,7 @@ onMounted(function () {
   padding: 20px;
   margin-bottom: 28px;
   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
-  background-color: #353535;
+  background-color: var(--accent1);
   border-radius: 4px;
   overflow: hidden;
 }
