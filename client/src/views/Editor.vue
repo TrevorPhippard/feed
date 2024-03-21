@@ -27,7 +27,6 @@ function updateGameName(value:string) {
 function saveGameToDatabase(){
     store.saveGameToDatabase();
     router.push({ path: '/profile' })
-
 }
 
 </script>
@@ -35,8 +34,16 @@ function saveGameToDatabase(){
 <template>
     <NavBar/>
     <div class="dashboard">
-        <div class="control">
-            <div class="card">
+        <div class="card preview">
+            <Preview :data="currentSlide"></Preview>
+        </div>
+        <div class="card control ">
+                <ImageUploader />
+                <br/>
+                <CreateField class="col-right" :slideData="currentSlide"></CreateField>
+        </div>
+        <div class="info ">
+            <div class="card ">
                 <ClickInput
                 label="Name:" 
                 placeholder="trivia name" 
@@ -44,25 +51,15 @@ function saveGameToDatabase(){
                 @input-submit="updateGameName"
                 />
             </div>
-            <div class="card">
+            <div class="card ">
                 <Sortable :itemsContent="slides"></Sortable>
             </div>
-            <div class="card">
-                <ImageUploader />
-                <br/>
-                <CreateField class="col-right" :slideData="currentSlide"></CreateField>
-            </div>
         </div>
-        <div class="save">
-            <div class="card">
+        <div class="save card">
                 <h4>Save Trivia </h4>
                 <i>save changes and return to home to launch game</i>
                 <hr/>
                 <button @click="saveGameToDatabase">Save</button>
-            </div>
-        </div>
-        <div class="preview">
-            <Preview :data="currentSlide"></Preview>
         </div>
     </div>
 </template>
@@ -70,33 +67,33 @@ function saveGameToDatabase(){
 <style scoped>
 .card {
     margin: 10px;
-    width: 95%;
+    width: 95%; 
+     overflow-y: scroll;
 }
-
 
 .dashboard {
   display: grid; 
-  height: 88vh;
-  grid-template-columns: .35fr .65fr; 
+  grid-template-columns: 1.5fr 2fr 2fr; 
   grid-template-rows: 1fr 1.6fr 0.4fr; 
   gap: 0px 0px; 
   grid-template-areas: 
-    "control  preview "
-    "control  preview "
-    "save  preview "; 
+    "preview control control"
+    "info  control control "
+    "save  save save ";   
+
 }
 .control { 
     grid-area: control;
-    height: 100%;
-    overflow-y: scroll;
 }
 .save {    
     grid-area: save;
-    height: 100%;
+ }
+ .info {    
+    grid-area: info;
  }
 .preview { 
     grid-area: preview;
-    padding:0 20px
+    height: 100%;
 }
 
 

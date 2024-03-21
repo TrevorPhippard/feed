@@ -1,9 +1,20 @@
 import express from "express";
-import { uploadFile } from "../controllers/fileController";
+import { uploadFile, addResource, getAllResources, getResourceById, updateResourceById, removeResource } from "../controllers/fileController";
 
 const router = express.Router();
 
-router.route("/upload:id")
-    .post(uploadFile);
+
+
+router.route("/upload")
+    .post(uploadFile);//uploadFile
+
+router.route("/resource")
+    .get(getAllResources)
+    .post(addResource)
+    
+router.route("/resource:id")
+    .get(getResourceById)
+    .put(updateResourceById)
+    .delete(removeResource);
 
 export default router;

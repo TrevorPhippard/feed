@@ -108,11 +108,14 @@ export const useEditorStore = defineStore('editor', {
       /**
        * @todo how?
        */
-      this.slides[this.showSlide].bgImg = url;
+      var tempUrl = import.meta.env.VITE_API_ENDPOINT + "/api/uploads/"
+      console.log(this.slides[this.showSlide])
+      console.log(tempUrl+ url)
+      this.slides[this.showSlide].bgImg =tempUrl+ url;
     },
     upload(formData: any) {
       UploadService.upload(formData,  (responseData: any) =>{
-        this.updateSlideBg( responseData.url)
+        this.updateSlideBg( responseData)
       });
     },
 

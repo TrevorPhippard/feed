@@ -33,11 +33,13 @@ function onOptionClick(e: any) {
 .imagecontainer {
     position: relative;
     border: 1px solid;
+    display: block;
     background-size: cover;
     background-repeat: no-repeat;
     background-position-x: center;
     background-position-y: bottom;
-    min-height: 100%;
+    height: 100%;
+    width: 100%;
     padding: 20px;
 }
 

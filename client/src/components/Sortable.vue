@@ -41,8 +41,10 @@ function changeOrder(event: any) {
 </script>
 <template>
     <h4>Order Slides</h4>
+    <div class="sideScroll">
     <draggable :list="itemsContent" :animation="100" ghost-class="invisable-card" group="list" class="sortable-list "
         tag="ul" @change="changeOrder">
+        
         <template #item="{ element, index }">
             <li :class="{ active: index == slide }" @mouseup="showSlide(index)">
               {{ element.name }}
@@ -54,11 +56,16 @@ function changeOrder(event: any) {
                 />
             </li>
         </template>
-    </draggable>
+    </draggable></div>
     <button @click="add">create slide</button>
     <button @click="remove">remove selected</button>
 </template>
 <style>
+.sideScroll{
+    max-height: 250px;
+    overflow-y: scroll;
+}
+
 .sortable-list {
     list-style: none;
     padding-left: 0px;

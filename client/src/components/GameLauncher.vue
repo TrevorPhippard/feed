@@ -31,11 +31,8 @@ edit button:
 select from game list
 move to edit page to edit, 
 
-
 Launch Button:
 create chat room and put you in it.
-
-
 
 */
 
@@ -49,7 +46,7 @@ function addGame() {
 }
 
 function launchGame(index:number) {
-    // router.push({ path: '/game' })
+    router.push({ path: `/game:${index}` })
 }
 
 function edit(index:number) {

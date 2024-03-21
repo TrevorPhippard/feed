@@ -24,7 +24,9 @@ export const useGameStore = defineStore('game', {
 
   actions: {
     launchGame(){
-      GameService.fetchAndLaunchGame(1);
+      console.log('new room created')
+
+
     }
   },
   getters: {

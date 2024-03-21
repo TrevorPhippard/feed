@@ -1,6 +1,7 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import cors from 'cors';
+import fileUpload from 'express-fileupload';
+
 import sequelize from './models/sequelize';
 
 import userRoutes from './routes/userRoutes';
@@ -10,6 +11,7 @@ import roomRoutes from './routes/roomRoutes';
 import triviaRoutes from './routes/triviaRoutes';
 
 import socketRoutes from './routes/socketIO';
+import bodyParser from 'body-parser';
 
 const jwt = require('jsonwebtoken');
 const dotEnv = require("dotenv")
@@ -22,6 +24,7 @@ const port = 3000;
 
 app.use(cors())
 app.use('/api/images', express.static('images'));
+app.use('/api/uploads', express.static('uploads'));
 
 // jwt secret
 const JWT_SECRET = process.env.JWT_SECRET ;
@@ -32,15 +35,12 @@ let userList: any[] = [];
  * --------------------------------------------------------------------------- */
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
   extended: true
-})); 
+  }));
 
-app.use(bodyParser.json({limit:'150mb',}));
-app.use(bodyParser.urlencoded({
-  limit:'150mb',
-  extended:true,
-  parameterLimit: 1000000,
+app.use(fileUpload({
+  limits: { fileSize: 50 * 1024 * 1024 },
 }));
 
 
@@ -57,12 +57,12 @@ app.use('/api',msgRoutes);
 app.use('/api',roomRoutes);
 app.use('/api',triviaRoutes);
 
-app.use(function (req, res) {
-  console.log(req.originalUrl)
-  res.status(404).send({
-    url: req.originalUrl + ' not found'
-  });
-});
+// app.use(function (req, res) {
+//   console.log(req.originalUrl)
+//   res.status(404).send({
+//     url: req.originalUrl + ' not found'
+//   });
+// });
 /** ---------------------------------------------------------------------------
  *  @Sockets
  * --------------------------------------------------------------------------- */

@@ -2,7 +2,6 @@
 import { onMounted } from 'vue'
 
 import Info from '../components/Info.vue';
-import Socket from '../components/Socket.vue';
 import NavBar from '../components/NavBar.vue';
 import GameLauncher from "../components/GameLauncher.vue";
 import { useEditorStore } from '../store/editorStore.ts';
@@ -28,10 +27,7 @@ onMounted(function () {
             <h3><span class="icons" id="icon-contacts">&#9814;</span>Game List</h3>
             <GameLauncher />
           </div>
-          <div class="card-box">
-            <h3><span class="icons" id="icon-contacts">&#9990;</span>Chat</h3>
-            <Socket />
-          </div>
+      
     </div>
   </main>
 </template>
