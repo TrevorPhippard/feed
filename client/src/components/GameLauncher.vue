@@ -4,7 +4,10 @@ import draggable from 'vuedraggable';
 import { ref } from 'vue';
 import { useEditorStore } from '../store/editorStore.ts';
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
 
+
+const router = useRouter();
 var store = useEditorStore();
 
 const {
@@ -16,20 +19,38 @@ defineProps({
 })
 
 
+/**
+ * @Todo
+
+plus button: 
+create new blank trivia entry, but with name
+select  trivia
+move to edit page to edit, 
+
+edit button: 
+select from game list
+move to edit page to edit, 
+
+Launch Button:
+create chat room and put you in it.
+
+*/
+
 const games = ref([
 gameList
 ]);
 
-function selectGame(index:number) {
-    console.log(store,index )
+function addGame() {
+    console.log(gameList.value.length )
+    // router.push({ path: '/editor' })
 }
 
 function launchGame(index:number) {
-    console.log('launch:',index)
+    router.push({ path: `/game:${index}` })
 }
 
 function edit(index:number) {
-    console.log('edit:',index)
+    router.push({ path: '/editor' })
 }
 
 function deleteGame(index:number) {
@@ -42,12 +63,14 @@ function deleteGame(index:number) {
         <li v-for="(info, key) in gameList" :key="key">
             <p>{{ info.gameName }}</p>
             <span>
-                <button @click="edit(info.id)">edit</button>
+                <button @click="edit(info.id)">Edit</button>
                 <button @click="launchGame(info.id)">Launch</button>
-                <button @click="deleteGame(info.id)">delete</button>
+                <button @click="deleteGame(info.id)">Delete</button>
             </span>
         </li>
     </ul>
+    <button @click="addGame">+</button>
+
 </template>
 <style>
 .game-list {
@@ -56,7 +79,7 @@ function deleteGame(index:number) {
 }
 
 .game-list li {
-    background-color: rgba(40, 40, 40, 1);
+    background-color: var(--accent-bg);
     min-width: 100px;
     padding: 8px 10px;
     border-radius: 3px;

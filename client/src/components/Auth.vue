@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { useAuthStore } from '../store/authStore.ts';
 import { useRouter } from 'vue-router';
 
+
 const store = useAuthStore();
 const router = useRouter();
 
@@ -26,15 +27,14 @@ function submitToken() {
 };
 
 function goToRegstrationPage() {
-  router.push({ path: '/register' })
+  router.push({ path: '/signup' })
 }
 
 
 </script>
 
 <template>
-  <div class="container">
-    <div class="card-black">
+    <div class="card-bg">
       <form @submit.prevent="">
         <input type="email" placeholder="E-Mail" v-model="email" required>
         <input type="password" placeholder="password" v-model="password" required>
@@ -45,27 +45,9 @@ function goToRegstrationPage() {
       </form>
       <p class="error">{{ error }}</p>
     </div>
-  </div>
 </template>
 
 <style scoped>
-body {
-  margin: 0;
-  padding: 0;
-  background: #f5f5f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 90vh;
-  width: 100vw;
-}
 
 .buttons {
   display: flex;
@@ -73,28 +55,24 @@ body {
   gap: 10px;
 }
 
-.login-button {
-  padding: 10px 20px;
-  background-color: var(--accent1);
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+button {
+    display: block;
+    font-size: clamp(14px, 1.5vw, 18px);
+    border: 1px solid #f1f1f1;
+    border-radius: 5px;
+    background: transparent;
+    color: #fff;
+    margin: 10px auto 0;
+    padding: 12px 20px;
+    cursor: pointer;
 }
 
-.login-button:hover {
+
+button:hover {
   background-color: var(--accent1-hover);
 }
 
 
-.register-button {
-  padding: 10px 20px;
-  background-color: #fff;
-  color: #333;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
 .error {
   color: var(--error);

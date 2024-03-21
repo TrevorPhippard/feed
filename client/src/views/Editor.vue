@@ -9,6 +9,9 @@ import { storeToRefs } from 'pinia';
 import { useEditorStore } from '../store/editorStore.ts';
 import NavBar from '../components/NavBar.vue';
 import ClickInput from '../components/ClickInput.vue';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 var store = useEditorStore();
 const {
@@ -21,39 +24,42 @@ function updateGameName(value:string) {
     store.updateGameName(value);
 }
 
+function saveGameToDatabase(){
+    store.saveGameToDatabase();
+    router.push({ path: '/profile' })
+}
+
 </script>
 
 <template>
     <NavBar/>
     <div class="dashboard">
-        <div class="control">
-            <div class="card">
+        <div class="card preview">
+            <Preview :data="currentSlide"></Preview>
+        </div>
+        <div class="card control ">
+                <ImageUploader />
+                <br/>
+                <CreateField class="col-right" :slideData="currentSlide"></CreateField>
+        </div>
+        <div class="info ">
+            <div class="card ">
                 <ClickInput
                 label="Name:" 
                 placeholder="trivia name" 
                 :text="gameName" 
                 @input-submit="updateGameName"
                 />
-                <h4>background image</h4>
-                <ImageUploader />
             </div>
-            <div class="card">
+            <div class="card ">
                 <Sortable :itemsContent="slides"></Sortable>
             </div>
-            <div class="card">
-                <CreateField class="col-right" :slideData="currentSlide"></CreateField>
-            </div>
         </div>
-        <div class="save">
-            <div class="card">
+        <div class="save card">
                 <h4>Save Trivia </h4>
                 <i>save changes and return to home to launch game</i>
                 <hr/>
-                <button @click="store.saveGameToDatabase">Save</button>
-            </div>
-        </div>
-        <div class="preview">
-            <Preview :data="currentSlide"></Preview>
+                <button @click="saveGameToDatabase">Save</button>
         </div>
     </div>
 </template>
@@ -61,32 +67,33 @@ function updateGameName(value:string) {
 <style scoped>
 .card {
     margin: 10px;
-    width: 95%;
+    width: 95%; 
+     overflow-y: scroll;
 }
 
 .dashboard {
   display: grid; 
-  height: 80vh;
-  grid-template-columns: 1fr 1fr 1.2fr; 
+  grid-template-columns: 1.5fr 2fr 2fr; 
   grid-template-rows: 1fr 1.6fr 0.4fr; 
   gap: 0px 0px; 
   grid-template-areas: 
-    "control preview preview"
-    "control preview preview"
-    "save preview preview"; 
+    "preview control control"
+    "info  control control "
+    "save  save save ";   
+
 }
 .control { 
     grid-area: control;
-    height: 100%;
-    overflow-y: scroll;
 }
 .save {    
     grid-area: save;
-    height: 100%;
+ }
+ .info {    
+    grid-area: info;
  }
 .preview { 
     grid-area: preview;
-    padding:0 20px
+    height: 100%;
 }
 
 

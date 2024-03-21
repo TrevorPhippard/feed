@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 
-// import ImageUploader from '../components/ImageUploader.vue';
 import Info from '../components/Info.vue';
-import Socket from '../components/Socket.vue';
 import NavBar from '../components/NavBar.vue';
 import GameLauncher from "../components/GameLauncher.vue";
 import { useEditorStore } from '../store/editorStore.ts';
@@ -29,10 +27,7 @@ onMounted(function () {
             <h3><span class="icons" id="icon-contacts">&#9814;</span>Game List</h3>
             <GameLauncher />
           </div>
-          <div class="card-box">
-            <h3><span class="icons" id="icon-contacts">&#9990;</span>Chat</h3>
-            <Socket />
-          </div>
+      
     </div>
   </main>
 </template>
@@ -66,7 +61,7 @@ onMounted(function () {
   padding: 20px;
   margin-bottom: 28px;
   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
-  background-color: #353535;
+  background-color: var(--accent1);
   border-radius: 4px;
   overflow: hidden;
 }

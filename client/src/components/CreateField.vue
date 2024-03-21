@@ -23,13 +23,13 @@ function updateQuestion() {
         <label for="question">Question: </label>
         <i>{{ props.slideData.question }}</i>
         <textarea v-model="questionText" name="question" rows="4" placeholder="write question here" @input="updateQuestion" />
-        <p>Question Type</p>
-        <select v-model="selected">
+        <!-- <p>Question Type</p> -->
+        <!-- <select v-model="selected"> -->
             <!-- <option value="">Please select one</option> -->
             <!-- <option>Boolean</option> -->
-            <option>Checkbox</option>
+            <!-- <option>Checkbox</option> -->
             <!-- <option>Radio</option> -->
-        </select>
+        <!-- </select> -->
         <!-- <BooleanChoice v-if="selected == 'Boolean'" /> -->
         <!-- <RadioChoice v-if="selected == 'Radio'" /> -->
         <CheckboxChoice :data="slideData" />
@@ -47,6 +47,7 @@ textarea {
     width: 100%;
     padding: 10px;
     margin-top:10px;
+    background-color: var(--input-bg);
 }
 
 .title,

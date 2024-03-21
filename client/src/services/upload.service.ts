@@ -1,25 +1,44 @@
-import axios from 'axios';
+const baseEndPoint =  import.meta.env.VITE_API_ENDPOINT  + '/api'
+const fileEndpoint = baseEndPoint + '/upload';
+const uploadDataEndpoint = baseEndPoint + '/resource';
+const headers = { "content-type":"application/json"}
 
-class UploadFilesService {
-  async upload(formData: any) {
-    const endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/upload:id';
-      try {
-        axios.post(endpoint, formData)
-        .then(function (result) {
-          console.log(result);
-        }, function (error) {
-          console.log(error);
-        });
-      } catch (error) {
-        console.error(error);
-      }
+const UploadFilesService = {
+  upload:(formData: any, cb: any)=> {
 
+    return fetch(fileEndpoint,{ method:"POST", body: formData })
+      .then(async response=> await response.text())
+      .then(filename=>{
+        UploadFilesService.postUpload(filename, cb)
+      })
+      .catch(error=> console.error(error))
+  },
+  
+  postUpload: (filename: string, cb: any)=> {
+    console.log(filename)
+    return fetch(uploadDataEndpoint,{ 
+      method:"POST", 
+      headers,
+      body: JSON.stringify({
+        filename:filename
+      })
+    })
+    .then(async response=> await response.text())
+    .then(data=>cb(data))
+    .catch(error=> console.error(error))
+  },
 
-  }
-
-  async getFiles(filename: string) {
-    return axios.get(`/images/${filename}`);
+  getFiles: async (id: string, cb:any) => {
+    return fetch(uploadDataEndpoint+`/${id}`,{ 
+      method:"GET", 
+      headers,
+    })
+    .then(async response=> await response.text())
+    .then(data=>cb(data))
+    .catch(error=> console.error(error))
   }
 }
 
-export default new UploadFilesService();
+export default UploadFilesService;
+
+

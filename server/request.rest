@@ -48,7 +48,7 @@ Content-Type: application/json
 
 ###
 
-DELETE http://localhost:3000/api/messages:23 HTTP/1.1
+DELETE http://localhost:3000/api/messages:4 HTTP/1.1
 Content-Type: application/json
 
 
@@ -73,6 +73,29 @@ Content-Type: application/json
 DELETE http://localhost:3000/api/users:23 HTTP/1.1
 Content-Type: application/json
 
+
+
+### signin ------------------------------------------------------
+###
+POST http://localhost:3000/api/auth/signin HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"1",
+    "email": "test@test.com", 
+    "password": "test"
+}
+
+###
+
+POST http://localhost:3000/api/auth/signup HTTP/1.1
+Content-Type: application/json
+
+{
+    "id":"1",
+    "email": "test@test.com", 
+    "password": "test"
+}
 
 
 ### uploader ------------------------------------------------------
@@ -120,4 +143,41 @@ Content-Type: application/json
 "user_id": "editor"
 }
 
+###
+
+
+
+### Resource ------------------------------------------------------
+
+###
+
+GET http://localhost:3000/api/resource  HTTP/1.1
+
+###
+
+PUT http://localhost:3000/api/resource:1  HTTP/1.1
+Content-Type: application/json
+
+{
+    "filename": "file2"
+}
+
+###
+
+POST http://localhost:3000/api/resource HTTP/1.1
+Content-Type: application/json
+
+{
+    "filename": "file1"
+}
+
+
+###
+
+DELETE  http://localhost:3000/api/resource HTTP/1.1
+Content-Type: application/json
+
+{
+    "filename": "file1"
+}
 

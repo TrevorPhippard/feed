@@ -20,8 +20,7 @@ var placeholderAvatar = import.meta.env.VITE_API_ENDPOINT + '/api/images/b.jpg'
       <div id="logo">&#10070;</div>
       <div id="search-form">
         <form method="get" action="#">
-          <input type="text" placeholder="Search User Network">
-          <button type="submit"><i>&#128269;</i></button>
+          <input type="text" placeholder="Search User Network"><i>&#128269;</i>
         </form>
       </div>
       <ul>
@@ -58,7 +57,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  height: 45px;
 }
 
 ul {
@@ -89,17 +88,17 @@ ul li a {
   padding: 0 15px;
   font-size: 44px;
   line-height: 30px;
+  color: #f1cb25;
 }
 
 #search-form form {
   position: relative;
   width: 280px;
   font-size: 16px;
-  padding: 8px 15px;
-  padding-right: 37px;
-  background-color: #000;
+  background-color: rgb(50, 51, 80);
   border-radius: 20px;
-  margin-left: 15px;
+  height: 30px;
+  display: flex;
 }
 
 #search-form form input {
@@ -109,13 +108,12 @@ ul li a {
   background-color: transparent;
 }
 
-#search-form form button {
+#search-form form i {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 4px;
+  right: 12px;
   color: #f1f1f1;
   height: 22px;
-  line-height: 1;
   cursor: pointer;
 }
 

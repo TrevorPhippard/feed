@@ -124,7 +124,7 @@ function filterMessage(info: { message: any; }) {
   width:100%;
   flex-grow: 1;
   text-align: left;
-  background-color: #1a1a1a;
+  background-color: #ffffff;
   overflow: scroll;
   overflow-anchor: auto !important; 
 }

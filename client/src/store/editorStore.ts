@@ -14,7 +14,6 @@ declare global {
   }
 }
 
-
 export const useEditorStore = defineStore('editor', {
   state: () => ({
     gameId:false,
@@ -33,16 +32,14 @@ export const useEditorStore = defineStore('editor', {
   }),
 
   actions: {
-    upload(data: any) {
-      UploadService.upload(data);
-    },
+
     blankSlideInfo() {
       return {
         name: 'slide ' + (Number(this.slides.length) + 1),
         type: '',
         question: '',
         options: [],
-        bgImg: "http://localhost:3000/api/images/img-0906.jpg"
+        bgImg: import.meta.env.VITE_API_ENDPOINT + "/api/images/img-0906.jpg"
       }
     },
 
@@ -68,6 +65,8 @@ export const useEditorStore = defineStore('editor', {
 
     fetchGameFromDatabase(){
       EditorService.fetchTrivia().then(data=>{
+
+        console.log('fetchGame', data)
         if(data.length){
           this.gameAr = data
           .filter((x:any)=>x.Trivia_id !==  'test')
@@ -104,6 +103,20 @@ export const useEditorStore = defineStore('editor', {
     },
     updateSlideQuestion(text: string) {
       this.slides[this.showSlide].question = text;
+    },
+    updateSlideBg(url: string) {
+      /**
+       * @todo how?
+       */
+      var tempUrl = import.meta.env.VITE_API_ENDPOINT + "/api/uploads/"
+      console.log(this.slides[this.showSlide])
+      console.log(tempUrl+ url)
+      this.slides[this.showSlide].bgImg =tempUrl+ url;
+    },
+    upload(formData: any) {
+      UploadService.upload(formData,  (responseData: any) =>{
+        this.updateSlideBg( responseData)
+      });
     },
 
     /** edit checkbox actions */
