@@ -9,7 +9,6 @@ const {
   getusername: username,
 } = storeToRefs(store)
 
-
 </script>
 
 <template>
@@ -74,8 +73,6 @@ const {
   font-size: 36px;
   font-weight: bold;
 }
-
-
 
 #edit-profile {
   position: absolute;

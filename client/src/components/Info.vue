@@ -8,12 +8,10 @@ const {
 
 var placeholderAvatar = import.meta.env.VITE_API_ENDPOINT + '/api/images/b.jpg'
 
-
 </script>
 
 <template>
   <div class="card-header">
-
     <div>
       <img class="profile-pic" :src="placeholderAvatar">
     </div>
@@ -76,7 +74,6 @@ var placeholderAvatar = import.meta.env.VITE_API_ENDPOINT + '/api/images/b.jpg'
   top: 1px;
   color: #2196f3;
 }
-
 
 .lb-action {
   cursor: pointer;

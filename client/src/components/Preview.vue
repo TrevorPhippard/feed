@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-
 defineProps({ data: Object })
 
 function onOptionClick(e: any) {
@@ -68,7 +67,6 @@ li {
 li.answer-correct {
     background-color: #c2ffbd;
 }
-
 
 li:hover {
     background-color: #ccc;

@@ -1,6 +1,5 @@
 import Room from '../models/room.model';
 
-
 // add room output: { room, channel, room }
 export const addRoom = (id, userId, roomId, msgs) => {
 
@@ -30,11 +29,10 @@ export const getAllRooms = async (req, res) => {
     }
 };
 
-
 // Controller for getting a room by ID
 export const getRoomById = async (req, res) => {
     try {
-        const roomId =req.params.id;
+        const roomId = req.params.id;
         const room = await Room.findByPk(roomId);
         if (!room) {
             res.status(404).send('room not found');
@@ -47,7 +45,6 @@ export const getRoomById = async (req, res) => {
     }
 };
 
-
 // updating a room
 export const updateRoomById = async (req, res) => {
     try {
@@ -58,9 +55,9 @@ export const updateRoomById = async (req, res) => {
             res.status(404).send('room not found');
         } else {
             room.id = id,
-            room.user_id = user_id,
-            room.room_id = room_id,
-            room.msgs = room_body
+                room.user_id = user_id,
+                room.room_id = room_id,
+                room.msgs = room_body
             await room.save();
             res.json({ room: 'room updated successfully', room });
         }
@@ -69,7 +66,6 @@ export const updateRoomById = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-
 
 // deleting a room by ID
 export const removeroomByRoom = async (req, res) => {

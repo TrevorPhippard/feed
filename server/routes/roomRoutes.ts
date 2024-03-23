@@ -1,7 +1,6 @@
 import express from "express";
 import { addRoom, getAllRooms, getRoomById, updateRoomById, removeroomByRoom } from "../controllers/roomController";
 
-
 const router = express.Router();
 
 // request previous messages

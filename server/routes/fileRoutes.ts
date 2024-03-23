@@ -3,15 +3,13 @@ import { uploadFile, addResource, getAllResources, getResourceById, updateResour
 
 const router = express.Router();
 
-
-
 router.route("/upload")
     .post(uploadFile);//uploadFile
 
 router.route("/resource")
     .get(getAllResources)
     .post(addResource)
-    
+
 router.route("/resource:id")
     .get(getResourceById)
     .put(updateResourceById)

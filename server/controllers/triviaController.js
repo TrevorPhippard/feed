@@ -1,12 +1,11 @@
 import Trivia from '../models/trivia.model';
 
-
 // add Trivia output: { Trivia, channel, Trivia }
-export const addTrivia = async (req, res ) => {
+export const addTrivia = async (req, res) => {
 
     const { gameName, slides, user_id } = req.body
     //Build the Trivia object to write to database
-    let  newTrivia = { gameName, slides, user_id } 
+    let newTrivia = { gameName, slides, user_id }
 
     Trivia.create(newTrivia)
         .then(savedTrivia => {
@@ -26,7 +25,6 @@ export const getAllTrivias = async (req, res) => {
     }
 };
 
-
 // Controller for getting a Trivia by ID
 export const getTriviaById = async (req, res) => {
     try {
@@ -43,7 +41,6 @@ export const getTriviaById = async (req, res) => {
     }
 };
 
-
 // updating a Trivia
 export const updateTriviaById = async (req, res) => {
     try {
@@ -54,9 +51,9 @@ export const updateTriviaById = async (req, res) => {
             res.status(404).send('Trivia not found');
         } else {
             trivia.id = id,
-            trivia.gameName = gameName,
-            trivia.slides = slides,
-            trivia.user_id = user_id
+                trivia.gameName = gameName,
+                trivia.slides = slides,
+                trivia.user_id = user_id
             await trivia.save();
             res.json({ Trivia: 'Trivia updated successfully', Trivia: trivia });
         }
@@ -65,7 +62,6 @@ export const updateTriviaById = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-
 
 // deleting a Trivia by ID
 export const removeTriviaByTrivia = async (req, res) => {

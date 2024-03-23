@@ -1,11 +1,10 @@
-
-<script setup lang="ts" >
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import SocketioService from '../services/socketio.service.js';
-import MsgService from '../services/msg.service.js';
+import SocketioService from '../../services/socketio.service.js';
+import MsgService from '../../services/msg.service.js';
 
-import { useAuthStore } from '../store/authStore.ts';
-import { useGameStore } from '../store/gameStore.ts';
+import { useAuthStore } from '../../store/authStore.ts';
+import { useGameStore } from '../../store/gameStore.ts';
 
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
@@ -23,7 +22,7 @@ const messages = ref([]);
 const msg = ref();
 
 onMounted(function () {
-  
+
   if (token.value) {
     SocketioService.setupSocketConnection(token.value, roomId.value, username.value);
     SocketioService.subscribeToMessages((_err, data) => {
@@ -73,9 +72,9 @@ function submitMessage() {
   });
 }
 
-  function scrollToBottom() {
-        msg.value.scrollTop = msg.value.scrollHeight;
-  }
+function scrollToBottom() {
+  msg.value.scrollTop = msg.value.scrollHeight;
+}
 
 function filterMessage(info: { message: any; }) {
   return info.message
@@ -98,7 +97,6 @@ function filterMessage(info: { message: any; }) {
   </div>
 </template>
 <style>
-
 .App {
   padding: 1rem;
 }
@@ -121,17 +119,18 @@ function filterMessage(info: { message: any; }) {
 
 .messages {
   padding: 10px;
-  width:100%;
+  width: 100%;
   flex-grow: 1;
   text-align: left;
   background-color: #ffffff;
   overflow: scroll;
-  overflow-anchor: auto !important; 
+  overflow-anchor: auto !important;
 }
 
-.messages *{
+.messages * {
   overflow-anchor: none;
 }
+
 .input-div {
   display: flex;
   width: 100%;

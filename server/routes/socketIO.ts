@@ -1,12 +1,8 @@
+import socketController from '../controllers/socketController';
 
-
-
-import  socketController  from '../controllers/socketController';
-
-  
 var socketIO = function (io: any, socket: any, onlineUsers: any[]) {
 
-  var socketCntr =  socketController(io, socket, onlineUsers)
+  var socketCntr = socketController(io, socket, onlineUsers)
 
   // connect to server
   // console.log('a user connected', socket.id);

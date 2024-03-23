@@ -1,11 +1,9 @@
 import Message from '../models/message.model';
 
-
 // add message output: { user, channel, msg }
 export const addMsgToRoom = (req, res) => {
 
     const { displayName, roomId, msg } = req
-
 
     //Build the user object to write to database
     const newMessage = {
@@ -13,7 +11,6 @@ export const addMsgToRoom = (req, res) => {
         room_id: roomId,
         message_body: msg
     }
-
 
     Message.create(newMessage)
         .then(savedUser => {
@@ -37,7 +34,6 @@ export const getAllMessages = async (req, res) => {
     }
 };
 
-
 // Controller for getting a user by ID
 export const getMessageById = async (req, res) => {
     try {
@@ -55,7 +51,6 @@ export const getMessageById = async (req, res) => {
     }
 };
 
-
 // updating a user
 export const updateMessageById = async (req, res) => {
     try {
@@ -65,7 +60,7 @@ export const updateMessageById = async (req, res) => {
         if (!msg) {
             res.status(404).send('msg not found');
         } else {
-                msg.id = id,
+            msg.id = id,
                 msg.user_id = user_id,
                 msg.room_id = room_id,
                 msg.message_body = message_body,
@@ -78,7 +73,6 @@ export const updateMessageById = async (req, res) => {
     }
 };
 
-
 // deleting a user by ID
 export const removeMsgByRoom = async (req, res) => {
 
@@ -86,7 +80,7 @@ export const removeMsgByRoom = async (req, res) => {
         const room = req.params.roomId.split(':')[1]
 
         const roomId = Number(room);
-        console.log('roomId:',roomId)
+        console.log('roomId:', roomId)
 
         const message = await Message.findByPk(roomId);
         if (!message) {

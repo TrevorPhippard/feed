@@ -4,9 +4,7 @@ import VideoHero from '../components/VideoHero.vue'
 </script>
 <template>
     <VideoHero>
-        <Auth/>
+        <Auth />
     </VideoHero>
 </template>
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -2,9 +2,9 @@
 // @ts-ignore
 import draggable from 'vuedraggable';
 import { ref } from 'vue';
-import { useEditorStore } from '../store/editorStore.ts';
+import { useSlideStore } from '../../store/slideStore.ts';
 
-var store = useEditorStore();
+var store = useSlideStore();
 
 defineProps({
     itemsContent: Array,
@@ -42,26 +42,22 @@ function changeOrder(event: any) {
 <template>
     <h4>Order Slides</h4>
     <div class="sideScroll">
-    <draggable :list="itemsContent" :animation="100" ghost-class="invisable-card" group="list" class="sortable-list "
-        tag="ul" @change="changeOrder">
-        
-        <template #item="{ element, index }">
-            <li :class="{ active: index == slide }" @mouseup="showSlide(index)">
-              {{ element.name }}
-                <ClickInput
-                label="Name:" 
-                placeholder="trivia name" 
-                :text="element.name" 
-                @input-submit="onEnter"
-                />
-            </li>
-        </template>
-    </draggable></div>
+        <draggable :list="itemsContent" :animation="100" ghost-class="invisable-card" group="list"
+            class="sortable-list " tag="ul" @change="changeOrder">
+
+            <template #item="{ element, index }">
+                <li :class="{ active: index == slide }" @mouseup="showSlide(index)">
+                    {{ element.name }}
+                    <ClickInput label="Name:" placeholder="trivia name" :text="element.name" @input-submit="onEnter" />
+                </li>
+            </template>
+        </draggable>
+    </div>
     <button @click="add">create slide</button>
     <button @click="remove">remove selected</button>
 </template>
 <style>
-.sideScroll{
+.sideScroll {
     max-height: 250px;
     overflow-y: scroll;
 }
@@ -77,13 +73,14 @@ function changeOrder(event: any) {
     padding: 4px 10px;
     border-radius: 3px;
     border: 1px solid #555;
-    cursor:grab
+    cursor: grab
 }
 
 .sortable-list *+* {
     margin-top: 10px;
 }
-.sortable-list li.active{
+
+.sortable-list li.active {
     color: var(--accent1-hover);
 }
 
@@ -95,4 +92,3 @@ button+button {
     margin-left: 10px
 }
 </style>
-

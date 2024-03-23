@@ -1,6 +1,6 @@
 import axios from 'axios';
 const endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/auth/';
-const headers = { "content-type":"application/json"};
+const headers = { "content-type": "application/json" };
 
 interface User {
   email: string,
@@ -9,15 +9,15 @@ interface User {
 }
 
 const AuthService = {
-  login:  (user: User | null)=>{
+  login: (user: User | null) => {
     return axios.post(endpoint + 'signin', user)
-    .then(response => {
-      return response.data;
-    });
+      .then(response => {
+        return response.data;
+      });
 
   },
 
-  register:  (user: User | null)=>{
+  register: (user: User | null) => {
     return axios.post(endpoint + 'signup', user).then(response => {
       return response.data;
     });

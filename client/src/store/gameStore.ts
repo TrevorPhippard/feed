@@ -17,19 +17,22 @@ export const useGameStore = defineStore('game', {
     token: import.meta.env.VITE_TOKEN,
     socketEndpoint: import.meta.env.VITE_SOCKET_ENDPOINT,
     roomId: 'myRandomChatRoomId',
+    gameStatus: 'question',
     gameData: {
       gameName: 'let us go',
     },
   }),
 
   actions: {
-    launchGame(){
+    launchGame() {
       console.log('new room created')
-
-
+    },
+    setSlideStatus(status: string) {
+      this.gameStatus = status;
     }
   },
   getters: {
+    getGameStatus: state => state.gameStatus,
     getEndPoint: state => state.socketEndpoint,
     getRoom: state => state.roomId,
     gameData: state => state.gameData,

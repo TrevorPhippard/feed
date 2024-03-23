@@ -1,24 +1,23 @@
 import uploaderService from '../services/fileUploader';
 import Resource from '../models/resource.model';
 
-export const uploadFile =   (req, res) => {
-    if(!req.files){
+export const uploadFile = (req, res) => {
+    if (!req.files) {
         return res.status(200).send('file transfer failed');
-    }else{
+    } else {
         uploaderService(req, res, (error) => {
             if (error) {
-              res.status(500).send('Internal Server Error');
+                res.status(500).send('Internal Server Error');
             } else {
-              res.status(500).send(req.file.filename);
+                res.status(500).send(req.file.filename);
             }
         })
     }
 };
 
-
 export const addResource = (req, res) => {
     const { filename } = req.body
-    Resource.create({filename})
+    Resource.create({ filename })
         .then(savedResource => {
             const myOptions = { status: 200, statusText: savedResource.id };
             res.status(500).send(filename);
@@ -40,7 +39,6 @@ export const getAllResources = async (req, res) => {
     }
 };
 
-
 // Controller for getting a user by ID
 export const getResourceById = async (req, res) => {
     try {
@@ -58,7 +56,6 @@ export const getResourceById = async (req, res) => {
     }
 };
 
-
 // updating a user
 export const updateResourceById = async (req, res) => {
     try {
@@ -68,7 +65,7 @@ export const updateResourceById = async (req, res) => {
         if (!file) {
             res.status(404).send('file not found');
         } else {
-                file.id = id,
+            file.id = id,
                 file.filename = filename,
                 await file.save();
             res.json({ message: 'file updated successfully', file });
@@ -78,7 +75,6 @@ export const updateResourceById = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-
 
 // deleting a user by ID
 export const removeResource = async (req, res) => {

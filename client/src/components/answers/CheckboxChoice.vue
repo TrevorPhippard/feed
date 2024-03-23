@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useEditorStore } from '../../store/editorStore.ts';
+import { useSlideStore } from '../../store/slideStore.ts';
 
-var store = useEditorStore();
+var store = useSlideStore();
 
 defineProps({ data: Object, })
 

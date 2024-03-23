@@ -14,9 +14,9 @@ declare global {
   }
 }
 
-export const useEditorStore = defineStore('editor', {
+export const useSlideStore = defineStore('editor', {
   state: () => ({
-    gameId:false,
+    gameId: false,
     gameName: '',
     showSlide: 0,
     slides: [{
@@ -28,11 +28,10 @@ export const useEditorStore = defineStore('editor', {
       ],
       bgImg: import.meta.env.VITE_API_ENDPOINT + "/api/images/img-0906.jpg"
     }],
-    gameAr:[]
+    gameAr: []
   }),
 
   actions: {
-
     blankSlideInfo() {
       return {
         name: 'slide ' + (Number(this.slides.length) + 1),
@@ -47,40 +46,40 @@ export const useEditorStore = defineStore('editor', {
       this.gameName = name
     },
 
-    saveGameToDatabase(){
+    saveGameToDatabase() {
       var sendData = {
-        gameName:this.gameName,
-        user_id:'editor',
-        slides:JSON.stringify(this.slides),
-      } 
+        gameName: this.gameName,
+        user_id: 'editor',
+        slides: JSON.stringify(this.slides),
+      }
 
-      if(this.gameId){
+      if (this.gameId) {
         EditorService.updateTrivia(sendData, this.gameId)
-        .then((msg: any) =>  console.log('response msg::', msg))
-      }else{
+          .then((msg: any) => console.log('response msg::', msg))
+      } else {
         EditorService.postTrivia(sendData)
-        .then((msg: any) =>  console.log('response msg::', msg))
+          .then((msg: any) => console.log('response msg::', msg))
       }
     },
 
-    fetchGameFromDatabase(){
-      EditorService.fetchTrivia().then(data=>{
+    fetchGameFromDatabase() {
+      EditorService.fetchTrivia().then(data => {
 
         console.log('fetchGame', data)
-        if(data.length){
+        if (data.length) {
           this.gameAr = data
-          .filter((x:any)=>x.Trivia_id !==  'test')
-          .map((x:any)=>({id:x.id,gameName:x.gameName }))
+            .filter((x: any) => x.Trivia_id !== 'test')
+            .map((x: any) => ({ id: x.id, gameName: x.gameName }))
         }
       });
     },
 
-    fetchGameById(index:number){
-      EditorService.fetchTriviaById(index).then(data=>{
-        if(data){
-          this.gameId =data.id
-          this.gameName =data.gameName
-          this.slides =  data.slides ? JSON.parse(data.slides) : data.slides
+    fetchGameById(index: number) {
+      EditorService.fetchTriviaById(index).then(data => {
+        if (data) {
+          this.gameId = data.id
+          this.gameName = data.gameName
+          this.slides = data.slides ? JSON.parse(data.slides) : data.slides
         }
       });
     },
@@ -110,12 +109,12 @@ export const useEditorStore = defineStore('editor', {
        */
       var tempUrl = import.meta.env.VITE_API_ENDPOINT + "/api/uploads/"
       console.log(this.slides[this.showSlide])
-      console.log(tempUrl+ url)
-      this.slides[this.showSlide].bgImg =tempUrl+ url;
+      console.log(tempUrl + url)
+      this.slides[this.showSlide].bgImg = tempUrl + url;
     },
     upload(formData: any) {
-      UploadService.upload(formData,  (responseData: any) =>{
-        this.updateSlideBg( responseData)
+      UploadService.upload(formData, (responseData: any) => {
+        this.updateSlideBg(responseData)
       });
     },
 
@@ -141,7 +140,8 @@ export const useEditorStore = defineStore('editor', {
   getters: {
     editorName: state => state.gameName,
     editorSlides: state => state.slides,
-    editorCurrentSlides: state => state.slides[state.showSlide],
-    getGameList: state => state.gameAr
+    getCurrentSlide: state => state.slides[state.showSlide],
+    getGameList: state => state.gameAr,
+    getSlideNum: state => state.slides.length,
   }
 })

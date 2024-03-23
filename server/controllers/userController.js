@@ -64,7 +64,6 @@ export const signInUser = async (req, res) => {
   }
 };
 
-
 // getting all users
 export const getAllUsers = async (req, res) => {
   try {
@@ -75,7 +74,6 @@ export const getAllUsers = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
-
 
 // Controller for getting a user by ID
 export const getUserById = async (req, res) => {
@@ -92,7 +90,6 @@ export const getUserById = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
-
 
 // updating a user
 export const updateUserById = async (req, res) => {

@@ -4,9 +4,9 @@ import { onMounted } from 'vue'
 import Info from '../components/Info.vue';
 import NavBar from '../components/NavBar.vue';
 import GameLauncher from "../components/GameLauncher.vue";
-import { useEditorStore } from '../store/editorStore.ts';
+import { useSlideStore } from '../store/slideStore.ts';
 
-var store = useEditorStore();
+var store = useSlideStore();
 
 // getGameList
 onMounted(function () {
@@ -19,29 +19,29 @@ onMounted(function () {
   <main>
     <NavBar />
     <div id="main-content">
-          <div class="card-box">
-            <h3><span class="icons" id="icon-contacts">&#9731;</span>Profile Info</h3>
-            <Info />
-          </div>
-          <div class="card-box longer">
-            <h3><span class="icons" id="icon-contacts">&#9814;</span>Game List</h3>
-            <GameLauncher />
-          </div>
-      
+      <div class="card-box">
+        <h3><span class="icons" id="icon-contacts">&#9731;</span>Profile Info</h3>
+        <Info />
+      </div>
+      <div class="card-box longer">
+        <h3><span class="icons" id="icon-contacts">&#9814;</span>Game List</h3>
+        <GameLauncher />
+      </div>
+
     </div>
   </main>
 </template>
 
 <style scoped>
-  h3{
-    margin-top: 0;
-  }
+h3 {
+  margin-top: 0;
+}
 
-  h3 span{
-    position: relative;
-    top:-7px;
-    font-size: 24px;
-  }
+h3 span {
+  position: relative;
+  top: -7px;
+  font-size: 24px;
+}
 
 #composer {
   padding: 20px;
@@ -49,14 +49,15 @@ onMounted(function () {
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
-#main-content{
+#main-content {
   display: flex;
   padding: 10px 20px;
 }
 
-.longer{
-  flex:1
+.longer {
+  flex: 1
 }
+
 .card-box {
   padding: 20px;
   margin-bottom: 28px;
@@ -66,7 +67,7 @@ onMounted(function () {
   overflow: hidden;
 }
 
-.card-box + .card-box{
-  margin-left:50px
+.card-box+.card-box {
+  margin-left: 50px
 }
 </style>

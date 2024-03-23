@@ -39,7 +39,7 @@ button {
   font-family: Helvetica;
 }
 
-#app{
+#app {
   width: 100vw;
 }
 
@@ -48,6 +48,7 @@ a {
   color: var(--accent1);
   text-decoration: inherit;
 }
+
 a:hover {
   color: var(--accent1-hover);
 }
@@ -74,11 +75,13 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: var(--button-text-hover);
-  color:var(--button-text-hover);
-  background-color: var( --button-hover);
+  color: var(--button-text-hover);
+  background-color: var(--button-hover);
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -92,9 +95,11 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: var(--accent1-hover)
   }
+
   button {
     background-color: #f9f9f9;
   }
@@ -109,13 +114,14 @@ button:focus-visible {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.card-bg{
+.card-bg {
   margin-top: 50px;
   padding: 10px;
   width: 300px;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   border-radius: 4px;
 }
+
 form {
   display: flex;
   flex-direction: column;
@@ -127,9 +133,10 @@ input {
   border: none;
   border-bottom: 1px solid #ccc;
 }
+
 input,
 select,
-textarea{
+textarea {
   color: var(--input-text);
   background-color: var(--input-bg);
 }
@@ -198,9 +205,10 @@ header {
   padding: 10px;
   font-family: 'roboto', sans-serif;
 }
+
 .card h4,
-.card p{
-  margin:0
+.card p {
+  margin: 0
 }
 
 .x-button {
@@ -213,6 +221,7 @@ header {
   font-weight: 900;
   cursor: pointer;
 }
+
 .x-button:hover {
   border: 2px solid #ccc;
   background-color: #ccc;
@@ -238,7 +247,7 @@ header {
 
 .form-group label:before {
   position: relative;
-  content:'';
+  content: '';
   -webkit-appearance: none;
   background-color: transparent;
   border: 2px solid #ccc;
@@ -250,7 +259,7 @@ header {
   margin-right: 5px;
 }
 
-.form-group input:checked + label:after {
+.form-group input:checked+label:after {
   content: '';
   display: block;
   position: absolute;
