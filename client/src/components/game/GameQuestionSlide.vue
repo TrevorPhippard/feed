@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 
-const selected = ref(null);
-const countDown = ref(15);
+const selected = ref(0);
+const countDown = ref(5);
 // const showAnswer = ref(false);
 
 defineProps({ data: Object })

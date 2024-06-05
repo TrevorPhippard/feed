@@ -10,7 +10,6 @@ const store = useAuthStore();
 
 const { getToken: token } = storeToRefs(store)
 
-
 onMounted(function () {
   var cookie = localStorage.getItem("user");
   if (cookie) { store.setUser(cookie) };

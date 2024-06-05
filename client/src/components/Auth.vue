@@ -4,7 +4,6 @@ import { ref } from 'vue'
 import { useAuthStore } from '../store/authStore.ts';
 import { useRouter } from 'vue-router';
 
-
 const store = useAuthStore();
 const router = useRouter();
 
@@ -30,7 +29,6 @@ function goToRegstrationPage() {
   router.push({ path: '/signup' })
 }
 
-
 </script>
 
 <template>
@@ -39,8 +37,8 @@ function goToRegstrationPage() {
       <input type="email" placeholder="E-Mail" v-model="email" required>
       <input type="password" placeholder="password" v-model="password" required>
       <div class="buttons">
-        <button @click="goToRegstrationPage" class="register-button">Register</button>
         <button @click="submitToken" type="submit" class="login-button">Login</button>
+        <button @click="goToRegstrationPage" class="register-button">Register</button>
       </div>
     </form>
     <p class="error">{{ error }}</p>

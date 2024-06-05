@@ -46,6 +46,10 @@ export const useSlideStore = defineStore('editor', {
       this.gameName = name
     },
 
+    incrementSildes(){
+        this.showSlide += 1;
+    },
+
     saveGameToDatabase() {
       var sendData = {
         gameName: this.gameName,
@@ -104,12 +108,7 @@ export const useSlideStore = defineStore('editor', {
       this.slides[this.showSlide].question = text;
     },
     updateSlideBg(url: string) {
-      /**
-       * @todo how?
-       */
       var tempUrl = import.meta.env.VITE_API_ENDPOINT + "/api/uploads/"
-      console.log(this.slides[this.showSlide])
-      console.log(tempUrl + url)
       this.slides[this.showSlide].bgImg = tempUrl + url;
     },
     upload(formData: any) {
@@ -143,5 +142,6 @@ export const useSlideStore = defineStore('editor', {
     getCurrentSlide: state => state.slides[state.showSlide],
     getGameList: state => state.gameAr,
     getSlideNum: state => state.slides.length,
+    getSlideInex: state => state.showSlide
   }
 })

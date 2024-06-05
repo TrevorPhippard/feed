@@ -1,8 +1,19 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { storeToRefs } from 'pinia';
+
+import { useSlideStore } from '../../store/slideStore.ts';
 import { useGameStore } from '../../store/gameStore.ts';
 
-const gameStore = useGameStore();
+var slideStore = useSlideStore();
+var gameStore = useGameStore();
+
+
+const {
+    getSlideNum: slideNum,
+    getSlideInex: slideIndex
+} = storeToRefs(slideStore);
+
 
 var props = defineProps({ data: Object })
 
@@ -12,9 +23,13 @@ const answer = computed(() => {
 
 function onOptionClick() {
     gameStore.setSlideStatus('question');
-
-    // test test test
+    if(slideIndex.value <  (slideNum.value-1)){
+        slideStore.incrementSildes();
+    }else{
+        console.log('done questiohs')
+    }
 }
+
 </script>
 <template>
     <div>

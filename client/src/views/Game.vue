@@ -16,8 +16,11 @@ const { getGameStatus: gameStatus } = storeToRefs(gameStore);
 slideStore.fetchGameById(1);
 slideStore.fetchGameFromDatabase();
 
-function updateGameName(status) {
+function updateGameName(status:string) {
   gameStore.setSlideStatus(status);
+  // if(status=='answer'){
+  //   slideStore.incrementSildes();
+  // }
 }
 
 </script>
