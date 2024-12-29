@@ -31,7 +31,6 @@ class SocketioService {
       }
     });
 
-    console.log(this.socket)
     console.log(`Connecting socket...`, username, room);
 
     if (room) {
@@ -51,16 +50,22 @@ class SocketioService {
 
   }
 
+  invite(username: string, room: string){
+    this.socket.emit('invite',{userId: username, roomId: room})
+  }
+
   subscribeToMessages(cb: (err: null, msg: string) => void) {
     if (!this.socket) return (true);
     this.socket.on('message', (msg: string) => cb(null, msg));
     this.socket.on('receivedMsg', (msg: string) => cb(null, msg));
+
   }
 
   subscribeToUsersPassage(cb: (err: null, userPassage: userPassageType) => void) {
     this.socket.on('join', (msg: string) => cb(null, { displayName: msg, type: 'join' }));
     this.socket.on('enteredRoom', (msg: string) => cb(null, { userList: msg, type: 'enteredRoom' }));
     this.socket.on('disconnected', (msg: string) => cb(null, { displayName: msg, type: 'disconnected' }));
+    this.socket.on('broadcast',  (msg: string) => cb(null, { data: msg, type: 'broadcast' }));
   }
 
 

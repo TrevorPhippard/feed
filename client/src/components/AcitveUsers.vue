@@ -7,32 +7,50 @@ import { useAuthStore } from "../store/authStore.ts";
 import { useGameStore } from "../store/gameStore.ts";
 import { storeToRefs } from "pinia";
 
+
+
 const authStore = useAuthStore();
 const gameStore = useGameStore();
 
 const { getusername: username, getToken: token } = storeToRefs(authStore)
 const { getRoom: roomId } = storeToRefs(gameStore);
 
-const activeUsers = ref({})
+const activeUsers = ref({});
+
+
+onMounted(function () {
+
 SocketioService.setupSocketConnection(token.value, roomId.value, username.value);
 
 SocketioService.subscribeToUsersPassage((_err, message) => {
-    if(message.type ==="enteredRoom"){
-        var temp = {};
+    switch (message.type) {
+    case "enteredRoom":
         var keys = Object.values(message.userList);
-        keys.map( username =>{
-            activeUsers.value[username]= { online: true }
-        })
-    }
-    if(message.type === 'join'){
-        activeUsers.value[message.displayName] = {online : true}
-    }
+        keys.map(username => {
+            activeUsers.value[username] = { online: true };
+        });
+        break;
 
-    if(message.type === 'disconnected'){
-        activeUsers.value[message.displayName] = {online : false}
-    }
+    case 'join':
+        activeUsers.value[message.displayName] = { online: true };
+        break;
+
+    case 'disconnected':
+        activeUsers.value[message.displayName] = { online: false };
+        break;
+
+    case "broadcast":
+        if(username.value === message.data.userId){
+            console.log('would you like to join ', message.data.roomId)
+        };
+        break;
+
+    default:
+        console.log('unexpected message type', message)
+        break;
+}
 });
-
+})
 // onUnmounted(() => SocketioService.disconnect(roomId.value,username.value));
 
 </script>

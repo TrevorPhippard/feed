@@ -1,7 +1,10 @@
 <script setup lang="ts">
-
+import { storeToRefs } from "pinia";
+import SocketioService from "../services/socketio.service.js";
 import plusCircle from "../assets/plus-circle.svg";
 import user from "../assets/user.svg";
+import { useGameStore } from "../store/gameStore.ts";
+import { useAuthStore } from "../store/authStore.ts";
 
 var props = defineProps({
     online: Boolean,
@@ -9,13 +12,21 @@ var props = defineProps({
     // imgSrc: String,
 })
 
-function goToEdit(){
-    console.log('test!')
+const gameStore = useGameStore();
+const authStore = useAuthStore();
+
+const { getRoom: roomId } = storeToRefs(gameStore);
+const { getusername: yourUsername } = storeToRefs(authStore)
+
+function goToEdit(user:string) {
+    SocketioService.invite(user, roomId.value )
 }
 
 </script>
 <template>
-        <li @click="goToEdit()">
+        <li 
+        v-if="yourUsername!==username"
+        @click="goToEdit(username)" data-user="user">
             <div class="iconCont">
                 <div>
                     <img  class="userIcon" :src="user" alt=""/>

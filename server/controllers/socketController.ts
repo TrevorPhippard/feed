@@ -58,7 +58,13 @@ export default function (io: any, socket: any) {
 
     }
 
- 
+
+    function onInvite({userId, roomId}:any){
+        console.log('--->')
+        socket.broadcast.emit('broadcast',{ userId, roomId})
+    }
+
+
 
     return {
         onConnectToServer,
@@ -67,5 +73,6 @@ export default function (io: any, socket: any) {
         onLeave,
         onDisconnect,
         onEnteredRoom,
+        onInvite
     }
 }

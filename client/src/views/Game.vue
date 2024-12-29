@@ -1,37 +1,58 @@
 <script setup lang="ts">
-import { onMounted } from "vue"
-// import { useGameStore } from "../store/gameStore.ts";
+import { ref, onMounted } from "vue"
+import { useGameStore } from "../store/gameStore.ts";
 import { storeToRefs } from "pinia";
 import GameSlide from "../components/GameSlide.vue"
 import { useEditorStore } from "../store/editorStore.ts";
+import AcitveUsers from "../components/AcitveUsers.vue"
+import {useRoute} from "vue-router";
 
-var store = useEditorStore();
+const store = useEditorStore();
+const gameStore = useGameStore();
+const route = useRoute();
+const { getRoom: roomId } = storeToRefs(gameStore);
 
-
-
-var store = useEditorStore();
 const {
     editorCurrentSlides: currentSlide
 } = storeToRefs(store);
 
+const started = ref(false);
+
 onMounted(function () {
-  store.fetchGameFromDatabase();
+  gameStore.setGame(route.params.id);
 })
 
 </script>
 
-<template>
-  <div class="container">
-    <div class="game card">
-      <GameSlide :data="currentSlide"></GameSlide>
-    </div>
-    <div class="chat card">
-      <h3><span class="icons" id="icon-contacts">&#9990;</span>Chat</h3>
-    </div>
+<template>   
+
+  <div v-if="!started" class="card-box">
+    <h1>Lobby: {{ $route.params.id }}</h1>
+    <AcitveUsers/>
   </div>
+
+  <div v-if="started" class="game card card-box">
+      <GameSlide :data="currentSlide"></GameSlide>
+      <nav>
+                <ul>
+                    <li><button>backwards</button></li>
+                    <li><button>skip</button></li>
+                    <li><button>forward</button></li>
+                </ul>
+            </nav>
+    </div>
 </template>
 
 <style scoped>
+nav {
+  display:block;
+}
+nav ul{
+  display:flex;
+  justify-content: space-around;
+  padding-top:10px;
+}
+
 .container {
   height: 90vh;
   width: 100vw;
@@ -49,9 +70,6 @@ onMounted(function () {
   width: 100%;
 }
 .game{
-  display: flex;
-  justify-content: center;
-  align-items: center;
   grid-area: game;
   text-align: center;
   z-index: 1;

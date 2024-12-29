@@ -25,8 +25,9 @@ export const useGameStore = defineStore("game", {
   actions: {
     launchGame(){
       console.log("new room created")
-
-
+    },
+    setGame(id:string){
+      this.roomId = id
     }
   },
   getters: {
