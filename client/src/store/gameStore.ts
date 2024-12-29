@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import GameService from "../services/game.service"
+// import GameService from "../services/game.service"
 
 declare global {
 

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
 import draggable from "vuedraggable";
-import { ref } from "vue";
+
 import { useEditorStore } from "../store/editorStore.ts";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
@@ -48,7 +49,7 @@ function deleteGame(index: number) {
       <p> No Quizes</p>
     </div>
     <div v-else v-for="(info, key) in gameList" :key="key">
-      <p>{{ info.gameName }}</p>
+      <p>{{ info.gameName ? info.gameName :'unnamed' }}</p>
       <ul>
         <li><img :src="playCircle"  alt="" @click="launchGame(info.id)" /></li>
         <li><img :src="edit"        alt="" @click="goToEdit(info.id)" /></li>

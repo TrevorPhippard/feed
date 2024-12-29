@@ -11,12 +11,8 @@ var store = useEditorStore();
 
 var store = useEditorStore();
 const {
-    editorName: gameName,
-    editorSlides: slides,
     editorCurrentSlides: currentSlide
 } = storeToRefs(store);
-
-var { name,type,question, options, bgImg }= currentSlide;
 
 onMounted(function () {
   store.fetchGameFromDatabase();

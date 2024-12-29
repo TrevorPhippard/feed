@@ -17,8 +17,10 @@ var store = useEditorStore();
 const slideNum = ref(0);
 
 
-function onOptionClick(e: any) {
-    console.log(e.target.dataset.answer)
+function onOptionClick(event: Event) {
+    const target = event.target as HTMLInputElement;
+
+    console.log(target.dataset.answer)
 }
 function forward(){
     if(slideNum.value < (slides.value.length-1)){

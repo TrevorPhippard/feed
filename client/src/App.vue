@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { onMounted } from "vue"
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useAuthStore } from "./store/authStore.ts";
 import { storeToRefs } from "pinia";
 
-const location = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
 

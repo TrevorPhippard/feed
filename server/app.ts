@@ -4,6 +4,7 @@
 /**
  * @todo Look up correct response codes for authorization
  *  also, maybe double check all of them
+ *  only return users quizes
  */
 
 import express from "express";

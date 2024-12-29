@@ -42,7 +42,7 @@ var tabs = ["Preview","Edit","Settings"]
 </script>
 
 <template>
-    <main>
+    <section class="flex"> 
     <div class="card-box">
 
         <ul class="flex">
@@ -51,7 +51,7 @@ var tabs = ["Preview","Edit","Settings"]
         <div v-if="tabSelected == 'Preview'" class="tab">
             <Preview :data="currentSlide"></Preview>
         </div>
-        <div v-if="tabSelected == 'Edit'" class="editTab tab">
+        <div v-if="tabSelected == 'Edit'" class="tab edit-tab">
            <EditTab/>
         </div>
         <div v-if="tabSelected == 'Settings'" class="tab ">
@@ -73,20 +73,22 @@ var tabs = ["Preview","Edit","Settings"]
 
         </div>
     </div>
-</main>
+</section>
 </template>
 
 <style scoped>
 
+    .card-box{
+        padding-top:0
+    }
 
-    .editTab{
+    .edit-tab{
         display: flex;
         gap:40px;
     }
 
-    .card-box{
+    .rm-top{
         padding-top:0;
-        margin: 0 auto;
     }
 
     li{
@@ -113,7 +115,7 @@ var tabs = ["Preview","Edit","Settings"]
     }
 
     @media only screen and (max-width: 600px) {
-        .editTab{
+        .edit-tab{
             display: block;
         }
     }

@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-//@ts-nocheck
+
 import { defineStore } from "pinia";
 
 import UploadService from "../services/upload.service.js";
@@ -141,13 +140,15 @@ export const useEditorStore = defineStore("editor", {
     removeChoice(index: number) {
       this.slides[this.showSlide].options.splice(index, 1);
     },
-    updateChoice(e: any) {
-      var index = (e.target.id.split("opt_"))[1];
-      this.slides[this.showSlide].options[Number(index)].choice = e.target.value;
+    updateChoice(event: Event) {
+      const target = event.target as HTMLInputElement;
+      const index = (target.id.split("opt_"))[1];
+      this.slides[this.showSlide].options[Number(index)].choice = target.value;
     },
-    updateCheck(e: any) {
-      var index = (e.target.id.split("check_"))[1];
-      this.slides[this.showSlide].options[Number(index)].correct = e.target.checked;
+    updateCheck(event: Event) {
+      const target = event.target as HTMLInputElement;
+      const index = (target.id.split("check_"))[1];
+      this.slides[this.showSlide].options[Number(index)].correct = target.checked;
     }
   },
   getters: {

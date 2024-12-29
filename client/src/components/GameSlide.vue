@@ -3,8 +3,9 @@
 
 defineProps({ data: Object })
 
-function onOptionClick(e: any) {
-    console.log(e.target.dataset.answer)
+function onOptionClick(event: Event) {
+    const target = event.target as HTMLInputElement;
+    console.log(target.dataset.answer)
 }
 
 </script>

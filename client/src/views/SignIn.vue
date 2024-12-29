@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Auth from "../components/Auth.vue";
-import VideoHero from "../components/VideoHero.vue"
+import Auth from "../components/auth/Auth.vue";
+import VideoHero from "../components/auth/VideoHero.vue"
 </script>
 <template>
     <VideoHero>

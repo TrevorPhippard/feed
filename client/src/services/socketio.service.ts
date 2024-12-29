@@ -1,16 +1,24 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-nocheck
 import { io } from 'socket.io-client';
 
-interface noArg {(): void};
+interface noArg {(): void}
+
+interface messageType{
+  roomId: string;
+  displayName: string;
+  msg: string;
+}
 
 
 class SocketioService {
 
-  //@ts
-  socket: any;
+  socket: unknown;
 
   constructor() { }
-
-  setupSocketConnection(token: string, room: string, username: string) {
+ // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+ //@ts-expect-error
+  setupSocketConnection(token: string, room?: string, username?: string) {
     console.log(import.meta.env.VITE_SOCKET_ENDPOINT)
     this.socket = io(import.meta.env.VITE_SOCKET_ENDPOINT, {
       auth: { token },
@@ -38,19 +46,21 @@ class SocketioService {
 
   }
 
-  subscribeToMessages(cb: (err: null, data: any) => any) {
+  subscribeToMessages(cb: (err: null, msg: string) => void) {
     if (!this.socket) return (true);
-    this.socket.on('message', (msg: any) => cb(null, msg));
-    this.socket.on('receivedMsg', (msg: any) => cb(null, msg));
+    this.socket.on('message', (msg: string) => cb(null, msg));
+    this.socket.on('receivedMsg', (msg: string) => cb(null, msg));
   }
 
-  subscribeToUsersPassage(cb: (err: null, data: any) => any) {
+  subscribeToUsersPassage(cb: (err: null, msg: string) => void) {
     this.socket.on('join', (msg: string) => cb(null, msg));
     this.socket.on('enteredRoom', (msg: string) => cb(null, msg));
     this.socket.on('disconnected', (msg: string) => cb(null, msg));
   }
 
-  sendMessage(message: string, cb:noArg) {
+
+
+  sendMessage(message: messageType, cb:noArg) {
     if (this.socket) {
       this.socket.emit('message', { message }, cb);
     }

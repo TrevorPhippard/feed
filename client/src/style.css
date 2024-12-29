@@ -63,11 +63,6 @@ body {
   counter-reset: my-sec-counter;
 }
 
-main{
-  padding-top:30px;
-}
-
-
 #app{
   width: 100vw;
   height: 100vh;
@@ -316,7 +311,7 @@ textarea{
 ----------------------------------------------------------------*/
 .card-box {
   padding: 20px;
-  margin-bottom: 28px;
+  margin-top:30px;
   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.2);
   background-color: var(--white);
   border-radius: 14px;

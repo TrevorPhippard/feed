@@ -27,6 +27,13 @@ function goToEdit(){
         </li>
      </template>
 <style scoped>
+
+.iconCont{
+    position:relative;
+    display: flex;
+    align-items: center;
+}
+
 img.addUserBtn{
     cursor: pointer;
     border-radius: 50%;
@@ -46,12 +53,6 @@ img.userIcon{
 h2{
     font-size:22px;
     margin-bottom:0px;
-}
-
-.iconCont{
-    position:relative;
-    display: flex;
-    align-items: center;
 }
 
 li{

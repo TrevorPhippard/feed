@@ -21,12 +21,12 @@ function removeChoice(index: number) {
     store.removeChoice(index)
 }
 
-function updateChoice(e: any) {
-    store.updateChoice(e)
+function updateChoice(event: Event) {
+    store.updateChoice(event)
 }
 
-function updateCheck(e: any) {
-    store.updateCheck(e)
+function updateCheck(event: Event) {
+    store.updateCheck(event)
 }
 
 </script>

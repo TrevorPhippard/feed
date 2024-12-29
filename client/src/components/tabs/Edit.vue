@@ -1,12 +1,13 @@
 <script setup lang="ts">
 
-import Sortable from "../Sortable.vue"
-import CreateField from "../CreateField.vue"
-import ImageUploader from "../ImageUploader.vue";
+import ClickInput from "../editor/ClickInput.vue";
+import CreateField from "../editor/CreateField.vue"
+import Sortable from "../editor/Sortable.vue"
+import ImageUploader from "../editor/ImageUploader.vue";
+
 
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "../../store/editorStore.ts";
-import ClickInput from "../ClickInput.vue";
 
 var store = useEditorStore();
 
