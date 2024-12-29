@@ -23,24 +23,24 @@ defineProps({
 
 
 function addGame() {
-  // store.setEditor()
   router.push({ path: "/editor" })
 }
 
 function launchGame(index: number) {
+  store.fetchGameById(index);
   router.push({ path: `/game/${index}` });
 }
 
 function goToEdit(index: number) {
-    store.setEditor(index);
+    store.fetchGameById(index);
     router.push({ path: "/editor" });
 }
 
 function deleteGame(index: number) {
   console.log("delete:", index);
   store.deleteGameFromDatabase(index);
-
 }
+
 </script>
 <template>
   <div class="game-list">

@@ -76,8 +76,6 @@ export const useEditorStore = defineStore("editor", {
 
     fetchGameFromDatabase(){
       EditorService.fetchTrivia().then(data=>{
-
-        console.log("fetchGame", data)
         if(data.length){
           this.gameAr = data
           .filter((x:any)=>x.Trivia_id !==  "test")
@@ -87,24 +85,14 @@ export const useEditorStore = defineStore("editor", {
     },
 
     fetchGameById(index:number){
-      EditorService.fetchTriviaById(index).then(data=>{
-        if(data){
-          this.gameId =data.id
-          this.gameName =data.gameName
-          this.slides =  data.slides ? JSON.parse(data.slides) : data.slides
+      EditorService.fetchTriviaById(index).then(({item})=>{
+        if(item){
+          this.gameId =item.id
+          this.gameName =item.gameName
+          this.slides =  item.slides ? JSON.parse(item.slides) : item.slides
         }
       });
     },
-
-    setEditor(index:number){
-      const data = this.gameAr[index];
-      if(this.gameAr[index]){
-        this.gameId =data.id
-        this.gameName =data.gameName
-        this.slides =  data.slides ? JSON.parse(data.slides) : data.slides
-      }
-    },
-
 
     /** edit slides actions */
     onSlideAdd() {
