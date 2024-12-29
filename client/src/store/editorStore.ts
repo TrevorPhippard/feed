@@ -31,7 +31,9 @@ export const useEditorStore = defineStore("editor", {
     gameName: "",
     showSlide: 0,
     slides: [blankSlides],
-    gameAr:[]
+    gameAr:[],
+    modal: false,
+    invitation:0
   }),
 
   actions: {
@@ -149,12 +151,19 @@ export const useEditorStore = defineStore("editor", {
       const target = event.target as HTMLInputElement;
       const index = (target.id.split("check_"))[1];
       this.slides[this.showSlide].options[Number(index)].correct = target.checked;
+    },
+    toggleModal(mode: boolean) {
+      this.modal = mode;
+    },
+    addInvitation(roomId:number){
+      this.invitation= roomId;
     }
   },
   getters: {
     editorName: state => state.gameName,
     editorSlides: state => state.slides,
     editorCurrentSlides: state => state.slides[state.showSlide],
-    getGameList: state => state.gameAr
+    getGameList: state => state.gameAr,
+    getInvitation: state => state.invitation
   }
 })

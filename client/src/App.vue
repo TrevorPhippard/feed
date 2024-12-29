@@ -3,6 +3,7 @@ import { onMounted } from "vue"
 import { useRouter } from "vue-router";
 import { useAuthStore } from "./store/authStore.ts";
 import { storeToRefs } from "pinia";
+import ModalBox from './components/ModalBox.vue';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -26,6 +27,7 @@ onMounted(function () {
 
 <template>
       <router-view />
+      <ModalBox/>
 </template>
 
 <style scoped>

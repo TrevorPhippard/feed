@@ -28,7 +28,12 @@ onMounted(function () {
 
   <div v-if="!started" class="card-box">
     <h1>Lobby: {{ $route.params.id }}</h1>
-    <AcitveUsers/>
+    <AcitveUsers text="Friends Online" :lobby="true"/>
+    <hr/>
+    <br/>
+    <AcitveUsers text="Accepted Players" :lobby="false"/>
+
+    <button>Start Game</button>
   </div>
 
   <div v-if="started" class="game card card-box">

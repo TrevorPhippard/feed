@@ -9,6 +9,7 @@ import { useAuthStore } from "../store/authStore.ts";
 var props = defineProps({
     online: Boolean,
     username: String,
+    lobby: Boolean
     // imgSrc: String,
 })
 
@@ -26,7 +27,7 @@ function goToEdit(user:string) {
 <template>
         <li 
         v-if="yourUsername!==username"
-        @click="goToEdit(username)" data-user="user">
+       >
             <div class="iconCont">
                 <div>
                     <img  class="userIcon" :src="user" alt=""/>
@@ -34,7 +35,10 @@ function goToEdit(user:string) {
                 </div>
                 <h2>{{props.username}}</h2>
             </div>
-            <img class="addUserBtn" :src="plusCircle" alt=""/>
+            <button v-if="lobby" @click="goToEdit(username)">
+                <apan>Add </apan>
+                <img class="addUserBtn" :src="plusCircle"  data-user="user"/>
+            </button>
         </li>
      </template>
 <style scoped>
@@ -45,15 +49,16 @@ function goToEdit(user:string) {
     align-items: center;
 }
 
-img.addUserBtn{
+button{
+    align-items:center;
     cursor: pointer;
+}
+
+img.addUserBtn{
     border-radius: 50%;
     height:20px
 }
-img.addUserBtn:hover{
-    background-color: var(--accent1-hover);
-   
-}
+
 
 img.userIcon{
     background-color: var(--primary);

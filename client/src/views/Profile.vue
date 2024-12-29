@@ -26,9 +26,11 @@ onMounted(function () {
             <h3><span class="icons" id="icon-contacts">&#9731;</span>Quizes</h3>
             <GameLauncher />
             <div class="community">
-                <AcitveUsers :lobby="false" />
+                <AcitveUsers text="Friends Online" :lobby="false" />
                 <ChatMessage  class="item"/>
           </div>
+          <ChatMessage  class="item"/>
+
           </div>
     </div>
   </main>

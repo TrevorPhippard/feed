@@ -5,17 +5,20 @@ import SocketUser from "../components/SocketUser.vue";
 
 import { useAuthStore } from "../store/authStore.ts";
 import { useGameStore } from "../store/gameStore.ts";
+import { useEditorStore } from "../store/editorStore.ts";
+
 import { storeToRefs } from "pinia";
-
-
 
 const authStore = useAuthStore();
 const gameStore = useGameStore();
+const store = useEditorStore();
 
 const { getusername: username, getToken: token } = storeToRefs(authStore)
 const { getRoom: roomId } = storeToRefs(gameStore);
 
 const activeUsers = ref({});
+
+defineProps({ lobby: Boolean, text:String })
 
 
 onMounted(function () {
@@ -41,7 +44,8 @@ SocketioService.subscribeToUsersPassage((_err, message) => {
 
     case "broadcast":
         if(username.value === message.data.userId){
-            console.log('would you like to join ', message.data.roomId)
+            store.addInvitation(message.data.roomId)
+            store.toggleModal(true)
         };
         break;
 
@@ -57,9 +61,9 @@ SocketioService.subscribeToUsersPassage((_err, message) => {
 
 <template>
  <div>
-    <h3><span class="icons" id="icon-contacts">&#9814;</span>Friends Online:</h3>
+    <h3><span class="icons" id="icon-contacts">&#9814;</span>{{text}}:</h3>
     <ul>
-        <SocketUser v-for="(info, key) in activeUsers" :key="key" :online="info.online" :username="key"/>
+        <SocketUser v-for="(info, key) in activeUsers" :key="key" :online="info.online" :username="key" :lobby="lobby"/>
     </ul>
 </div>
 </template>
