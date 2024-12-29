@@ -1,6 +1,6 @@
-'use strict';
-import { Model, DataTypes } from 'sequelize'
-import sequelize from './sequelize';
+"use strict";
+import { Model, DataTypes } from "sequelize"
+import sequelize from "./sequelize";
 
 interface ResourceAttributes {
   id: number;
@@ -10,18 +10,12 @@ interface ResourceAttributes {
 class Resource extends Model<ResourceAttributes>
 
   implements ResourceAttributes {
-  // 
-  id!: number;
+
+    id!: number;
   filename!: string;
 
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
-  static associate(models: any) {
+  static associate() {
 
-    // define association here
   }
 }
 Resource.init({
@@ -37,6 +31,6 @@ Resource.init({
   },
 }, {
   sequelize,
-  modelName: 'Resource',
+  modelName: "Resource",
 });
 export default Resource;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Register from '../components/Register.vue';
-import VideoHero from '../components/VideoHero.vue'
+import Register from "../components/Register.vue";
+import VideoHero from "../components/VideoHero.vue"
 </script>
 <template>
     <VideoHero>

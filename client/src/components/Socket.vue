@@ -1,14 +1,14 @@
 
 <script setup lang="ts" >
-import { ref, onMounted, onUnmounted } from 'vue'
-import SocketioService from '../services/socketio.service.js';
-import MsgService from '../services/msg.service.js';
+import { ref, onMounted, onUnmounted } from "vue"
+import SocketioService from "../services/socketio.service.js";
+import MsgService from "../services/msg.service.js";
 
-import { useAuthStore } from '../store/authStore.ts';
-import { useGameStore } from '../store/gameStore.ts';
+import { useAuthStore } from "../store/authStore.ts";
+import { useGameStore } from "../store/gameStore.ts";
 
-import { storeToRefs } from 'pinia';
-import { useRouter } from 'vue-router';
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
 const gameStore = useGameStore();
@@ -18,7 +18,7 @@ const router = useRouter();
 const { getusername: username, getToken: token } = storeToRefs(authStore)
 const { getRoom: roomId } = storeToRefs(gameStore)
 
-const inputMessageText = ref('')
+const inputMessageText = ref("")
 const messages = ref([]);
 const msg = ref();
 
@@ -32,12 +32,14 @@ onMounted(function () {
     });
 
     SocketioService.subscribeToUsersPassage((_err, data) => {
-      console.log('user::', data);
+      console.log("user::", data);
     });
 
     MsgService.fetchMessages(roomId.value)
       .then(result => {
-        result.map((data: { id: any; user_id: any; message_body: any; }) => {
+        if(result.status == 500) return console.log(result)
+
+   return result.map((data: { id: any; user_id: any; message_body: any; }) => {
           return {
             message: {
               id: data.id,
@@ -50,7 +52,7 @@ onMounted(function () {
         })
       })
   } else {
-    return router.push({ path: '/' })
+    return router.push({ path: "/" })
   }
 })
 
@@ -64,11 +66,8 @@ function submitMessage() {
     msg: inputMessageText.value
   }
 
-  SocketioService.sendMessage({ message }, (cb: any) => {
-    // callback is acknowledgement from server
-    console.log(cb);
-    // @ts-ignore
-    inputMessageText.value = '';
+  SocketioService.sendMessage(message, () => {
+    inputMessageText.value = "";
     scrollToBottom();
   });
 }

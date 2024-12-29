@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 var inputs = ref([{
-    name: '',
-    party: ''
+    name: "",
+    party: ""
 }])
 
 function add() {
     inputs.value.push({
-        name: '',
-        party: ''
+        name: "",
+        party: ""
     })
 }
 function remove(index: number) {

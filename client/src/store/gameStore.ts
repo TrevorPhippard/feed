@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
-import GameService from '../services/game.service'
+import { defineStore } from "pinia";
+import GameService from "../services/game.service"
 
 declare global {
 
@@ -12,19 +12,19 @@ declare global {
   }
 }
 
-export const useGameStore = defineStore('game', {
+export const useGameStore = defineStore("game", {
   state: () => ({
     token: import.meta.env.VITE_TOKEN,
     socketEndpoint: import.meta.env.VITE_SOCKET_ENDPOINT,
-    roomId: 'myRandomChatRoomId',
+    roomId: "myRandomChatRoomId",
     gameData: {
-      gameName: 'let us go',
+      gameName: "let us go",
     },
   }),
 
   actions: {
     launchGame(){
-      console.log('new room created')
+      console.log("new room created")
 
 
     }

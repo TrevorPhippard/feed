@@ -1,11 +1,11 @@
-import axios from 'axios';
-var endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/messages';
-const headers = { "content-type":"application/json"}
+import axios from "axios";
+const endpoint = import.meta.env.VITE_API_ENDPOINT + "messages";
+// const headers = { "content-type":"application/json"}
 
 const msgService = {
 
   fetchMessages :(roomId: string) =>{
-    return axios.get(endpoint + `:${roomId}`)
+    return axios.get(endpoint + `/${roomId}`)
       .then(response => {
         return response.data;
       });

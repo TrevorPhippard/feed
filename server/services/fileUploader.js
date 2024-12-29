@@ -1,13 +1,13 @@
-import fs from 'fs';
+import fs from "fs";
 
 function timeStampFile(originalFileName){
-    var fileName = originalFileName.split('.');
-    var timestamp = new Date().toISOString().replace(/:/g, '-');
+    var fileName = originalFileName.split(".");
+    var timestamp = new Date().toISOString().replace(/:/g, "-");
     return `${fileName[0]}${timestamp}.${fileName[1]}`
 }
 
 function uploaderService( req, res, callback){
-    const destination = './uploads';
+    const destination = "./uploads";
         if(!fs.existsSync(destination)){
             fs.mkdirSync(destination, {recursive: true})
         }
@@ -15,7 +15,7 @@ function uploaderService( req, res, callback){
         let timeStampName = timeStampFile(uploadFile.name);
         const finalPath = `${destination}/${timeStampName}`
          uploadFile.mv(finalPath)
-         res.send(timeStampName)
+    return res.send(timeStampName)
   
 }
 

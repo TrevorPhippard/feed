@@ -1,6 +1,6 @@
-import { defineConfig, loadEnv } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { ViteEjsPlugin } from 'vite-plugin-ejs'
+import { defineConfig, loadEnv } from "vite"
+import vue from "@vitejs/plugin-vue"
+import { ViteEjsPlugin } from "vite-plugin-ejs"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -10,11 +10,11 @@ export default defineConfig({
   plugins: [
     vue(),
     ViteEjsPlugin(viteConfig => {
-      const env = loadEnv(viteConfig.mode, './');
+      const env = loadEnv(viteConfig.mode, "./");
       return {
         TOKEN: env.VITE_TOKEN
       }
     })
   ],
-  base: './'
+  base: "./"
 })

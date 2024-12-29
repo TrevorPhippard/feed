@@ -1,5 +1,12 @@
-import axios from 'axios';
-const endpoint = import.meta.env.VITE_API_ENDPOINT + '/api/editor';
+import axios from "axios";
+const endpoint = import.meta.env.VITE_API_ENDPOINT + "trivia";
+
+
+interface triviaData {
+  gameName: string;
+  user_id: string;
+  slides: string;
+}
 
 const EditorService = {
 
@@ -10,27 +17,37 @@ const EditorService = {
   },
 
   fetchTriviaById:(triviaId: number) =>{
-    return axios.get(endpoint + `:${triviaId}`)
+    return axios.get(endpoint + `/${triviaId}`)
     .then(response =>  response.data)
     .catch(error=> error.toJSON());
   },
 
-  postTrivia:(data:any) =>{
+  postTrivia:(data:triviaData) =>{
+    console.log({
+      gameName:data.gameName,
+      slide: JSON.parse(data.slides),
+    })
     return axios.post(endpoint,data )
     .then(response =>  response.data)
     .catch(error=> error.toJSON());
 
   },
 
-  updateTrivia:(data:any, index:number| boolean) =>{
-    return  axios.put(endpoint+":"+index, data )
+  updateTrivia:(data:triviaData, index:number) =>{
+
+    console.log({
+      gameName:data.gameName,
+      slide: JSON.parse(data.slides),
+      index
+      })
+    return  axios.put(endpoint+"/"+index, data )
     .then(response =>  response.data)
     .catch(error=> error.toJSON());
 
   },
 
-  deleteTrivia:(data:any, index:number| boolean) =>{
-    return  axios.delete(endpoint+":"+index, data )
+  deleteTrivia:( index:number) =>{
+    return  axios.delete(endpoint+"/"+index )
     .then(response =>  response.data)
     .catch(error=> error.toJSON());
   }

@@ -1,29 +1,75 @@
 <script setup lang="ts">
 
+import { ref } from "vue"
+import { storeToRefs } from "pinia";
+import { useEditorStore } from "../../store/editorStore.ts";
 
-defineProps({ data: Object })
+
+var store = useEditorStore();
+const {
+    editorSlides: slides,
+    editorCurrentSlides: currentSlide
+
+} = storeToRefs(store);
+var store = useEditorStore();
+
+
+const slideNum = ref(0);
+
 
 function onOptionClick(e: any) {
     console.log(e.target.dataset.answer)
+}
+function forward(){
+   console.log({
+        dir:'>',
+        slides :slides.value.length, 
+        slideNum:slideNum.value
+    })
+
+    if(slideNum.value < (slides.value.length-1)){
+        slideNum.value = slideNum.value +1;
+    }
+    store.onSlideAction(slideNum.value)
+}
+function rewind(){
+    console.log({
+        dir:'<',
+        slides :slides.value.length, 
+        slideNum :slideNum.value
+    })
+
+    if(slideNum.value>0){
+        slideNum.value = slideNum.value -1;
+    }
+    store.onSlideAction(slideNum.value)
 }
 
 </script>
 
 <template>
-    <div class="imagecontainer" v-if="data" v-bind:style="{
-        backgroundImage: `url(${data.bgImg}) `,
+    <div class="imagecontainer" v-if="currentSlide" v-bind:style="{
+        backgroundImage: `url(${currentSlide.bgImg}) `,
     }">
-        <h2>{{ data.question }}</h2>
+        <h2>{{ currentSlide.question }}</h2>
         <ul>
             <li :class="{ 'answer-correct': option.correct }" @click="onOptionClick" :data-answer="option"
-                v-for="( option, index) in data.options">
+                v-for="( option, index) in currentSlide.options">
                 {{ index + 1 }}) {{ option.choice }}
             </li>
         </ul>
     </div>
+
+    <button @click="rewind">Rewind</button>
+    <button @click="forward">Forward</button>
 </template>
 
 <style scoped>
+.imagecontainer{
+    min-height:400px;
+    margin-bottom:20px;
+}
+
 .imagecontainer h2 {
     font-size: 32px;
     text-shadow: 0px 3px 3px rgba(0, 0, 0, .5);

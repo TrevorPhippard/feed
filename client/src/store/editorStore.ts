@@ -1,7 +1,9 @@
-import { defineStore } from 'pinia';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+//@ts-nocheck
+import { defineStore } from "pinia";
 
 import UploadService from "../services/upload.service.js";
-import EditorService from '../services/editor.service'
+import EditorService from "../services/editor.service"
 
 declare global {
 
@@ -14,19 +16,20 @@ declare global {
   }
 }
 
-export const useEditorStore = defineStore('editor', {
+
+export const useEditorStore = defineStore("editor", {
   state: () => ({
-    gameId:false,
-    gameName: '',
+    gameId:0,
+    gameName: "",
     showSlide: 0,
     slides: [{
-      name: 'slide 1',
-      type: 'checkbox',
-      question: '',
+      name: "slide 1",
+      type: "checkbox",
+      question: "",
       options: [
-        { choice: '', correct: false },
+        { choice: "", correct: false },
       ],
-      bgImg: import.meta.env.VITE_API_ENDPOINT + "/api/images/img-0906.jpg"
+      bgImg: import.meta.env.VITE_BASE_ENDPOINT + "images/img-0906.jpg"
     }],
     gameAr:[]
   }),
@@ -35,11 +38,11 @@ export const useEditorStore = defineStore('editor', {
 
     blankSlideInfo() {
       return {
-        name: 'slide ' + (Number(this.slides.length) + 1),
-        type: '',
-        question: '',
+        name: "slide " + (Number(this.slides.length) + 1),
+        type: "",
+        question: "",
         options: [],
-        bgImg: import.meta.env.VITE_API_ENDPOINT + "/api/images/img-0906.jpg"
+        bgImg: import.meta.env.VITE_BASE_ENDPOINT + "images/img-0906.jpg"
       }
     },
 
@@ -48,28 +51,36 @@ export const useEditorStore = defineStore('editor', {
     },
 
     saveGameToDatabase(){
-      var sendData = {
+      const sendData = {
         gameName:this.gameName,
-        user_id:'editor',
+        user_id:"editor",
         slides:JSON.stringify(this.slides),
       } 
 
+
       if(this.gameId){
         EditorService.updateTrivia(sendData, this.gameId)
-        .then((msg: any) =>  console.log('response msg::', msg))
+        .then((msg: any) =>  console.log("response msg::", msg))
       }else{
         EditorService.postTrivia(sendData)
-        .then((msg: any) =>  console.log('response msg::', msg))
+        .then((msg: any) =>  console.log("response msg::", msg))
+      }
+    },
+
+    deleteGameFromDatabase(index:number){
+      if(index){
+        EditorService.deleteTrivia(index)
+        .then((msg: any) =>  console.log("response msg::", msg))
       }
     },
 
     fetchGameFromDatabase(){
       EditorService.fetchTrivia().then(data=>{
 
-        console.log('fetchGame', data)
+        console.log("fetchGame", data)
         if(data.length){
           this.gameAr = data
-          .filter((x:any)=>x.Trivia_id !==  'test')
+          .filter((x:any)=>x.Trivia_id !==  "test")
           .map((x:any)=>({id:x.id,gameName:x.gameName }))
         }
       });
@@ -84,6 +95,16 @@ export const useEditorStore = defineStore('editor', {
         }
       });
     },
+
+    setEditor(index:number){
+      const data = this.gameAr[index];
+      if(this.gameAr[index]){
+        this.gameId =data.id
+        this.gameName =data.gameName
+        this.slides =  data.slides ? JSON.parse(data.slides) : data.slides
+      }
+    },
+
 
     /** edit slides actions */
     onSlideAdd() {
@@ -108,21 +129,22 @@ export const useEditorStore = defineStore('editor', {
       /**
        * @todo how?
        */
-      var tempUrl = import.meta.env.VITE_API_ENDPOINT + "/api/uploads/"
-      console.log(this.slides[this.showSlide])
-      console.log(tempUrl+ url)
+      const tempUrl = import.meta.env.VITE_API_ENDPOINT + "uploads/"
       this.slides[this.showSlide].bgImg =tempUrl+ url;
     },
-    upload(formData: any) {
-      UploadService.upload(formData,  (responseData: any) =>{
-        this.updateSlideBg( responseData)
+
+    upload(formData: unknown) {
+      UploadService.upload(formData,  (responseData: string) =>{
+        console.log("url", responseData)
+
+        return this.updateSlideBg(responseData);
       });
     },
 
     /** edit checkbox actions */
     addChoice() {
       this.slides[this.showSlide].options.push({
-        choice: '',
+        choice: "",
         correct: false
       })
     },
@@ -130,11 +152,11 @@ export const useEditorStore = defineStore('editor', {
       this.slides[this.showSlide].options.splice(index, 1);
     },
     updateChoice(e: any) {
-      var index = (e.target.id.split('opt_'))[1];
+      var index = (e.target.id.split("opt_"))[1];
       this.slides[this.showSlide].options[Number(index)].choice = e.target.value;
     },
     updateCheck(e: any) {
-      var index = (e.target.id.split('check_'))[1];
+      var index = (e.target.id.split("check_"))[1];
       this.slides[this.showSlide].options[Number(index)].correct = e.target.checked;
     }
   },

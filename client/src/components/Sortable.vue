@@ -1,8 +1,8 @@
 <script setup lang="ts">
 // @ts-ignore
-import draggable from 'vuedraggable';
-import { ref } from 'vue';
-import { useEditorStore } from '../store/editorStore.ts';
+import draggable from "vuedraggable";
+import { ref } from "vue";
+import { useEditorStore } from "../store/editorStore.ts";
 
 var store = useEditorStore();
 
@@ -21,7 +21,8 @@ function showSlide(index: number) {
 }
 
 function onEnter() {
-    store.onSlideEdit(isEdit.value, textModel.value)
+    store.onSlideEdit(isEdit.value, textModel.value);
+    
     isEdit.value = 100;
 }
 
@@ -41,10 +42,9 @@ function changeOrder(event: any) {
 </script>
 <template>
     <h4>Order Slides</h4>
-    <div class="sideScroll">
+    <div :class="{ sideScroll: itemsContent.length > 6 }">
     <draggable :list="itemsContent" :animation="100" ghost-class="invisable-card" group="list" class="sortable-list "
         tag="ul" @change="changeOrder">
-        
         <template #item="{ element, index }">
             <li :class="{ active: index == slide }" @mouseup="showSlide(index)">
               {{ element.name }}
@@ -57,10 +57,17 @@ function changeOrder(event: any) {
             </li>
         </template>
     </draggable></div>
-    <button @click="add">create slide</button>
-    <button @click="remove">remove selected</button>
+    <div class="btnCont">
+        <button @click="add">create slide</button>
+        <button @click="remove">remove selected</button>
+    </div>
 </template>
 <style>
+
+.btnCont button{
+    margin-top:20px;
+}
+
 .sideScroll{
     max-height: 250px;
     overflow-y: scroll;

@@ -1,6 +1,6 @@
-const baseEndPoint =  import.meta.env.VITE_API_ENDPOINT  + '/api'
-const fileEndpoint = baseEndPoint + '/upload';
-const uploadDataEndpoint = baseEndPoint + '/resource';
+const baseEndPoint =  import.meta.env.VITE_API_ENDPOINT
+const fileEndpoint = baseEndPoint + "upload";
+const uploadDataEndpoint = baseEndPoint + "resources";
 const headers = { "content-type":"application/json"}
 
 const UploadFilesService = {
@@ -15,7 +15,8 @@ const UploadFilesService = {
   },
   
   postUpload: (filename: string, cb: any)=> {
-    console.log(filename)
+    console.log("postUpload:",filename)
+
     return fetch(uploadDataEndpoint,{ 
       method:"POST", 
       headers,

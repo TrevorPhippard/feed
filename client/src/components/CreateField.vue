@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-// import BooleanChoice from './answers/BooleanChoice.vue';
-import CheckboxChoice from './answers/CheckboxChoice.vue';
-// import RadioChoice from './answers/RadioChoice.vue';
+import { ref } from "vue";
+// import BooleanChoice from "./answers/BooleanChoice.vue";
+import CheckboxChoice from "./answers/CheckboxChoice.vue";
+// import RadioChoice from "./answers/RadioChoice.vue";
 
-import { useEditorStore } from '../store/editorStore.ts';
+import { useEditorStore } from "../store/editorStore.ts";
 
 var props = defineProps({ slideData: Object, })
 var store = useEditorStore();
 
-var selected = ref('');
-const questionText = ref(props.slideData ? props.slideData.question : '')
+var selected = ref("");
+const questionText = ref(props.slideData ? props.slideData.question : "")
 
 function updateQuestion() {
     store.updateSlideQuestion(questionText.value)
@@ -30,8 +30,8 @@ function updateQuestion() {
             <!-- <option>Checkbox</option> -->
             <!-- <option>Radio</option> -->
         <!-- </select> -->
-        <!-- <BooleanChoice v-if="selected == 'Boolean'" /> -->
-        <!-- <RadioChoice v-if="selected == 'Radio'" /> -->
+        <!-- <BooleanChoice v-if="selected == "Boolean"" /> -->
+        <!-- <RadioChoice v-if="selected == "Radio"" /> -->
         <CheckboxChoice :data="slideData" />
     </div>
 </template>
@@ -44,10 +44,12 @@ h4 {
 
 textarea {
     display: block;
-    width: 100%;
     padding: 10px;
     margin-top:10px;
+    margin-bottom:15px;
     background-color: var(--input-bg);
+    color: var(--input-text);
+    width:100%;
 }
 
 .title,

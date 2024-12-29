@@ -1,6 +1,6 @@
-'use strict';
-import { Model, DataTypes } from 'sequelize'
-import sequelize from './sequelize';
+"use strict";
+import { Model, DataTypes } from "sequelize"
+import sequelize from "./sequelize";
 
 interface MessageAttributes {
   id: number;
@@ -12,25 +12,20 @@ interface MessageAttributes {
 class Message extends Model<MessageAttributes>
 
   implements MessageAttributes {
-  // 
+
   id!: number;
   user_id!: string;
   room_id!: string;
   message_body!: string;
 
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static associate(models: any) {
     Message.belongsToMany(models.User, {
-      through: 'userMessage'
+      through: "userMessage"
     })
     Message.belongsToMany(models.Room, {
-      through: 'roomMessage'
+      through: "roomMessage"
     })
-    // define association here
   }
 }
 Message.init({
@@ -54,6 +49,6 @@ Message.init({
   },
 }, {
   sequelize,
-  modelName: 'Message',
+  modelName: "Message",
 });
 export default Message;

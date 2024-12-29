@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import Auth from '../components/Auth.vue';
-import VideoHero from '../components/VideoHero.vue'
+import Auth from "../components/Auth.vue";
+import VideoHero from "../components/VideoHero.vue"
 </script>
 <template>
     <VideoHero>
@@ -8,5 +8,4 @@ import VideoHero from '../components/VideoHero.vue'
     </VideoHero>
 </template>
 <style scoped>
-
 </style>

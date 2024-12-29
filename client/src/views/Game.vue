@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-// import { useGameStore } from '../store/gameStore.ts';
-import { storeToRefs } from 'pinia';
-import GameSlide from '../components/GameSlide.vue'
-import Socket from '../components/Socket.vue';
-import { useEditorStore } from '../store/editorStore.ts';
+import { onMounted } from "vue"
+// import { useGameStore } from "../store/gameStore.ts";
+import { storeToRefs } from "pinia";
+import GameSlide from "../components/GameSlide.vue"
+import { useEditorStore } from "../store/editorStore.ts";
 
 var store = useEditorStore();
 
@@ -20,7 +19,6 @@ const {
 var { name,type,question, options, bgImg }= currentSlide;
 
 onMounted(function () {
-  store.fetchGameById(1);
   store.fetchGameFromDatabase();
 })
 
@@ -33,7 +31,6 @@ onMounted(function () {
     </div>
     <div class="chat card">
       <h3><span class="icons" id="icon-contacts">&#9990;</span>Chat</h3>
-      <Socket />
     </div>
   </div>
 </template>

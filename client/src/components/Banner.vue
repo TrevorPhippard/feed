@@ -1,13 +1,13 @@
 <script setup lang="ts">
 
-import { useAuthStore } from '../store/authStore.ts';
-import { storeToRefs } from 'pinia';
+import { useAuthStore } from "../store/authStore.ts";
+import { storeToRefs } from "pinia";
 
-const store = useAuthStore();
+const authStore = useAuthStore();
 
 const {
   getusername: username,
-} = storeToRefs(store)
+} = storeToRefs(authStore)
 
 
 </script>

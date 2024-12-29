@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue"
 
 var props = defineProps({
     text: String,
@@ -8,13 +8,13 @@ var props = defineProps({
     index: Number
 })
 
-const emit = defineEmits([ 'input-submit'])
+const emit = defineEmits([ "input-submit"])
 
 const textModel = ref(props.text)
-const isEdit = ref(false);
+const isEdit = ref(props.text && props.text !=='');
 
 function onEnter(){
-    emit('input-submit',textModel.value )
+    emit("input-submit",textModel.value )
     isEdit.value = !isEdit.value;
 }
 
@@ -25,8 +25,8 @@ function setEditMode(){
 </script>
 <template>
     <div class="editable" @dblclick="setEditMode">
-       <h4> {{ label }} <span v-if="!isEdit"> {{ text }}</span>
-      <input v-if="isEdit" @keyup.enter="onEnter" type="text" placeholder="rename slide" v-model="textModel"></h4>
+       <h2> {{ label }} <span v-if="!isEdit"> {{ text }}</span>
+      <input v-if="isEdit" @keyup.enter="onEnter" type="text" placeholder="rename slide" v-model="textModel"></h2>
     </div>
 </template>
 
@@ -36,6 +36,7 @@ function setEditMode(){
     }
 
     span{
+        color: var(--primary);
         font-weight: 100;
     }
 </style>

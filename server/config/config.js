@@ -1,10 +1,10 @@
 export default {
     development: {
-        username: 'root',
-        password: 'root',
-        storage:  '../database_test.sqlite',
-        host: 'localhost',
-        dialect: 'sqlite',
+        username: "root",
+        password: "root",
+        storage:  "../database_test.sqlite",
+        host: "localhost",
+        dialect: "sqlite",
         // logging: console.log
     },
     production: {

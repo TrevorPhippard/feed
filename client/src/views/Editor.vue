@@ -1,100 +1,123 @@
 <script setup lang="ts">
+import { ref } from "vue"
 
-import Preview from '../components/Preview.vue'
-import Sortable from '../components/Sortable.vue'
-import CreateField from '../components/CreateField.vue'
-import ImageUploader from '../components/ImageUploader.vue';
+import Preview from "../components/tabs/Preview.vue"
+import EditTab from "../components/tabs/Edit.vue"
 
-import { storeToRefs } from 'pinia';
-import { useEditorStore } from '../store/editorStore.ts';
-import NavBar from '../components/NavBar.vue';
-import ClickInput from '../components/ClickInput.vue';
-import { useRouter } from 'vue-router';
+import { storeToRefs } from "pinia";
+import { useEditorStore } from "../store/editorStore.ts";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 var store = useEditorStore();
 const {
-    editorName: gameName,
-    editorSlides: slides,
     editorCurrentSlides: currentSlide
 } = storeToRefs(store);
 
-function updateGameName(value:string) {
-    store.updateGameName(value);
-}
+const tabSelected = ref("Edit");
+
 
 function saveGameToDatabase(){
     store.saveGameToDatabase();
-    router.push({ path: '/profile' })
+    router.push({ path: "/profile" })
 }
+
+function backToProfile(){
+    router.push({ path: "/profile" })
+}
+
+function switchTabs(cls: string){
+    tabSelected.value = cls  || "Edit";
+}
+
+function isActive(cls: string){
+    return tabSelected.value === cls;
+}
+
+var tabs = ["Preview","Edit","Settings"]
+
+
 
 </script>
 
 <template>
-    <NavBar/>
-    <div class="dashboard">
-        <div class="card preview">
+    <main>
+    <div class="card-box">
+
+        <ul class="flex">
+            <li v-for="tab in tabs"  @click="switchTabs(tab)" :class="{ active: isActive(tab) }"  >{{ tab }}</li>
+        </ul>
+        <div v-if="tabSelected == 'Preview'" class="tab">
             <Preview :data="currentSlide"></Preview>
         </div>
-        <div class="card control ">
-                <ImageUploader />
-                <br/>
-                <CreateField class="col-right" :slideData="currentSlide"></CreateField>
+        <div v-if="tabSelected == 'Edit'" class="editTab tab">
+           <EditTab/>
         </div>
-        <div class="info ">
-            <div class="card ">
-                <ClickInput
-                label="Name:" 
-                placeholder="trivia name" 
-                :text="gameName" 
-                @input-submit="updateGameName"
-                />
-            </div>
-            <div class="card ">
-                <Sortable :itemsContent="slides"></Sortable>
-            </div>
+        <div v-if="tabSelected == 'Settings'" class="tab ">
+            <h2>setting</h2>
+            <div class="card">Track pts: no </div>
+            <div class="card">share link: no </div>
+            <div class="card">api link: no </div>
+            <div class="card">allow late: no </div>
+            <div class="card">code: 54687 </div>
         </div>
-        <div class="save card">
+
+        <br/>
+        <div class="save">
                 <h4>Save Trivia </h4>
                 <i>save changes and return to home to launch game</i>
                 <hr/>
                 <button @click="saveGameToDatabase">Save</button>
+                <button @click="backToProfile">Back</button>
+
         </div>
     </div>
+</main>
 </template>
 
 <style scoped>
-.card {
-    margin: 10px;
-    width: 95%; 
-     overflow-y: scroll;
-}
-
-.dashboard {
-  display: grid; 
-  grid-template-columns: 1.5fr 2fr 2fr; 
-  grid-template-rows: 1fr 1.6fr 0.4fr; 
-  gap: 0px 0px; 
-  grid-template-areas: 
-    "preview control control"
-    "info  control control "
-    "save  save save ";   
-
-}
-.control { 
-    grid-area: control;
-}
-.save {    
-    grid-area: save;
- }
- .info {    
-    grid-area: info;
- }
-.preview { 
-    grid-area: preview;
-    height: 100%;
-}
 
 
+    .editTab{
+        display: flex;
+        gap:40px;
+    }
+
+    .card-box{
+        padding-top:0;
+        margin: 0 auto;
+    }
+
+    li{
+        padding:10px;
+        flex: 1;
+        text-align: center;
+        border-top: 5px solid rgb(255, 85, 0, .05);
+    }
+
+    li.active{
+        border-top: 5px solid var(--primary);
+    }
+
+    li:hover{
+        background-color: var(--accent-bg);
+    }
+
+    hr{
+        margin-bottom:20px;
+    }
+
+    ul{
+        margin-bottom:20px;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .editTab{
+            display: block;
+        }
+        .col{
+            margin-bottom:20px;
+        }
+    }
 </style>

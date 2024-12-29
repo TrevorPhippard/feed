@@ -1,11 +1,16 @@
 import { io } from 'socket.io-client';
 
+interface noArg {(): void};
+
+
 class SocketioService {
+
+  //@ts
   socket: any;
 
   constructor() { }
 
-  setupSocketConnection(token: any, room?: any, username?: any) {
+  setupSocketConnection(token: string, room: string, username: string) {
     console.log(import.meta.env.VITE_SOCKET_ENDPOINT)
     this.socket = io(import.meta.env.VITE_SOCKET_ENDPOINT, {
       auth: { token },
@@ -21,7 +26,7 @@ class SocketioService {
     }
   }
 
-  joinRoom(room: any, username: any) {
+  joinRoom(room: string, username: string) {
     console.log('join', room)
     // leave old room
     // if (currentRoomId) {
@@ -40,12 +45,12 @@ class SocketioService {
   }
 
   subscribeToUsersPassage(cb: (err: null, data: any) => any) {
-    this.socket.on('join', (msg: any) => cb(null, msg));
-    this.socket.on('enteredRoom', (msg: any) => cb(null, msg));
-    this.socket.on('disconnected', (msg: any) => cb(null, msg));
+    this.socket.on('join', (msg: string) => cb(null, msg));
+    this.socket.on('enteredRoom', (msg: string) => cb(null, msg));
+    this.socket.on('disconnected', (msg: string) => cb(null, msg));
   }
 
-  sendMessage({ message }: any, cb: any) {
+  sendMessage(message: string, cb:noArg) {
     if (this.socket) {
       this.socket.emit('message', { message }, cb);
     }

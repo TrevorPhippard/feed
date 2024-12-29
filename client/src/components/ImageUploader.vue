@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { useEditorStore } from '../store/editorStore.ts';
+import { useEditorStore } from "../store/editorStore.ts";
 
 const store = useEditorStore();
 
@@ -9,7 +9,7 @@ const file = ref(false);
 
 function remove(){
   file.value = false;
-  console.log('removed', file.value)
+  console.log("removed", file.value)
 }
 
 function dragover(e){
@@ -39,7 +39,7 @@ function onChange(event) {
 async function onSubmit() {
   const formData = new FormData();
   formData.append("file", file.value.files[0]);
-  formData.append("id", 'test1');
+  formData.append("id", "test1");
   formData.append("test","good")
   store.upload(formData)
 }
@@ -74,6 +74,10 @@ async function onSubmit() {
 </template>
 
 <style scoped>
+
+h4{
+  margin:10px 0;
+}
 
 .dropzone-container{
 	display: flex;

@@ -1,16 +1,16 @@
 <script setup lang="ts">
 
-import { ref } from 'vue'
-import { useAuthStore } from '../store/authStore.ts';
-import { useRouter } from 'vue-router';
+import { ref } from "vue"
+import { useAuthStore } from "../store/authStore.ts";
+import { useRouter } from "vue-router";
 
-const store = useAuthStore();
+const authStore = useAuthStore();
 const router = useRouter();
 
 const username = ref();
 const email = ref();
 const password = ref();
-const error = ref('');
+const error = ref("");
 
 function submitToken() {
   const formData = {
@@ -19,13 +19,17 @@ function submitToken() {
     "password": password.value
   }
 
-  store.register(formData).then(function () {
-    router.push({ path: '/profile' })
+  authStore.register(formData).then(function () {
+    router.push({ path: "/profile" })
   }).catch(function (res) {
     console.error(res.response)
-    error.value = 'error';
+    error.value = "error";
   });
 };
+
+function backToLanding() {
+  router.push({ path: "/" })
+}
 
 </script>
 
@@ -36,7 +40,8 @@ function submitToken() {
         <input type="email" placeholder="email" v-model="email" required>
         <input type="password" placeholder="password" v-model="password" required>
         <div class="buttons">
-          <button @click="submitToken" type="submit" class="login-button">Register</button>
+          <button @click="backToLanding" type="submit" class="secondary-button">Back</button>
+          <button @click="submitToken" type="submit" class="primary-button">Register</button>
         </div>
       </form>
       <p class="error">{{ error }}</p>
@@ -47,30 +52,13 @@ function submitToken() {
 
 .buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content:center;
   gap: 10px;
+  margin-top:5px;
 }
-
-button {
-    display: block;
-    font-size: clamp(14px, 1.5vw, 18px);
-    border: 1px solid #f1f1f1;
-    border-radius: 5px;
-    background: transparent;
-    color: #fff;
-    margin: 10px auto 0;
-    padding: 12px 20px;
-    cursor: pointer;
-}
-
-
-button:hover {
-  background-color: var(--accent1-hover);
-}
-
-
 
 .error {
+  margin-top:10px;
   color: var(--error);
 }
 </style>

@@ -1,6 +1,6 @@
-'use strict';
-import { Model, DataTypes } from 'sequelize'
-import sequelize from './sequelize';
+"use strict";
+import { Model, DataTypes } from "sequelize"
+import sequelize from "./sequelize";
 
 interface TriviaAttributes {
   id: number;
@@ -12,20 +12,13 @@ interface TriviaAttributes {
 class Trivia extends Model<TriviaAttributes>
 
   implements TriviaAttributes {
-  // 
+
   id!: number;
   gameName!: string;
   slides!: string;
   Trivia_id!: string;
 
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
-  static associate(models: any) {
-
-    // define association here
+  static associate() {
   }
 }
 Trivia.init({
@@ -49,6 +42,6 @@ Trivia.init({
   },
 }, {
   sequelize,
-  modelName: 'Trivia',
+  modelName: "Trivia",
 });
 export default Trivia;

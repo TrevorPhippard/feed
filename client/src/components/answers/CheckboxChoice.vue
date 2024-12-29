@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useEditorStore } from '../../store/editorStore.ts';
+import { ref } from "vue";
+import { useEditorStore } from "../../store/editorStore.ts";
 
 var store = useEditorStore();
 
 defineProps({ data: Object, })
 
 var inputs = ref([{
-    name: '',
-    party: ''
+    name: "",
+    party: ""
 }])
 
 function addChoice() {
@@ -53,6 +53,10 @@ function updateCheck(e: any) {
     flex-direction: column;
 }
 
+.form p{
+    margin-bottom: 10px;
+}
+
 .form-group {
     align-items: center;
     display: flex;
@@ -61,5 +65,8 @@ function updateCheck(e: any) {
 
 .form-group *+* {
     margin-left: 10px;
+}
+textarea{
+    padding:5px;
 }
 </style>

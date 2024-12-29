@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia';
-import AuthService from '../services/auth.service'
-import SocketioService from '../services/socketio.service';
+import { defineStore } from "pinia";
+import AuthService from "../services/auth.service"
+import SocketioService from "../services/socketio.service";
 
 declare global {
 
@@ -19,20 +19,20 @@ interface User {
   username?: string
 }
 
-export const useAuthStore = defineStore('auth', {
+export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: import.meta.env.VITE_TOKEN,
     socketEndpoint: import.meta.env.VITE_SOCKET_ENDPOINT,
     loggedIn: false,
     user: {
-      user_name: '',
-      token: ''
+      user_name: "Default",
+      token: ""
     },
     profileInfo: {
-      avatar: '',
-      email: '',
+      avatar: "",
+      email: "",
       Id: 0,
-      memberSince: '',
+      memberSince: "",
     },
   }),
 
@@ -44,7 +44,7 @@ export const useAuthStore = defineStore('auth', {
     login(user: User | null) {
       return AuthService.login(user).then(
         (user: any) => {
-          console.log('response user::', user)
+          console.log("response user::", user)
 
           this.user = user;
           this.loggedIn = true;
@@ -67,7 +67,7 @@ export const useAuthStore = defineStore('auth', {
           this.user = user;
           this.loggedIn = true;
 
-          console.log('log in successful')
+          console.log("log in successful")
 
           localStorage.setItem("user", JSON.stringify({ data: this.user }));
           SocketioService.setupSocketConnection(this.user.token);
