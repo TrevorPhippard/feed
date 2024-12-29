@@ -21,7 +21,10 @@ router.post("/", async (req, res) => {
     try {
         const { filename } = req.body;
         const result = await Controller.addEntry({filename})
-        return res.status(200).json(result);
+        return res.status(200).json({
+            id:result.id,
+            filename:filename
+        });
     } catch (error) {
         console.error(error);
         return res.status(500).send("Internal Server Error");

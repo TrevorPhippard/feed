@@ -32,7 +32,7 @@
 
   --input-bg: #edf3ed;
   --input-text: #3C3C3C;
-  --input-text-placeholder:#60665f;
+  --input-text-placeholder:#9ca49a;
 
   --disabled: #91abc1;
   --focused: var(--primary);
@@ -240,6 +240,7 @@ textarea{
 
 ::placeholder {
   color: var(--input-text-placeholder);
+  font-weight: 100;
 }
 
 .form-group input {
@@ -274,7 +275,7 @@ textarea{
   content: "";
   display: block;
   position: absolute;
-  top: 2px;
+  top: 4px;
   left: 9px;
   width: 6px;
   height: 14px;
@@ -306,7 +307,9 @@ textarea{
   justify-content: center;
   gap:var(--sp-mini);
 }
-
+.col{
+  margin-bottom:20px;
+}
 
 /*----------------------------------------------------------------
   LAYOUT
@@ -360,19 +363,14 @@ textarea{
 }
 
 .x-button {
+  height:20px;
+  width:20px;
   border-radius: 50%;
-  padding: 0px 5px 2px 3px;
-  border: 2px solid #ccc;
-  color: #ccc;
   position: relative;
-  font-size: 15px;
-  font-weight: 900;
   cursor: pointer;
 }
 .x-button:hover {
-  border: 2px solid #ccc;
-  background-color: #ccc;
-  color: #333;
+  background-color: var(--accent1-hover);
 }
 
 

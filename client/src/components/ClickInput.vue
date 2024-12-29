@@ -11,7 +11,8 @@ var props = defineProps({
 const emit = defineEmits([ "input-submit"])
 
 const textModel = ref(props.text)
-const isEdit = ref(props.text && props.text !=='');
+
+const isEdit = ref(props.text?false:true);
 
 function onEnter(){
     emit("input-submit",textModel.value )
@@ -25,8 +26,8 @@ function setEditMode(){
 </script>
 <template>
     <div class="editable" @dblclick="setEditMode">
-       <h2> {{ label }} <span v-if="!isEdit"> {{ text }}</span>
-      <input v-if="isEdit" @keyup.enter="onEnter" type="text" placeholder="rename slide" v-model="textModel"></h2>
+       <h2> {{ label }} <span v-if="!isEdit || text"> {{ text }}</span>
+      <input v-if="isEdit &&  !text" @keyup.enter="onEnter" type="text" placeholder="enter quiz name" v-model="textModel"></h2>
     </div>
 </template>
 

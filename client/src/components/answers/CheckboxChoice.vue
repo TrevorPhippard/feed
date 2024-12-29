@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useEditorStore } from "../../store/editorStore.ts";
+import minusCircle from "../../assets/minus-circle.svg";
+
 
 var store = useEditorStore();
 
@@ -39,10 +41,14 @@ function updateCheck(e: any) {
 
             <input type="checkbox" :id="'check_' + k" :checked="input.correct" @input="updateCheck">
             <label :for="'check_' + k"> Correct</label><br>
-            <span>
-                <i class="x-button" @click="removeChoice(k)" v-show="k || (!k && inputs.length > 1)">×</i>
-            </span>
-        </div>
+                <img
+                alt="" 
+                class="x-button" @click="removeChoice(k)" 
+                v-show="k || (!k && inputs.length > 1)"
+                :src="minusCircle" 
+              >
+
+            </div>
     </div>
     <button @click="addChoice">Add fields</button>
 </template>

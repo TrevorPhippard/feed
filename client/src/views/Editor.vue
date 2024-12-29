@@ -116,8 +116,5 @@ var tabs = ["Preview","Edit","Settings"]
         .editTab{
             display: block;
         }
-        .col{
-            margin-bottom:20px;
-        }
     }
 </style>

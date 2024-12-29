@@ -27,9 +27,7 @@ function remove(index: number) {
             <textarea placeholder="option" type="text" v-model="input.name"></textarea>
             <input type="radio" :id="'opt_' + k" name="'opt_'+k" :value="k">
             <label :for="'opt_' + k"> Correct</label><br>
-            <span>
-                <i class="x-button" @click="remove(k)" v-show="k || (!k && inputs.length > 1)">×</i>
-            </span>
+                <span class="x-button" @click="remove(k)" v-show="k || (!k && inputs.length > 1)">×</span>
         </div>
     </div>
     <button @click="add">Add fields</button>

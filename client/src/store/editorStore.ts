@@ -16,21 +16,22 @@ declare global {
   }
 }
 
+const blankSlides = {
+  name: "slide 1",
+  type: "checkbox",
+  question: "",
+  options: [
+    { choice: "", correct: false },
+  ],
+  bgImg: import.meta.env.VITE_BASE_ENDPOINT + "images/img-0906.jpg"
+};
 
 export const useEditorStore = defineStore("editor", {
   state: () => ({
     gameId:0,
     gameName: "",
     showSlide: 0,
-    slides: [{
-      name: "slide 1",
-      type: "checkbox",
-      question: "",
-      options: [
-        { choice: "", correct: false },
-      ],
-      bgImg: import.meta.env.VITE_BASE_ENDPOINT + "images/img-0906.jpg"
-    }],
+    slides: [blankSlides],
     gameAr:[]
   }),
 
@@ -93,6 +94,12 @@ export const useEditorStore = defineStore("editor", {
         }
       });
     },
+    
+    createNewGame(){
+          this.gameId =0
+          this.gameName= "";
+          this.slides =  [blankSlides]
+    },
 
     /** edit slides actions */
     onSlideAdd() {
@@ -113,18 +120,13 @@ export const useEditorStore = defineStore("editor", {
     updateSlideQuestion(text: string) {
       this.slides[this.showSlide].question = text;
     },
-    updateSlideBg(url: string) {
-      /**
-       * @todo how?
-       */
-      const tempUrl = import.meta.env.VITE_API_ENDPOINT + "uploads/"
-      this.slides[this.showSlide].bgImg =tempUrl+ url;
+    updateSlideBg(res: string) {
+      const tempUrl = import.meta.env.VITE_BASE_ENDPOINT + "uploads/"
+      this.slides[this.showSlide].bgImg =tempUrl+ JSON.parse(res).filename;
     },
 
     upload(formData: unknown) {
       UploadService.upload(formData,  (responseData: string) =>{
-        console.log("url", responseData)
-
         return this.updateSlideBg(responseData);
       });
     },

@@ -23,6 +23,7 @@ defineProps({
 
 
 function addGame() {
+  store.createNewGame();
   router.push({ path: "/editor" })
 }
 
@@ -37,7 +38,6 @@ function goToEdit(index: number) {
 }
 
 function deleteGame(index: number) {
-  console.log("delete:", index);
   store.deleteGameFromDatabase(index);
 }
 
@@ -50,9 +50,9 @@ function deleteGame(index: number) {
     <div v-else v-for="(info, key) in gameList" :key="key">
       <p>{{ info.gameName }}</p>
       <ul>
-        <li><img :src="edit" alt="" @click="goToEdit(info.id)" /></li>
-        <li><img :src="playCircle" alt="" @click="launchGame(info.id)" /></li>
-        <li><img :src="trash" alt="" @click="deleteGame(info.id)" /></li>
+        <li><img :src="playCircle"  alt="" @click="launchGame(info.id)" /></li>
+        <li><img :src="edit"        alt="" @click="goToEdit(info.id)" /></li>
+        <li><img :src="trash"       alt="" @click="deleteGame(info.id)" /></li>
       </ul>
     </div>
   </div>

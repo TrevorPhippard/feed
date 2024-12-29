@@ -15,7 +15,6 @@ const UploadFilesService = {
   },
   
   postUpload: (filename: string, cb: any)=> {
-    console.log("postUpload:",filename)
 
     return fetch(uploadDataEndpoint,{ 
       method:"POST", 

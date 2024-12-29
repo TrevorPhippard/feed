@@ -6,6 +6,7 @@ const store = useEditorStore();
 
 const isDragging = ref(false);
 const file = ref(false);
+const clearlyNotNamed = ref(false);
 
 function remove(){
   file.value = false;
@@ -29,24 +30,34 @@ function drop(e){
 
 
 function onChange(event) {
+  console.log(event);
+
   if(event.type == "drop"){
-    file.value = event.dataTransfer.files[0]
+    file.value = event.dataTransfer.files[0];
+    clearlyNotNamed.value = true;
   }else{
     file.value = event.target.files[0];
+    clearlyNotNamed.value = true;
   }
 }
 
-async function onSubmit() {
+ function onSubmit() {
+
   const formData = new FormData();
   formData.append("file", file.value.files[0]);
   formData.append("id", "test1");
   formData.append("test","good")
-  store.upload(formData)
+  store.upload(formData);
+
+  clearlyNotNamed.value = false;
+
 }
 
 </script>
-<template>
-    <h4>background image</h4>
+<template>     
+    <h4>background image: 
+      <i v-if="file.files && file.files[0] && !clearlyNotNamed">{{file.files[0].name}}</i>
+    </h4>
     <form @submit.prevent="onSubmit" enctype="multipart/form-data">
       <div class="dropzone-container" @dragover="dragover" @dragleave="dragLeave" @drop="drop">
           <input 
@@ -57,18 +68,21 @@ async function onSubmit() {
           accept=".png,.jpeg,.gif"
           @change="onChange" 
           placeholder="Select Files" />
-        <label for="fileInput" class="file-label" v-if="!file.value">
-          <div v-if="isDragging">Release to drop file here.</div>
-          <div v-else>
+        <label for="fileInput" class="file-label" v-if="!clearlyNotNamed && file">
+          <div class="dropzone"  v-if="isDragging">Release to drop file here.</div>
+          <div class="dropzone" v-else>
             <h2>Drop File</h2>
             <p>or</p>
             <a class="button">browse files</a>
           </div>
         </label>
-        <div class="prelaod" v-if="file.value">
+        <div class="prelaod" v-if="file.files && clearlyNotNamed">
           <p :title="file.name"> {{ file.files[0].name }}</p>
           <input type="submit" value="Submit">
         </div>
+
+      
+
       </div>
     </form>
 </template>
@@ -81,13 +95,27 @@ h4{
 
 .dropzone-container{
 	display: flex;
-	/* justify-content: center; */
 }
+
+.dropzone{
+  color: var(--input-text-placeholder);
+  height:125px;
+  width:150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.dropzone a{
+  color: var(--input-text-placeholder);
+}
+
 
 .file-label{
   padding: 12px;
-  border: 2px dashed #bbb7c0;
-  background-color: #c6ccd5;
+  border: 2px dashed var(--accent1);
+  background-color: var(--input-bg);
 }
 .file-label *{
   margin: 0;

@@ -21,24 +21,12 @@ function onOptionClick(e: any) {
     console.log(e.target.dataset.answer)
 }
 function forward(){
-   console.log({
-        dir:'>',
-        slides :slides.value.length, 
-        slideNum:slideNum.value
-    })
-
     if(slideNum.value < (slides.value.length-1)){
         slideNum.value = slideNum.value +1;
     }
     store.onSlideAction(slideNum.value)
 }
 function rewind(){
-    console.log({
-        dir:'<',
-        slides :slides.value.length, 
-        slideNum :slideNum.value
-    })
-
     if(slideNum.value>0){
         slideNum.value = slideNum.value -1;
     }
@@ -48,6 +36,7 @@ function rewind(){
 </script>
 
 <template>
+    <h3>Slide: {{(slideNum+1) +' of '+ slides.length}}</h3>
     <div class="imagecontainer" v-if="currentSlide" v-bind:style="{
         backgroundImage: `url(${currentSlide.bgImg}) `,
     }">
@@ -59,9 +48,8 @@ function rewind(){
             </li>
         </ul>
     </div>
-
-    <button @click="rewind">Rewind</button>
-    <button @click="forward">Forward</button>
+    <button v-if="slides.length > 1 && slideNum" @click="rewind">Rewind</button>
+    <button v-if="slides.length > 1 && slideNum < (slides.length-1)" @click="forward">Forward</button>
 </template>
 
 <style scoped>
