@@ -12,7 +12,7 @@ import express from "express";
 
 import cors from "cors";
 import fileUpload from "express-fileupload";
-import http from "http";
+import { createServer } from 'http'
 import bodyParser from "body-parser";
 import jwt from "jsonwebtoken";
 import dotEnv from "dotenv";
@@ -20,6 +20,8 @@ import compression from "compression";
 
 import sequelize from "./models/sequelize";
 import socketRoutes from "./routes/api/v1/socket";
+
+import { Server } from 'socket.io'
 import { instrument } from "@socket.io/admin-ui";
 import routes from "./routes";
 
@@ -30,6 +32,7 @@ dotEnv.config();
 
 const app = express();
 const port = 3000;
+const socketPort = 3001;
 
 app.use(cors());
 app.use(compression());
@@ -39,7 +42,6 @@ app.use("/uploads", express.static("uploads"));
 
 // jwt secret
 const JWT_SECRET = process.env.JWT_SECRET;
-const userList: unknown[] = [];
 
 /** ---------------------------------------------------------------------------
  *  @bodyparser
@@ -91,10 +93,10 @@ app.use(function (req, res) {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const socketServer = http.createServer(app, userList);
+const socketServer = createServer(app);
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const io = require("socket.io")(socketServer, {
+const io = new Server(socketServer, {
   cors: {
     origin: "http://localhost:8080",
     methods: ["GET", "POST"],
@@ -108,7 +110,7 @@ instrument(io, {
   mode: "development",
 });
 
-io.use(async (socket: unknown, next: unknown) => {
+io.use(async (socket: any, next: any) => {
   const token = socket.handshake.auth.token;
   try {
     const user = await jwt.verify(token, JWT_SECRET);
@@ -119,10 +121,10 @@ io.use(async (socket: unknown, next: unknown) => {
   }
 });
 
-io.on("connection", (socket: unknown) => socketRoutes(io, socket, userList));
+io.on("connection", (socket: any) => socketRoutes(io, socket));
 
-socketServer.listen(3001, () => {
-  console.log("SOCKET listening on *:3001");
+socketServer.listen(socketPort, () => {
+  console.log(`SOCKET listening on *:${socketPort}`);
 });
 
 

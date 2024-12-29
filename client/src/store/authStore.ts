@@ -14,10 +14,15 @@ declare global {
 }
 
 interface User {
-  email: string,
-  password: string
-  username?: string
+  email: string;
+  password: string;
+  username?: string;
 }
+
+interface UserType {
+  token: string;
+  user_name: string;
+} 
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
@@ -41,44 +46,44 @@ export const useAuthStore = defineStore("auth", {
       this.user = JSON.parse(cookieData).data;
       this.token = this.user.token;
     },
-    login(user: User | null) {
+    login(user: User) {
       return AuthService.login(user).then(
-        (user: any) => {
-          console.log("response user::", user)
+        (userRes: UserType) => {
 
-          this.user = user;
+          this.user = userRes;
           this.loggedIn = true;
           localStorage.setItem("user", JSON.stringify({ data: this.user }));
-          SocketioService.setupSocketConnection(this.user.token);
+          SocketioService.setupSocketConnection(this.user.token,"landing" ,userRes.user_name);
 
-          return Promise.resolve(user);
+          return Promise.resolve(userRes);
         },
-        (error: any) => {
+        (error: Error) => {
           this.loggedIn = false;
-          // @ts-ignore
-          this.user = null;
+          this.user = {
+            token:"",
+            user_name:""
+          };
           return Promise.reject(error);
         }
       )
     },
-    register(user: User | null) {
+    register(user: User ) {
       return AuthService.register(user).then(
-        (user: any) => {
-          this.user = user;
+        (userRes: UserType) => {
+          this.user = userRes;
           this.loggedIn = true;
 
-          console.log("log in successful")
-
           localStorage.setItem("user", JSON.stringify({ data: this.user }));
-          SocketioService.setupSocketConnection(this.user.token);
+          SocketioService.setupSocketConnection(this.user.token,"landing" ,userRes.user_name);
 
-          return Promise.resolve(user);
-
+          return Promise.resolve(userRes);
         },
-        (error: any) => {
+        (error: Error) => {
           this.loggedIn = false;
-          // @ts-ignore
-          this.user = null;
+          this.user = {
+            token:"",
+            user_name:""
+          };
           return Promise.reject(error);
         })
     }

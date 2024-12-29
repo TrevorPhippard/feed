@@ -124,7 +124,7 @@ export const useEditorStore = defineStore("editor", {
       this.slides[this.showSlide].bgImg =tempUrl+ JSON.parse(res).filename;
     },
 
-    upload(formData: unknown) {
+    upload(formData: any) {
       UploadService.upload(formData,  (responseData: string) =>{
         return this.updateSlideBg(responseData);
       });
