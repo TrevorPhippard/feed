@@ -1,15 +1,13 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useEditorStore } from "../../store/editorStore.ts";
 
 import ClickInput from "../editor/ClickInput.vue";
 import CreateField from "../editor/CreateField.vue"
 import Sortable from "../editor/Sortable.vue"
 import ImageUploader from "../editor/ImageUploader.vue";
 
-
-import { storeToRefs } from "pinia";
-import { useEditorStore } from "../../store/editorStore.ts";
-
-var store = useEditorStore();
+const store = useEditorStore();
 
 const {
     editorName: gameName,

@@ -4,7 +4,7 @@ import draggable from "vuedraggable";
 import { ref } from "vue";
 import { useEditorStore } from "../../store/editorStore.ts";
 
-var store = useEditorStore();
+const store = useEditorStore();
 
 defineProps({
     itemsContent: Array,

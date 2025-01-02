@@ -1,25 +1,19 @@
 <script setup lang="ts">
-
 import { ref } from "vue"
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "../../store/editorStore.ts";
 
-
-var store = useEditorStore();
+const store = useEditorStore();
 const {
     editorSlides: slides,
     editorCurrentSlides: currentSlide
 
 } = storeToRefs(store);
-var store = useEditorStore();
-
 
 const slideNum = ref(0);
 
-
 function onOptionClick(event: Event) {
     const target = event.target as HTMLInputElement;
-
     console.log(target.dataset.answer)
 }
 function forward(){

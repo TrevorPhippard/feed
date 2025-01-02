@@ -35,8 +35,7 @@ class SocketioService {
       }
     });
 
-    console.log(`Connecting socket...`, {
-      username, room});
+    console.log(`Connecting socket...`, {username, room});
 
     if (room) {
       this.socket.emit('join', { room_id: room, userId: username, socketId: this.socket.id });
@@ -62,10 +61,8 @@ class SocketioService {
   subscribeToMessages(cb: (err: null, message: string) => void) {
 
     if (!this.socket) return (true);
-    
     this.socket.on('message', (msg: string) => cb(null, msg));
     this.socket.on('receivedMsg', (msg: string) => cb(null, msg));
-
   }
 
   subscribeToUsersPassage(cb: (err: null, userPassage: userPassageType) => void) {
@@ -75,12 +72,20 @@ class SocketioService {
     this.socket.on('broadcast',  (msg: string) => cb(null, { data: msg, type: 'broadcast' }));
   }
 
-
-
   sendMessage(message: messageType, cb:noArg) {
     if (this.socket) {
       this.socket.emit('message', { message }, cb);
     }
+  }
+
+  subscribeToGameActions(cb: (err: null, message: string) => void) {
+    if (!this.socket) return (true);
+    this.socket.on('join', (msg: string) => cb(null, { username: msg, type: 'join' }));
+    this.socket.on('enteredRoom', (msg: string) => cb(null, { userList: msg, type: 'enteredRoom' }));
+    this.socket.on('disconnected', (msg: string) => cb(null, { username: msg, type: 'disconnected' }));
+    this.socket.on('message', (msg: string) => cb(null, msg));
+    this.socket.on('receivedMsg', (msg: string) => cb(null, msg));
+    this.socket.on('broadcast',  (msg: string) => cb(null, { data: msg, type: 'broadcast' }));
   }
 
   disconnect() {

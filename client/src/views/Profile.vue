@@ -1,20 +1,25 @@
 <script setup lang="ts">
-import { onMounted } from "vue"
+import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useEditorStore } from "../store/editorStore.ts";
+import { useGameStore } from "../store/gameStore.ts";
 
-// import Info from "../components/Info.vue";
 import TopHeader from "../components/TopHeader.vue";
 import GameLauncher from "../components/GameLauncher.vue";
 import ChatMessage from "../components/ChatMessage.vue";
-// import SocketUser from "../components/SocketUser.vue";
 import AcitveUsers from "../components/AcitveUsers.vue";
 
-import { useEditorStore } from "../store/editorStore.ts";
+// import Info from "../components/Info.vue";
+// import SocketUser from "../components/SocketUser.vue";
 
-var store = useEditorStore();
+const gameStore = useGameStore();
+const editorStore  = useEditorStore();
+
+const { getActiveRoom: room_id } = storeToRefs(gameStore);
 
 // getGameList
 onMounted(function () {
-  store.fetchGameFromDatabase();
+  editorStore .fetchGameFromDatabase();
 })
 </script>
 
@@ -26,8 +31,9 @@ onMounted(function () {
             <h3><span class="icons" id="icon-contacts">&#9731;</span>Quizes</h3>
             <GameLauncher />
             <div class="community">
-              <AcitveUsers text="Friends Online" :lobby="false" />
-              <ChatMessage  class="item"/>
+              {{ room_id }}
+              <AcitveUsers text="Friends Online" :lobby="false" :room="room_id" />
+              <!-- <ChatMessage  class="item"/> -->
             </div>
         </div>
     </div>

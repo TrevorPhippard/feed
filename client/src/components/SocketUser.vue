@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { storeToRefs } from "pinia";
-import SocketioService from "../services/socketio.service.js";
-import plusCircle from "../assets/plus-circle.svg";
-import user from "../assets/user.svg";
 import { useGameStore } from "../store/gameStore.ts";
 import { useAuthStore } from "../store/authStore.ts";
 
-var props = defineProps({
+import plusCircle from "../assets/plus-circle.svg";
+import user from "../assets/user.svg";
+
+import SocketioService from "../services/socketio.service.js";
+
+const props = defineProps({
     online: Boolean,
     username: String,
     lobby: Boolean
@@ -16,10 +18,10 @@ var props = defineProps({
 const gameStore = useGameStore();
 const authStore = useAuthStore();
 
-const { getRoom: room_id } = storeToRefs(gameStore);
+const { getGameRoom: room_id } = storeToRefs(gameStore);
 const { getusername: yourUsername } = storeToRefs(authStore)
 
-function goToEdit() {
+function inviteUserToPlay() {
     if(typeof user == "string" && props.username){
         SocketioService.invite(props.username, room_id.value )
     }else{
@@ -37,7 +39,7 @@ function goToEdit() {
                 </div>
                 <h2>{{props.username}}</h2>
             </div>
-            <button v-if="lobby" @click="goToEdit">
+            <button v-if="lobby" @click="inviteUserToPlay">
                 <span>Add </span>
                 <img class="addUserBtn" :src="plusCircle"  data-user="user"/>
             </button>

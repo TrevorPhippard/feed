@@ -1,24 +1,34 @@
 <script setup lang="ts">
-/** @name <ModalBox>  */
-
 import { storeToRefs } from "pinia";
+import { useAuthStore } from "../store/authStore.ts";
 import { useEditorStore } from "../store/editorStore.ts";
+import { useGameStore } from "../store/gameStore.ts";
+
+import SocketioService from "../services/socketio.service.js";
 import closeCircle from "../assets/x-circle.svg";
 
-const store = useEditorStore();
+
+const editorStore = useEditorStore();
+const authStore = useAuthStore();
+const gameStore = useGameStore();
+
+const { getusername: username, getToken: token } = storeToRefs(authStore)
+const { getInvitation: room_id } = storeToRefs(gameStore);
 
 const {
   modal: castModal,
-  getInvitation:invitation
-} = storeToRefs(store);
+} = storeToRefs(editorStore);
 
 function closeModal(){
-    store.toggleModal(false);
+    editorStore.toggleModal(false);
 }
 
 function joinGame(){
-  store.toggleModal(false);
-
+  editorStore.toggleModal(false);
+  // SocketioService.joinRoom(room_id, username)
+  // SocketioService.subscribeToGameActions((_err, data) => {
+  //     console.log(data);
+  // })
 }
 
 </script>
@@ -30,7 +40,7 @@ function joinGame(){
       <img id="closeButton" @click="closeModal" :src="closeCircle" />
     </div>
 
-      <p>Would you like to join <i>username</i> in game: <i>{{invitation}}</i></p>
+      <p>Would you like to join <i>username</i> in game: <i>{{room_id}}</i></p>
     <div class="modal_footer">
       <button class="btn-invert" @click="joinGame">Join</button>
       <button @click="closeModal">Back</button>

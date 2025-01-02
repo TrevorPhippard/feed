@@ -1,20 +1,22 @@
 
 <script setup lang="ts" >
-import { ref,  onUnmounted } from "vue"
+import { ref,  onUnmounted } from "vue";
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+
+import { useAuthStore } from "../store/authStore.ts";
+import { useGameStore } from "../store/gameStore.ts";
+
 import SocketioService from "../services/socketio.service.js";
 import MsgService from "../services/msg.service.js";
 
-import { useAuthStore } from "../store/authStore.ts";
-
-import { storeToRefs } from "pinia";
-import { useRouter } from "vue-router";
-
+const gameStore = useGameStore();
 const authStore = useAuthStore();
 
 const router = useRouter();
 
 const { getusername: username, getToken: token } = storeToRefs(authStore)
-const room_id = ref('chat')
+const { getActiveRoom: room_id } = storeToRefs(gameStore);
 
 const inputMessageText = ref("")
 const messages:any = ref([]);

@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { onMounted } from "vue"
+import { onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useAuthStore } from "./store/authStore.ts";
 import { storeToRefs } from "pinia";
+
+import { useAuthStore } from "./store/authStore.ts";
+
 import ModalBox from './components/ModalBox.vue';
 
 const router = useRouter();
@@ -12,7 +14,7 @@ const { getToken: token } = storeToRefs(authStore)
 
 
 onMounted(function () {
-  var cookie = localStorage.getItem("user");
+  const cookie = localStorage.getItem("user");
   if (cookie) { authStore.setUser(cookie) };
   console.log('-->',token.value)
 

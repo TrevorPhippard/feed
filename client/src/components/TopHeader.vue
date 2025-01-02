@@ -2,8 +2,8 @@
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "../store/authStore";
-import LogoSide from "../components/LogoSide.vue";
 
+import LogoSide from "../components/LogoSide.vue";
 
 const authStore = useAuthStore();
 
@@ -16,7 +16,7 @@ function logout() {
   router.push({ path: "/" })
 }
 
-var placeholderAvatar ="https://placeholder.pagebee.io/api/random/300/200"
+const placeholderAvatar ="https://placeholder.pagebee.io/api/random/300/200"
 
 //import.meta.env.VITE_BASE_ENDPOINT + "images/b.jpg"
 

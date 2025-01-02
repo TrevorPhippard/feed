@@ -4,11 +4,11 @@ import { useEditorStore } from "../../store/editorStore.ts";
 import minusCircle from "../../assets/minus-circle.svg";
 
 
-var store = useEditorStore();
+const store = useEditorStore();
 
 defineProps({ data: Object, })
 
-var inputs = ref([{
+const inputs = ref([{
     name: "",
     party: ""
 }])

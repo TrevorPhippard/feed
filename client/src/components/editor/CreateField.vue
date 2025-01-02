@@ -6,8 +6,8 @@ import CheckboxChoice from "../answers/CheckboxChoice.vue";
 
 import { useEditorStore } from "../../store/editorStore.ts";
 
-var props = defineProps({ slideData: Object, })
-var store = useEditorStore();
+const props = defineProps({ slideData: Object, })
+const store = useEditorStore();
 
 const questionText = ref(props.slideData ? props.slideData.question : "")
 

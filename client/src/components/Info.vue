@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { useAuthStore } from "../store/authStore.ts";
 import { storeToRefs } from "pinia";
+import { useAuthStore } from "../store/authStore.ts";
+
 const authStore = useAuthStore();
 const {
   getusername: username,
 } = storeToRefs(authStore)
 
-var placeholderAvatar = import.meta.env.VITE_BASE_ENDPOINT + "images/b.jpg"
+const placeholderAvatar = import.meta.env.VITE_BASE_ENDPOINT + "images/b.jpg"
 
 
 </script>

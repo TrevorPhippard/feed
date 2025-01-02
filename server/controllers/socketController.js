@@ -33,12 +33,14 @@ export default function (io, socket) {
         io.emit("join", userId);
         onlineUsers[socket.id] = userId;
         // let room know someone joined
+        console.log(`user ${userId} has entered room ${room_id}`);
+
         io.to(room_id).emit("enteredRoom", onlineUsers);
 
     }
 
     function onLeave({ room_id, userId }) {
-        // console.log(`user ${userId} has left room ${room_id}`);
+        console.log(`user ${userId} has left room ${room_id}`);
         socket.leave(room_id);
         io.emit("disconnected", userId);
         io.to(room_id).emit("disconnected", onlineUsers[socket.id]);

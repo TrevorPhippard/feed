@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue"
+import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useEditorStore } from "../store/editorStore.ts";
 
 import Preview from "../components/tabs/Preview.vue"
 import EditTab from "../components/tabs/Edit.vue"
 
-import { storeToRefs } from "pinia";
-import { useEditorStore } from "../store/editorStore.ts";
-import { useRouter } from "vue-router";
-
 const router = useRouter();
 
-var store = useEditorStore();
+const store = useEditorStore();
 const {
     editorCurrentSlides: currentSlide
 } = storeToRefs(store);
@@ -35,7 +34,7 @@ function isActive(cls: string){
     return tabSelected.value === cls;
 }
 
-var tabs = ["Preview","Edit","Settings"]
+const tabs = ["Preview","Edit","Settings"]
 
 
 

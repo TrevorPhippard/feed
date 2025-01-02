@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-var inputs = ref([{
+const inputs = ref([{
     name: "",
     party: ""
 }])

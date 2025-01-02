@@ -1,13 +1,19 @@
 import axios from "axios";
-const endpoint = import.meta.env.VITE_API_ENDPOINT + "game";
+const endpoint = import.meta.env.VITE_API_ENDPOINT + "trivia";
 // const headers = { "content-type": "application/json" }
+// import SocketioService from "./socketio.service.js";
 
 const GameService = {
-  fetchAndLaunchGame: (room_id: string) => {
-    return axios.get(endpoint + `/${room_id}`)
+  launchGame: ( room: string) => {
+
+    return axios.get(endpoint + `/${room}`)
       .then(response => {
         return response.data;
       });
+  },
+  quitGame:()=>{
+
+
   }
 }
 

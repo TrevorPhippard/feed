@@ -1,7 +1,7 @@
 
 import { defineStore } from "pinia";
 
-import UploadService from "../services/upload.service.js";
+import UploadService from "../services/upload.service";
 import EditorService from "../services/editor.service"
 
 declare global {
@@ -33,7 +33,7 @@ export const useEditorStore = defineStore("editor", {
     slides: [blankSlides],
     gameAr:[],
     modal: false,
-    invitation:'0'
+  
   }),
 
   actions: {
@@ -95,6 +95,7 @@ export const useEditorStore = defineStore("editor", {
         }
       });
     },
+
     
     createNewGame(){
           this.gameId =0
@@ -155,15 +156,13 @@ export const useEditorStore = defineStore("editor", {
     toggleModal(mode: boolean) {
       this.modal = mode;
     },
-    addInvitation(room_id:string){
-      this.invitation= room_id;
-    }
+
   },
   getters: {
     editorName: state => state.gameName,
     editorSlides: state => state.slides,
     editorCurrentSlides: state => state.slides[state.showSlide],
     getGameList: state => state.gameAr,
-    getInvitation: state => state.invitation
+
   }
 })

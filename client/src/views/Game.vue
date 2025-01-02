@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
-import { useGameStore } from "../store/gameStore.ts";
+import { useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
-import GameSlide from "../components/GameSlide.vue"
 import { useEditorStore } from "../store/editorStore.ts";
+import { useGameStore } from "../store/gameStore.ts";
+
+import GameSlide from "../components/GameSlide.vue"
 import AcitveUsers from "../components/AcitveUsers.vue"
-import {useRoute} from "vue-router";
 
-const store = useEditorStore();
+const editorStore = useEditorStore();
 const gameStore = useGameStore();
-const route = useRoute();
-// const { getRoom: room_id } = storeToRefs(gameStore);
 
-const {
-    editorCurrentSlides: currentSlide
-} = storeToRefs(store);
+const route = useRoute();
+
+const {editorCurrentSlides: currentSlide} = storeToRefs(editorStore);
+const { getActiveRoom: activeRoom, getGameRoom: gameRoom } = storeToRefs(gameStore);
+
 
 const started = ref(false);
 
@@ -26,16 +27,19 @@ onMounted(function () {
 
 </script>
 
-<template>   
+<template>
 
   <div v-if="!started" class="card-box">
     <h1>Lobby: {{ $route.params.id }}</h1>
-    <AcitveUsers text="Friends Online" :lobby="true"/>
+    {{ activeRoom }}
+    <AcitveUsers text="Friends Online" :lobby="true"  :room="activeRoom"/>
     <hr/>
     <br/>
-    <AcitveUsers text="Accepted Players" :lobby="false"/>
+    {{ gameRoom }}
+    <AcitveUsers text="Accepted Players" :lobby="false"  :room="gameRoom"/>
 
     <button>Start Game</button>
+    <button>Quit Game</button>
   </div>
 
   <div v-if="started" class="game card card-box">

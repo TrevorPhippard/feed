@@ -2,21 +2,27 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-nocheck
 import draggable from "vuedraggable";
-
-import { useEditorStore } from "../store/editorStore.ts";
-import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useAuthStore } from "../store/authStore.ts";
+import { useGameStore } from "../store/gameStore.ts";
+import { useEditorStore } from "../store/editorStore.ts";
 
-import trash from "../assets/trash.svg";
 import playCircle from "../assets/play-circle.svg";
 import plusCircle from "../assets/plus-circle.svg";
-
 import edit from "../assets/edit.svg";
+import trash from "../assets/trash.svg";
 
 const router = useRouter();
-const store = useEditorStore();
+const editorStore = useEditorStore();
 
-const { getGameList: gameList } = storeToRefs(store);
+const { getGameList: gameList } = storeToRefs(editorStore);
+
+const authStore = useAuthStore();
+const gameStore = useGameStore();
+
+const { getusername: username, getToken: token } = storeToRefs(authStore)
+const { getActiveRoom: room_id } = storeToRefs(gameStore);
 
 defineProps({
   itemsContent: Array,
@@ -24,22 +30,23 @@ defineProps({
 
 
 function addGame() {
-  store.createNewGame();
+  editorStore.createNewGame();
   router.push({ path: "/editor" })
 }
 
-function launchGame(index: number) {
-  store.fetchGameById(index);
+function onLaunchGame(index: number) {
+  editorStore.fetchGameById(index);
+  gameStore.launchGame(index);
   router.push({ path: `/game/${index}` });
 }
 
 function goToEdit(index: number) {
-    store.fetchGameById(index);
+    editorStore.fetchGameById(index);
     router.push({ path: "/editor" });
 }
 
 function deleteGame(index: number) {
-  store.deleteGameFromDatabase(index);
+  editorStore.deleteGameFromDatabase(index);
 }
 
 </script>
@@ -51,9 +58,9 @@ function deleteGame(index: number) {
     <div v-else v-for="(info, key) in gameList" :key="key">
       <p>{{ info.gameName ? info.gameName :'unnamed' }}</p>
       <ul>
-        <li><img :src="playCircle"  alt="" @click="launchGame(info.id)" /></li>
-        <li><img :src="edit"        alt="" @click="goToEdit(info.id)" /></li>
-        <li><img :src="trash"       alt="" @click="deleteGame(info.id)" /></li>
+        <li><img :src="playCircle" alt="" @click="onLaunchGame(info.id)" /></li>
+        <li><img :src="edit"       alt="" @click="goToEdit(info.id)" /></li>
+        <li><img :src="trash"      alt="" @click="deleteGame(info.id)" /></li>
       </ul>
     </div>
   </div>

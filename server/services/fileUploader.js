@@ -1,8 +1,8 @@
 import fs from "fs";
 
 function timeStampFile(originalFileName){
-    var fileName = originalFileName.split(".");
-    var timestamp = new Date().toISOString().replace(/:/g, "-");
+    const fileName = originalFileName.split(".");
+    const timestamp = new Date().toISOString().replace(/:/g, "-");
     return `${fileName[0]}${timestamp}.${fileName[1]}`
 }
 
