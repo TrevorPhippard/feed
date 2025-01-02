@@ -18,7 +18,6 @@ class Room extends Model<RoomAttributes>
   room_id!: string;
   msgs!: string;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static associate(models: any) {
     Room.belongsToMany(models.User, {
       through: "userRoom"

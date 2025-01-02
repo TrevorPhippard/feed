@@ -1,6 +1,7 @@
 import express from "express";
 import Model from "../../../../models/message.model";
 import BaseController from "../../../../controllers/baseController";
+import { Op } from "sequelize";
 
 const Controller = new BaseController(Model);
 
@@ -20,6 +21,7 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const {  username, room_id, message_body } = req.body;
+        console.log(req.body)
         const result = await Controller.addEntry({ username, room_id, message_body})
         return res.status(200).json(result);
     } catch (error) {
@@ -28,9 +30,17 @@ router.post("/", async (req, res) => {
     }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:room_id", async (req, res) => {
     try {
-        const result = await Controller.getEntryById(req.params.id)
+        const room_id = req.params.room_id;
+        const result = await Controller.getEntryByQuery({
+            where: {
+                room_id: {
+                [Op.eq]: room_id,
+              },
+            },
+        })
+        
         if (!result) {
             return res.status(404).send("item not found");
         } else {

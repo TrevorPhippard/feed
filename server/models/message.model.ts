@@ -18,7 +18,6 @@ class Message extends Model<MessageAttributes>
   room_id!: string;
   message_body!: string;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static associate(models: any) {
     Message.belongsToMany(models.User, {
       through: "userMessage"

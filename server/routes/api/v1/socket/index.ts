@@ -5,7 +5,6 @@ import { Socket } from "socket.io";
 
 
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const socketRoutes =  function (io: any, socket: Socket ) {
 
   const socketCntr =   SocketController(io, socket);

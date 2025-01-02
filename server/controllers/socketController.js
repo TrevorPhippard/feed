@@ -1,39 +1,33 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Model from "../models/message.model";
-import BaseController from "../controllers/baseController";
+import BaseController from "./baseController";
 
 const Controller = new BaseController(Model);
-const onlineUsers:any = {};
+const onlineUsers = {};
 
-export default function (io: any, socket: any) {
+export default function (io, socket) {
 
-
-    function onConnectToServer(data: any) {
-        console.log("data::", data)
+    function onConnectToServer(data) {
+        // console.log("data::", data)
         // onlineUsers.push(data);
     }
 
-    function onMessage({ message }: any, callback: any): void {
-        io.to(message.room_id).emit("receivedMsg", { message });
+    function onMessage({ message }, callback) {
+        console.log(message, message.room_id)
+        io.to(message.room_id).emit("receivedMsg", message);
         Controller.addEntry(message);
         callback({ status: "ok" });
     }
 
-    interface OnUserType{
-        room_id: string;
-        userId: string;
-    }
-    function onEnteredRoom({room_id}:any) {
+
+    function onEnteredRoom({room_id}) {
         io.to(room_id).emit("enteredRoom", onlineUsers[socket.id]);
     }
-    
-    function onUser(res: OnUserType) {
+
+    function onUser(res) {
 
         const { room_id, userId } = res;
         const oldKey = Object.values(onlineUsers).indexOf(userId);
         if (oldKey > -1) { delete  onlineUsers[oldKey]}
-
-        console.log(`user ${userId} has joined room ${room_id}`);
 
         socket.join(room_id);
         io.emit("join", userId);
@@ -43,7 +37,7 @@ export default function (io: any, socket: any) {
 
     }
 
-    function onLeave({ room_id, userId }: any) {
+    function onLeave({ room_id, userId }) {
         // console.log(`user ${userId} has left room ${room_id}`);
         socket.leave(room_id);
         io.emit("disconnected", userId);
@@ -52,19 +46,14 @@ export default function (io: any, socket: any) {
     }
 
     function onDisconnect() {
-        console.log('disconnected',onlineUsers)
         io.emit("disconnected", onlineUsers[socket.id]);
         delete  onlineUsers[socket.id];
 
     }
 
-
-    function onInvite({userId, room_id}:any){
-        console.log('--->')
+    function onInvite({userId, room_id}){
         socket.broadcast.emit('broadcast',{ userId, room_id})
     }
-
-
 
     return {
         onConnectToServer,

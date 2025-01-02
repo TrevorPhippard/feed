@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use strict";
 
 import fs from "fs";
@@ -8,8 +7,6 @@ import sequelize from "./sequelize";
 
 const basename = path.basename(__filename);
 const db: any = {};
-
-
 
 fs
   .readdirSync(__dirname)

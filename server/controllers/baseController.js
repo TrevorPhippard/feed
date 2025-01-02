@@ -27,6 +27,16 @@ export default class Controller {
       }
   };
 
+
+  getEntryByQuery = async (query) => {
+    const item = await this.model.findAll(query);
+    if (!item) {
+      return { status: 500, message: "Item not found"};
+    } else {
+      return { status: 200, item:item};
+    }
+};
+
   updateEntryById = async (id, obj) => {
       const item = await this.model.findByPk(id);
       if (!item) {

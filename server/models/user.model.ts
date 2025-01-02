@@ -17,7 +17,6 @@ class User extends Model<UserAttributes>
   email!: string;
   password!: string;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static associate(models: any) {
     User.belongsToMany(models.Message, {
       through: "userMessage"
