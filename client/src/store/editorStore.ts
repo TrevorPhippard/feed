@@ -55,7 +55,7 @@ export const useEditorStore = defineStore("editor", {
     saveGameToDatabase(){
       const sendData = {
         gameName:this.gameName,
-        user_id:"editor",
+        username:"editor",
         slides:JSON.stringify(this.slides),
       } 
 
@@ -155,8 +155,8 @@ export const useEditorStore = defineStore("editor", {
     toggleModal(mode: boolean) {
       this.modal = mode;
     },
-    addInvitation(roomId:number){
-      this.invitation= roomId;
+    addInvitation(room_id:number){
+      this.invitation= room_id;
     }
   },
   getters: {

@@ -82,7 +82,7 @@ Content-Type: application/json
 
 {
     "id":"1",
-    "user_id":"T",
+    "username":"T",
     "room_id":"333",
     "msgs":"test test test"
 }
@@ -106,7 +106,7 @@ Content-Type: application/json
 
 {
     "id":"1",
-    "user_id": "23",
+    "username": "23",
     "room_id": "23",
     "message_body": "23"
 }

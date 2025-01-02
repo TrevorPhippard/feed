@@ -16,11 +16,11 @@ var props = defineProps({
 const gameStore = useGameStore();
 const authStore = useAuthStore();
 
-const { getRoom: roomId } = storeToRefs(gameStore);
+const { getRoom: room_id } = storeToRefs(gameStore);
 const { getusername: yourUsername } = storeToRefs(authStore)
 
 function goToEdit(user:string) {
-    SocketioService.invite(user, roomId.value )
+    SocketioService.invite(user, room_id.value )
 }
 
 </script>

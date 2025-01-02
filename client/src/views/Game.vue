@@ -10,7 +10,7 @@ import {useRoute} from "vue-router";
 const store = useEditorStore();
 const gameStore = useGameStore();
 const route = useRoute();
-const { getRoom: roomId } = storeToRefs(gameStore);
+const { getRoom: room_id } = storeToRefs(gameStore);
 
 const {
     editorCurrentSlides: currentSlide

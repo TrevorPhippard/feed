@@ -4,7 +4,7 @@ const endpoint = import.meta.env.VITE_API_ENDPOINT + "trivia";
 
 interface triviaData {
   gameName: string;
-  user_id: string;
+  username: string;
   slides: string;
 }
 

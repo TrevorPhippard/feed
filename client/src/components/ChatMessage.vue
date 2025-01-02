@@ -16,7 +16,7 @@ const gameStore = useGameStore();
 const router = useRouter();
 
 const { getusername: username, getToken: token } = storeToRefs(authStore)
-const { getRoom: roomId } = storeToRefs(gameStore)
+const { getRoom: room_id } = storeToRefs(gameStore)
 
 const inputMessageText = ref("")
 const messages = ref([]);
@@ -24,54 +24,57 @@ const msg = ref();
 
 
   interface messageType {
-    id: string;
-    displayName: string;
-    msg: string;
+    room_id: string;
+    username: string;
+    message_body: string;
   }
 
   if (token.value) {
-    SocketioService.setupSocketConnection(token.value, roomId.value, username.value);
+    SocketioService.setupSocketConnection(token.value, room_id.value, username.value);
     SocketioService.subscribeToMessages((_err, data) => {
       messages.value.push(data);
     });
 
-    // SocketioService.subscribeToUsersPassage((_err, message) => {
-      // console.log(message );
-    // });
+    SocketioService.subscribeToUsersPassage((_err, message) => {
+      console.log(message );
+    });
 
-    // MsgService.fetchMessages(roomId.value)
-    //   .then(result => {
-    //     if(result.status == 500) return console.log(result)
+    MsgService.fetchMessages(room_id.value)
+      .then(result => {
+        if(result.status == 500) return console.log(result)
 
-    //    result.map((data: { id: string; user_id: string; message_body: string; }) => {
-    //       return {
-    //         message: {
-    //           id: data.id,
-    //           displayName: data.user_id,
-    //           msg: data.message_body
-    //         }
-    //       }
-    //     }).map((data: messageType) => {
-    //       return messages.value.push(data);
-    //     })
-    //   })
+       result.map((data: { room_id: string; username: string; message_body: string; }) => {
+          return {
+            message: {
+              room_id: data.id,
+              username: data.username,
+              message_body: data.message_body
+            }
+          }
+        }).map((data: messageType) => {
+          return messages.value.push(data);
+        })
+      })
   } else {
      router.push({ path: "/" })
   }
 
 
-onUnmounted(() => SocketioService.disconnect(roomId.value,username.value));
+onUnmounted(() => SocketioService.disconnect(room_id.value,username.value));
 
 function submitMessage() {
 
   const message = {
-    roomId: roomId.value,
-    displayName: username.value,
-    msg: inputMessageText.value
+    room_id: room_id.value,
+    username: username.value,
+    message_body: inputMessageText.value
   }
+
+  console.log(message)
 
   SocketioService.sendMessage(message, () => {
     inputMessageText.value = "";
+    MsgService.postMessages(message)
     scrollToBottom();
   });
 }
@@ -87,10 +90,10 @@ function filterMessage(info: { message: any; }) {
 </script>
 <template>
   <div>
-    <div class="box">
+    <div v-if="token" class="box">
       <div  :class="{ sideScroll: messages.length > 3 }" class=" messagesCont" ref="msg">
         <div v-for="(info, key) in messages" :key="key">
-          <strong> {{ filterMessage(info).displayName }}: </strong>{{ filterMessage(info).msg }}
+          <strong> {{ filterMessage(info).username }}: </strong>{{ filterMessage(info).msg }}
         </div>
       </div>
       <form class="input-div" @submit.prevent="submitMessage">
@@ -98,6 +101,10 @@ function filterMessage(info: { message: any; }) {
         <textarea type="text" placeholder="Type in text" v-model="inputMessageText" />
         <button type="submit">Send</button>
       </form>
+    </div>
+
+    <div v-else class="box token-error">
+        <p>token not found</p>
     </div>
   </div>
 </template>
@@ -113,7 +120,6 @@ h6{
   border: solid 1px #000;
   display: flex;
   flex-direction: column;
-
 }
 
 .box textarea {
@@ -144,4 +150,10 @@ h6{
   display: flex;
   width: 100%;
 }
+
+.token-error{
+  padding:2px 5px;
+  color:red;
+}
+
 </style>

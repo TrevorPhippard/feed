@@ -5,13 +5,13 @@ import { io } from 'socket.io-client';
 interface noArg {(): void}
 
 interface messageType{
-  roomId: string;
-  displayName: string;
-  msg: string;
+  room_id: string;
+  username: string;
+  message_body: string;
 }
 
 interface userPassageType{
-  displayName: string;
+  username: string;
   type: string;
 }
 class SocketioService {
@@ -34,24 +34,24 @@ class SocketioService {
     console.log(`Connecting socket...`, username, room);
 
     if (room) {
-      this.socket.emit('join', { roomId: room, userId: username, socketId: this.socket.id });
+      this.socket.emit('join', { room_id: room, userId: username, socketId: this.socket.id });
     }
   }
 
   joinRoom(room: string, username: string) {
     console.log('join', room)
     // leave old room
-    // if (currentRoomId) {
-    //     this.socket.emit('leave', { roomId: currentRoomId, userId: userInfo.id, socketId: this.socket.id });
+    // if (currentroom_id) {
+    //     this.socket.emit('leave', { room_id: currentroom_id, userId: userInfo.id, socketId: this.socket.id });
     // }
     // load old messages in new room
     // join new room
-    this.socket.emit('join', { roomId: room, userId: username, socketId: this.socket.id });
+    this.socket.emit('join', { room_id: room, userId: username, socketId: this.socket.id });
 
   }
 
   invite(username: string, room: string){
-    this.socket.emit('invite',{userId: username, roomId: room})
+    this.socket.emit('invite',{userId: username, room_id: room})
   }
 
   subscribeToMessages(cb: (err: null, msg: string) => void) {
@@ -62,9 +62,9 @@ class SocketioService {
   }
 
   subscribeToUsersPassage(cb: (err: null, userPassage: userPassageType) => void) {
-    this.socket.on('join', (msg: string) => cb(null, { displayName: msg, type: 'join' }));
+    this.socket.on('join', (msg: string) => cb(null, { username: msg, type: 'join' }));
     this.socket.on('enteredRoom', (msg: string) => cb(null, { userList: msg, type: 'enteredRoom' }));
-    this.socket.on('disconnected', (msg: string) => cb(null, { displayName: msg, type: 'disconnected' }));
+    this.socket.on('disconnected', (msg: string) => cb(null, { username: msg, type: 'disconnected' }));
     this.socket.on('broadcast',  (msg: string) => cb(null, { data: msg, type: 'broadcast' }));
   }
 

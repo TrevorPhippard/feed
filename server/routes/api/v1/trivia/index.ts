@@ -19,8 +19,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const { id, gameName, slides, Trivia_id } = req.body;
-        const result = await Controller.addEntry({id, gameName, slides, Trivia_id})
+        const { gameName, slides, Trivia_id } = req.body;
+        const result = await Controller.addEntry({ gameName, slides, Trivia_id})
         return res.status(200).json(result);
     } catch (error) {
         console.error(error);

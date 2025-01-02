@@ -19,8 +19,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const { id, username, email, password } = req.body;
-        const result = await Controller.addEntry({id, username, email, password})
+        const {  username, email, password } = req.body;
+        const result = await Controller.addEntry({ username, email, password})
         return res.status(200).json(result);
     } catch (error) {
         console.error(error);

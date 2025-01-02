@@ -4,7 +4,7 @@ import sequelize from "./sequelize";
 
 interface RoomAttributes {
   id: number;
-  user_id: string;
+  username: string;
   room_id: string;
   msgs: string;
 }
@@ -14,7 +14,7 @@ class Room extends Model<RoomAttributes>
   implements RoomAttributes {
 
   id!: number;
-  user_id!: string;
+  username!: string;
   room_id!: string;
   msgs!: string;
 
@@ -35,7 +35,7 @@ Room.init({
     primaryKey: true,
     allowNull: false,
   },
-  user_id: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
   },

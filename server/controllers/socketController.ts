@@ -14,40 +14,40 @@ export default function (io: any, socket: any) {
     }
 
     function onMessage({ message }: any, callback: any): void {
-        io.to(message.roomId).emit("receivedMsg", { message });
+        io.to(message.room_id).emit("receivedMsg", { message });
         Controller.addEntry(message);
         callback({ status: "ok" });
     }
 
     interface OnUserType{
-        roomId: string;
+        room_id: string;
         userId: string;
     }
-    function onEnteredRoom({roomId}:any) {
-        io.to(roomId).emit("enteredRoom", onlineUsers[socket.id]);
+    function onEnteredRoom({room_id}:any) {
+        io.to(room_id).emit("enteredRoom", onlineUsers[socket.id]);
     }
     
     function onUser(res: OnUserType) {
 
-        const { roomId, userId } = res;
+        const { room_id, userId } = res;
         const oldKey = Object.values(onlineUsers).indexOf(userId);
         if (oldKey > -1) { delete  onlineUsers[oldKey]}
 
-        console.log(`user ${userId} has joined room ${roomId}`);
+        console.log(`user ${userId} has joined room ${room_id}`);
 
-        socket.join(roomId);
+        socket.join(room_id);
         io.emit("join", userId);
         onlineUsers[socket.id] = userId;
         // let room know someone joined
-        io.to(roomId).emit("enteredRoom", onlineUsers);
+        io.to(room_id).emit("enteredRoom", onlineUsers);
 
     }
 
-    function onLeave({ roomId, userId }: any) {
-        // console.log(`user ${userId} has left room ${roomId}`);
-        socket.leave(roomId);
+    function onLeave({ room_id, userId }: any) {
+        // console.log(`user ${userId} has left room ${room_id}`);
+        socket.leave(room_id);
         io.emit("disconnected", userId);
-        io.to(roomId).emit("disconnected", onlineUsers[socket.id]);
+        io.to(room_id).emit("disconnected", onlineUsers[socket.id]);
 
     }
 
@@ -59,9 +59,9 @@ export default function (io: any, socket: any) {
     }
 
 
-    function onInvite({userId, roomId}:any){
+    function onInvite({userId, room_id}:any){
         console.log('--->')
-        socket.broadcast.emit('broadcast',{ userId, roomId})
+        socket.broadcast.emit('broadcast',{ userId, room_id})
     }
 
 

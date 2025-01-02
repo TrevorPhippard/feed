@@ -4,7 +4,7 @@ import sequelize from "./sequelize";
 
 interface MessageAttributes {
   id: number;
-  user_id: string;
+  username: string;
   room_id: string;
   message_body: string;
 }
@@ -14,7 +14,7 @@ class Message extends Model<MessageAttributes>
   implements MessageAttributes {
 
   id!: number;
-  user_id!: string;
+  username!: string;
   room_id!: string;
   message_body!: string;
 
@@ -35,7 +35,7 @@ Message.init({
     primaryKey: true,
     allowNull: false,
   },
-  user_id: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
   },

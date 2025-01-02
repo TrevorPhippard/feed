@@ -19,8 +19,8 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     try {
-        const { id, user_id, room_id, msgs } = req.body;
-        const result = await Controller.addEntry({id, user_id, room_id, msgs})
+        const {  username, room_id, msgs } = req.body;
+        const result = await Controller.addEntry({username, room_id, msgs})
         return res.status(200).json(result);
     } catch (error) {
         console.error(error);
@@ -47,8 +47,8 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const routeId = Number(req.params.id);
-        const { id, user_id, room_id, msgs } = req.body;
-        const result = await Controller.updateEntryById(routeId, {id, user_id, room_id, msgs})
+        const { id, username, room_id, msgs } = req.body;
+        const result = await Controller.updateEntryById(routeId, {id, username, room_id, msgs})
         if (result) {
             return res.json(result );
         } else {

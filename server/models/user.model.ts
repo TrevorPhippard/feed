@@ -22,6 +22,7 @@ class User extends Model<UserAttributes>
     User.belongsToMany(models.Message, {
       through: "userMessage"
     })
+    
   }
 }
 User.init({

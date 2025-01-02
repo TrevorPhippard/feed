@@ -14,7 +14,7 @@ const gameStore = useGameStore();
 const store = useEditorStore();
 
 const { getusername: username, getToken: token } = storeToRefs(authStore)
-const { getRoom: roomId } = storeToRefs(gameStore);
+const { getRoom: room_id } = storeToRefs(gameStore);
 
 const activeUsers = ref({});
 
@@ -23,7 +23,7 @@ defineProps({ lobby: Boolean, text:String })
 
 onMounted(function () {
 
-SocketioService.setupSocketConnection(token.value, roomId.value, username.value);
+SocketioService.setupSocketConnection(token.value, room_id.value, username.value);
 
 SocketioService.subscribeToUsersPassage((_err, message) => {
     switch (message.type) {
@@ -35,16 +35,16 @@ SocketioService.subscribeToUsersPassage((_err, message) => {
         break;
 
     case 'join':
-        activeUsers.value[message.displayName] = { online: true };
+        activeUsers.value[message.username] = { online: true };
         break;
 
     case 'disconnected':
-        activeUsers.value[message.displayName] = { online: false };
+        activeUsers.value[message.username] = { online: false };
         break;
 
     case "broadcast":
         if(username.value === message.data.userId){
-            store.addInvitation(message.data.roomId)
+            store.addInvitation(message.data.room_id)
             store.toggleModal(true)
         };
         break;
@@ -55,7 +55,7 @@ SocketioService.subscribeToUsersPassage((_err, message) => {
 }
 });
 })
-// onUnmounted(() => SocketioService.disconnect(roomId.value,username.value));
+// onUnmounted(() => SocketioService.disconnect(room_id.value,username.value));
 
 </script>
 

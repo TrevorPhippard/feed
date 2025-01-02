@@ -6,17 +6,14 @@ function timeStampFile(originalFileName){
     return `${fileName[0]}${timestamp}.${fileName[1]}`
 }
 
-function uploaderService( req, res, callback){
-    const destination = "./uploads";
+function uploaderService( uploadFile, destination, callback){
         if(!fs.existsSync(destination)){
             fs.mkdirSync(destination, {recursive: true})
         }
-        let uploadFile = req.files.file;
         let timeStampName = timeStampFile(uploadFile.name);
         const finalPath = `${destination}/${timeStampName}`
-         uploadFile.mv(finalPath)
-    return res.send(timeStampName)
-  
+        uploadFile.mv(finalPath);
+    return callback( timeStampName, finalPath);
 }
 
 export default uploaderService;
