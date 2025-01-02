@@ -1,37 +1,29 @@
 
 <script setup lang="ts" >
-import { ref, onMounted, onUnmounted } from "vue"
+import { ref,  onUnmounted } from "vue"
 import SocketioService from "../services/socketio.service.js";
 import MsgService from "../services/msg.service.js";
 
 import { useAuthStore } from "../store/authStore.ts";
-import { useGameStore } from "../store/gameStore.ts";
 
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
-const gameStore = useGameStore();
 
 const router = useRouter();
 
 const { getusername: username, getToken: token } = storeToRefs(authStore)
-const { getRoom: room_id } = storeToRefs(gameStore)
+const room_id = ref('chat')
 
 const inputMessageText = ref("")
-const messages = ref([]);
+const messages:any = ref([]);
 const msg = ref();
-
-
-  interface messageType {
-    room_id: string;
-    username: string;
-    message_body: string;
-  }
 
   if (token.value) {
     SocketioService.setupSocketConnection(token.value, room_id.value, username.value);
     SocketioService.subscribeToMessages((_err, data) => {
+      // @ts-ignore 
       messages.value.push(data);
     });
 
@@ -39,20 +31,13 @@ const msg = ref();
       console.log(message );
     });
 
-    MsgService.fetchMessages(room_id.value)
+    MsgService.fetchMessages(String(room_id.value))
       .then(result => {
         if(result.status == 500) return console.log(result)
-
-       result.map((data: { room_id: string; username: string; message_body: string; }) => {
-          return {
-            message: {
-              room_id: data.id,
-              username: data.username,
-              message_body: data.message_body
-            }
-          }
-        }).map((data: messageType) => {
-          return messages.value.push(data);
+        // @ts-ignore
+        result.item.map((data) => {
+        // @ts-ignore
+          messages.value.push(data);
         })
       })
   } else {
@@ -60,7 +45,7 @@ const msg = ref();
   }
 
 
-onUnmounted(() => SocketioService.disconnect(room_id.value,username.value));
+onUnmounted(() => SocketioService.disconnect());
 
 function submitMessage() {
 
@@ -70,11 +55,8 @@ function submitMessage() {
     message_body: inputMessageText.value
   }
 
-  console.log(message)
-
   SocketioService.sendMessage(message, () => {
     inputMessageText.value = "";
-    MsgService.postMessages(message)
     scrollToBottom();
   });
 }
@@ -83,17 +65,14 @@ function submitMessage() {
         msg.value.scrollTop = msg.value.scrollHeight;
   }
 
-function filterMessage(info: { message: any; }) {
-  return info.message
-}
 
 </script>
 <template>
   <div>
     <div v-if="token" class="box">
       <div  :class="{ sideScroll: messages.length > 3 }" class=" messagesCont" ref="msg">
-        <div v-for="(info, key) in messages" :key="key">
-          <strong> {{ filterMessage(info).username }}: </strong>{{ filterMessage(info).msg }}
+        <div v-if="messages.length" v-for="(info, key) in messages" :key="key">
+          <strong> {{ info.username }}: </strong>{{ info.message_body }}
         </div>
       </div>
       <form class="input-div" @submit.prevent="submitMessage">

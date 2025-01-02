@@ -10,7 +10,7 @@ import {useRoute} from "vue-router";
 const store = useEditorStore();
 const gameStore = useGameStore();
 const route = useRoute();
-const { getRoom: room_id } = storeToRefs(gameStore);
+// const { getRoom: room_id } = storeToRefs(gameStore);
 
 const {
     editorCurrentSlides: currentSlide
@@ -19,7 +19,9 @@ const {
 const started = ref(false);
 
 onMounted(function () {
-  gameStore.setGame(route.params.id);
+  if(typeof route.params.id == "string" ){
+      gameStore.setGame(route.params.id);
+  }
 })
 
 </script>

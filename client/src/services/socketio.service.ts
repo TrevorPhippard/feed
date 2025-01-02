@@ -13,6 +13,11 @@ interface messageType{
 interface userPassageType{
   username: string;
   type: string;
+  data?: {
+    userId: string,
+    room_id:string
+  };
+  userList?: string;
 }
 class SocketioService {
 
@@ -22,7 +27,6 @@ class SocketioService {
  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
  //@ts-expect-error
   setupSocketConnection(token: string, room: string, username: string) {
-    console.log('::',import.meta.env.VITE_SOCKET_ENDPOINT)
     this.socket = io(import.meta.env.VITE_SOCKET_ENDPOINT, {
       auth: { token },
       withCredentials: true,
@@ -31,7 +35,8 @@ class SocketioService {
       }
     });
 
-    console.log(`Connecting socket...`, username, room);
+    console.log(`Connecting socket...`, {
+      username, room});
 
     if (room) {
       this.socket.emit('join', { room_id: room, userId: username, socketId: this.socket.id });
@@ -54,8 +59,10 @@ class SocketioService {
     this.socket.emit('invite',{userId: username, room_id: room})
   }
 
-  subscribeToMessages(cb: (err: null, msg: string) => void) {
+  subscribeToMessages(cb: (err: null, message: string) => void) {
+
     if (!this.socket) return (true);
+    
     this.socket.on('message', (msg: string) => cb(null, msg));
     this.socket.on('receivedMsg', (msg: string) => cb(null, msg));
 

@@ -34,6 +34,6 @@ export const useGameStore = defineStore("game", {
   getters: {
     getEndPoint: state => state.socketEndpoint,
     getRoom: state => state.room_id,
-    gameData: state => state.gameData,
+    getGameData: state => state.gameData,
   }
 })

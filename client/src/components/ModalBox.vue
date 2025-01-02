@@ -1,7 +1,6 @@
 <script setup lang="ts">
 /** @name <ModalBox>  */
 
-import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useEditorStore } from "../store/editorStore.ts";
 import closeCircle from "../assets/x-circle.svg";

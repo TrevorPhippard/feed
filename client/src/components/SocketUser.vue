@@ -19,15 +19,17 @@ const authStore = useAuthStore();
 const { getRoom: room_id } = storeToRefs(gameStore);
 const { getusername: yourUsername } = storeToRefs(authStore)
 
-function goToEdit(user:string) {
-    SocketioService.invite(user, room_id.value )
+function goToEdit() {
+    if(typeof user == "string" && props.username){
+        SocketioService.invite(props.username, room_id.value )
+    }else{
+        console.error("username undefined")
+    }
 }
 
 </script>
 <template>
-        <li 
-        v-if="yourUsername!==username"
-       >
+        <li v-if="yourUsername!==username">
             <div class="iconCont">
                 <div>
                     <img  class="userIcon" :src="user" alt=""/>
@@ -35,8 +37,8 @@ function goToEdit(user:string) {
                 </div>
                 <h2>{{props.username}}</h2>
             </div>
-            <button v-if="lobby" @click="goToEdit(username)">
-                <apan>Add </apan>
+            <button v-if="lobby" @click="goToEdit">
+                <span>Add </span>
                 <img class="addUserBtn" :src="plusCircle"  data-user="user"/>
             </button>
         </li>

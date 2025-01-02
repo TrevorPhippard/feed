@@ -5,7 +5,7 @@ import { onMounted } from "vue"
 import TopHeader from "../components/TopHeader.vue";
 import GameLauncher from "../components/GameLauncher.vue";
 import ChatMessage from "../components/ChatMessage.vue";
-import SocketUser from "../components/SocketUser.vue";
+// import SocketUser from "../components/SocketUser.vue";
 import AcitveUsers from "../components/AcitveUsers.vue";
 
 import { useEditorStore } from "../store/editorStore.ts";
