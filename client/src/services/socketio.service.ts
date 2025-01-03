@@ -35,6 +35,7 @@ class SocketioService {
       }
     });
 
+
     console.log(`Connecting socket...`, {username, room});
 
     if (room) {
@@ -51,7 +52,6 @@ class SocketioService {
     // load old messages in new room
     // join new room
     this.socket.emit('join', { room_id: room, userId: username, socketId: this.socket.id });
-
   }
 
   invite(username: string, room: string){
@@ -59,7 +59,6 @@ class SocketioService {
   }
 
   subscribeToMessages(cb: (err: null, message: string) => void) {
-
     if (!this.socket) return (true);
     this.socket.on('message', (msg: string) => cb(null, msg));
     this.socket.on('receivedMsg', (msg: string) => cb(null, msg));
@@ -74,7 +73,7 @@ class SocketioService {
 
   sendMessage(message: messageType, cb:noArg) {
     if (this.socket) {
-      this.socket.emit('message', { message }, cb);
+      this.socket.emit('message',message, cb);
     }
   }
 

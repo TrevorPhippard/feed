@@ -7,6 +7,7 @@ import { useGameStore } from "../store/gameStore.ts";
 
 import GameSlide from "../components/GameSlide.vue"
 import AcitveUsers from "../components/AcitveUsers.vue"
+import GameUsers from "../components/GameUsers.vue"
 
 const editorStore = useEditorStore();
 const gameStore = useGameStore();
@@ -21,6 +22,7 @@ const started = ref(false);
 
 onMounted(function () {
   if(typeof route.params.id == "string" ){
+    
       gameStore.setGame(route.params.id);
   }
 })
@@ -31,12 +33,10 @@ onMounted(function () {
 
   <div v-if="!started" class="card-box">
     <h1>Lobby: {{ $route.params.id }}</h1>
-    {{ activeRoom }}
     <AcitveUsers text="Friends Online" :lobby="true"  :room="activeRoom"/>
     <hr/>
     <br/>
-    {{ gameRoom }}
-    <AcitveUsers text="Accepted Players" :lobby="false"  :room="gameRoom"/>
+    <GameUsers text="Accepted Players" :lobby="false"  :room="gameRoom"/>
 
     <button>Start Game</button>
     <button>Quit Game</button>

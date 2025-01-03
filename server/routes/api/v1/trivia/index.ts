@@ -12,7 +12,6 @@ router.get("/", async (req, res) => {
         const entries = await Controller.getAllEntries()
         return res.json(entries);
     } catch (error) {
-        console.error(error);
         return res.status(500).send("Internal Server Error");
     }
 })
@@ -23,7 +22,6 @@ router.post("/", async (req, res) => {
         const result = await Controller.addEntry({ gameName, slides, Trivia_id})
         return res.status(200).json(result);
     } catch (error) {
-        console.error(error);
         return res.status(500).send("Internal Server Error");
     }
 });
@@ -39,7 +37,6 @@ router.get("/:id", async (req, res) => {
             return res.json(result);
         }
     } catch (error) {
-        console.error(error);
         return res.status(500).send("Internal Server Error");
     }
 })
@@ -49,13 +46,12 @@ router.put("/:id", async (req, res) => {
         const routeId = Number(req.params.id);
         const { id, gameName, slides, Trivia_id } = req.body;
         const result = await Controller.updateEntryById(routeId, {id, gameName, slides, Trivia_id})
-        if (result) {
-            return res.json(result );
-        } else {
+        if (!result) {
             return res.status(404).send("item not found");
+        } else {
+            return res.json(result);
         }
     } catch (error) {
-        console.error(error);
         return res.status(500).send("Internal Server Error");
     }
 })
@@ -71,7 +67,6 @@ router.delete("/:id", async (req, res) => {
             return res.send("item deleted successfully");
         }
     } catch (error) {
-        console.error(error);
         return res.status(500).send("Internal Server Error");
     }
 });

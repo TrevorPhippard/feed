@@ -1,11 +1,12 @@
-
 export default class Controller {
   constructor(providedModel) {
     this.model = providedModel;
   }
 
-  addEntry = (newMessage) => {
-    return this.model.create(newMessage)
+ 
+  addEntry = (info) => {
+    return this.model
+      .create(info)
       .then((msg) => {
         return { status: 200, id: msg.id };
       })
@@ -19,43 +20,55 @@ export default class Controller {
   };
 
   getEntryById = async (id) => {
-      const item = await this.model.findByPk(id);
-      if (!item) {
-        return { status: 500, message: "Item not found"};
-      } else {
-        return { status: 200, item:item};
-      }
+    const item = await this.model.findByPk(id);
+    if (item == null) {
+      return false;
+    } else {
+      return item;
+    }
   };
 
-
   getEntryByQuery = async (query) => {
-    const item = await this.model.findAll(query);
-    if (!item) {
-      return { status: 500, message: "Item not found"};
+    const items = await this.model.findAll(query);
+    if (!items) {
+      return false;
     } else {
-      return { status: 200, item:item};
+      return items;
     }
-};
+  };
 
   updateEntryById = async (id, obj) => {
-      const item = await this.model.findByPk(id);
-      if (!item) {
-        return { status: 404, message: "Item not found", item: item };
-      } else {
-          Object.keys(obj).forEach(key=>{
-              item[key] = obj[key]
-          })
-          await item.save();
-        return { status: 200,  message: "Item updated successfully", item: item };
-      }
+    const item = await this.model.findByPk(id);
+    if (item == null) {
+      return false;
+    } else {
+      Object.keys(obj).forEach((key) => {
+        item[key] = obj[key];
+      });
+      await item.save();
+      return item;
+    }
   };
 
   removeEntryById = async (id) => {
     const item = await this.model.findByPk(id);
-    if (!item) {
-      return { status: 404, message: "Item not found" };
+    if (item == null ) {
+      return false;
     } else {
       await item.destroy();
+      return true;
+    }
+  };
+
+
+  removeEntryByQuery = async (query) => {
+    const items = await this.model.findAll(query);
+    if (!items.length) {
+      return false;
+    } else {
+      items.forEach(async (item)=>{
+        await item.destroy();
+      })
       return { status: 200, message: "Item deleted successfully" };
     }
   };

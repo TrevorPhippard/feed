@@ -1,56 +1,85 @@
-import Model from "../models/message.model";
-import BaseController from "./baseController";
+import MsgModel from "../models/message.model";
+import RoomModel from "../models/room.model";
 
-const Controller = new BaseController(Model);
-const onlineUsers = {};
+import BaseController from "./baseController";
+import { Op } from "sequelize";
+
+const MsgController = new BaseController(MsgModel);
+const RoomController = new BaseController(RoomModel);
+
+async function isAlready(username,room_id){
+    const already = await RoomController.getEntryByQuery({
+        where: {
+            [Op.and]: [{ username: username }, { room_id: room_id}],
+          }})
+    return already;
+}
+
 
 export default function (io, socket) {
 
-    function onConnectToServer(data) {
-        // console.log("data::", data)
-        // onlineUsers.push(data);
+
+
+    function getRoomEntries(room_id){
+        return RoomController.getEntryByQuery({
+            where: {
+                room_id: {[Op.eq]: room_id},
+            },
+        })
     }
 
-    function onMessage({ message }, callback) {
-        console.log(message, message.room_id)
-        io.to(message.room_id).emit("receivedMsg", message);
-        Controller.addEntry(message);
+
+    
+    function rmRoomEntry(userId, room_id){
+        return RoomController.removeEntryByQuery({
+            where: {
+                userId:{[Op.eq]: userId},
+                room_id: {[Op.eq]: room_id},
+            },
+        })
+    }
+
+
+    function onConnectToServer(data) {
+        (data);
+    }
+
+    function handleErrors(err)  {
+        (err);
+    }
+
+    function onUserMessage({ room_id,username,message_body }, callback) {
+        io.to(room_id).emit("receivedMsg", {room_id,username,message_body});
+        MsgController.addEntry({room_id,username,message_body});
         callback({ status: "ok" });
     }
 
-
     function onEnteredRoom({room_id}) {
-        io.to(room_id).emit("enteredRoom", onlineUsers[socket.id]);
+        io.to(room_id).emit("enteredRoom", getRoomEntries(room_id));
     }
 
-    function onUser(res) {
-
-        const { room_id, userId } = res;
-        const oldKey = Object.values(onlineUsers).indexOf(userId);
-        if (oldKey > -1) { delete  onlineUsers[oldKey]}
-
+    async function onUserJoin({ room_id,userId } ) {
         socket.join(room_id);
         io.emit("join", userId);
-        onlineUsers[socket.id] = userId;
-        // let room know someone joined
-        console.log(`user ${userId} has entered room ${room_id}`);
-
-        io.to(room_id).emit("enteredRoom", onlineUsers);
-
+        var online = true;
+        var username = userId;
+        var IsEntry = await isAlready(username,room_id);
+        if(!IsEntry.length){
+            RoomController.addEntry({username, room_id, online});
+        }
+        io.to(room_id).emit("enteredRoom", getRoomEntries(room_id));
     }
 
     function onLeave({ room_id, userId }) {
-        console.log(`user ${userId} has left room ${room_id}`);
         socket.leave(room_id);
         io.emit("disconnected", userId);
-        io.to(room_id).emit("disconnected", onlineUsers[socket.id]);
-
+        rmRoomEntry({userId, room_id});
+        io.to(room_id).emit("disconnected", getRoomEntries(room_id));
     }
 
-    function onDisconnect() {
-        io.emit("disconnected", onlineUsers[socket.id]);
-        delete  onlineUsers[socket.id];
-
+    function onDisconnect(res) {
+        // rmRoomEntry({userId, room_id});
+        io.emit("disconnected", res);
     }
 
     function onInvite({userId, room_id}){
@@ -59,11 +88,13 @@ export default function (io, socket) {
 
     return {
         onConnectToServer,
-        onMessage,
-        onUser,
+        onUserMessage,
+        onUserJoin,
         onLeave,
         onDisconnect,
         onEnteredRoom,
-        onInvite
+        onInvite,
+        handleErrors,
+        isAlready
     }
 }

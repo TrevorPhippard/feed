@@ -29,15 +29,15 @@ const msg = ref();
       messages.value.push(data);
     });
 
-    SocketioService.subscribeToUsersPassage((_err, message) => {
-      console.log(message );
-    });
+    // SocketioService.subscribeToUsersPassage((_err, message) => {
+    //   console.log(message );
+    // });
 
     MsgService.fetchMessages(String(room_id.value))
-      .then(result => {
-        if(result.status == 500) return console.log(result)
+      .then(msg => {
+        if(msg.status == 500) return console.log(msg)
         // @ts-ignore
-        result.item.map((data) => {
+        msg.map ((data) => {
         // @ts-ignore
           messages.value.push(data);
         })

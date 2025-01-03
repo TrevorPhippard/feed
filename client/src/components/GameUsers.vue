@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref,onMounted, onUnmounted } from "vue";
+import { ref,onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useAuthStore } from "../store/authStore.ts";
 import { useGameStore } from "../store/gameStore.ts";
@@ -31,7 +31,7 @@ interface userPassageType{
 }
 
 function socketActions(_err, message:userPassageType)  {
-    console.log('A',username.value,props.room, message)
+    console.log('G',username.value,props.room, message)
 
     switch (message.type) {
         case "enteredRoom":
@@ -46,6 +46,7 @@ function socketActions(_err, message:userPassageType)  {
             break;
 
         case 'disconnected':
+            userList.value[message.username] = { online: false };
             break;
 
         case "broadcast":
@@ -61,14 +62,12 @@ function socketActions(_err, message:userPassageType)  {
     }
 }
 
-
 onMounted(function () {
         console.log("subscribeToUsersPassage");
         SocketioService.setupSocketConnection(token.value, props.room, username.value);
-        SocketioService.subscribeToUsersPassage(socketActions);
+        SocketioService.subscribeToGameActions(socketActions);
 })
-
-onUnmounted(() => SocketioService.disconnect(props.room,username.value));
+// onUnmounted(() => SocketioService.disconnect(room_id.value,username.value));
 
 </script>
 
@@ -82,8 +81,6 @@ onUnmounted(() => SocketioService.disconnect(props.room,username.value));
             :username="String(key)" 
             :lobby="lobby"
         />
-
-
     </ul>
 </div>
 </template>

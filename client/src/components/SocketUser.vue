@@ -37,7 +37,7 @@ function inviteUserToPlay() {
                     <img  class="userIcon" :src="user" alt=""/>
                     <div :class="`status ${props.online ?'online':'offline'}`"></div>
                 </div>
-                <h2>{{props.username}}</h2>
+                <h2>{{username}}</h2>
             </div>
             <button v-if="lobby" @click="inviteUserToPlay">
                 <span>Add </span>

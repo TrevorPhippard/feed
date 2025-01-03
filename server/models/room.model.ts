@@ -6,7 +6,7 @@ interface RoomAttributes {
   id: number;
   username: string;
   room_id: string;
-  msgs: string;
+  online: string;
 }
 
 class Room extends Model<RoomAttributes>
@@ -16,7 +16,7 @@ class Room extends Model<RoomAttributes>
   id!: number;
   username!: string;
   room_id!: string;
-  msgs!: string;
+  online!: string;
 
   static associate(models: any) {
     Room.belongsToMany(models.User, {
@@ -42,7 +42,7 @@ Room.init({
     type: DataTypes.STRING,
     allowNull: true,
   },
-  msgs: {
+  online: {
     type: DataTypes.STRING,
     allowNull: true,
   },

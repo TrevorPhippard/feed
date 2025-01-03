@@ -69,6 +69,16 @@ Content-Type: application/json
 
 ### Room  ------------------------------------------------------
 
+
+POST http://localhost:3000/api/v1/room/isalready HTTP/1.1
+Content-Type: application/json
+
+{
+    "username":"t",
+    "room_id":"333"
+}
+
+
 ###
 GET http://localhost:3000/api/v1/room  HTTP/1.1
 
@@ -82,7 +92,7 @@ Content-Type: application/json
 
 {
     "id":"1",
-    "username":"T",
+    "username":"request.rest entered name",
     "room_id":"333",
     "msgs":"test test test"
 }
@@ -112,7 +122,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/api/v1/messages/22 HTTP/1.1
+DELETE http://localhost:3000/api/v1/messages/5 HTTP/1.1
 Content-Type: application/json
 
 

@@ -100,9 +100,18 @@ const io = new Server(socketServer, {
   cors: {
     origin: "http://localhost:8080",
     methods: ["GET", "POST"],
+    transports: ['websocket','polling'],
+
     allowedHeaders: ["socket-header"],
-    credentials: true
-  }
+    credentials: true,
+
+    serverClient: true,
+    pingInterval:10000,
+    pingTimeout:5000,
+    cookie:false,
+    secure:true
+  },
+  allowEIO3: true
 });
 
 instrument(io, {
@@ -110,9 +119,10 @@ instrument(io, {
   mode: "development",
 });
 
+
 io.use(async (socket: any, next: any) => {
-  const token = socket.handshake.auth.token;
   try {
+    const token = socket.handshake.auth.token;
     const user = await jwt.verify(token, JWT_SECRET);
     socket.user = user;
     next();
