@@ -23,10 +23,6 @@ const EditorService = {
   },
 
   postTrivia:(data:triviaData) =>{
-    console.log({
-      gameName:data.gameName,
-      slide: JSON.parse(data.slides),
-    })
     return axios.post(endpoint,data )
     .then(response =>  response.data)
     .catch(error=> error.toJSON());
@@ -34,13 +30,7 @@ const EditorService = {
   },
 
   updateTrivia:(data:triviaData, index:number) =>{
-
-    console.log({
-      gameName:data.gameName,
-      slide: JSON.parse(data.slides),
-      index
-      })
-    return  axios.put(endpoint+"/"+index, data )
+    return axios.put(endpoint+"/"+index, data )
     .then(response =>  response.data)
     .catch(error=> error.toJSON());
 

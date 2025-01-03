@@ -8,6 +8,7 @@ import { useEditorStore } from "../store/editorStore.ts";
 import SocketUser from "../components/SocketUser.vue";
 
 import SocketioService from "../services/socketio.service.js";
+import RoomService from "../services/room.service.js";
 
 
 const authStore = useAuthStore();
@@ -19,6 +20,7 @@ const { getusername: username, getToken: token } = storeToRefs(authStore)
 const userList:any = ref({});
 
 const props = defineProps({ lobby: Boolean, text:String, room: String })
+const roomName = 'active-users';
 
 interface userPassageType{
   username: string;
@@ -31,18 +33,14 @@ interface userPassageType{
 }
 
 function socketActions(_err, message:userPassageType)  {
-    console.log('A',username.value,props.room, message)
 
     switch (message.type) {
         case "enteredRoom":
-            const keys = Object.values(message.userList);
-            keys.map((username:any) => {
-                userList.value[username] = { online: true };
-            });
+            RoomService.fetchRoomById(roomName).then(mapRooms);
             break;
 
         case 'join':
-            userList.value[message.username] = { online: true };
+            RoomService.fetchRoomById(roomName).then(mapRooms);
             break;
 
         case 'disconnected':
@@ -61,11 +59,17 @@ function socketActions(_err, message:userPassageType)  {
     }
 }
 
+function mapRooms(activeUsers) {
+    activeUsers.forEach( userInfo => {
+        userList.value[userInfo.username] = { online: true }
+    });
+}
 
 onMounted(function () {
         console.log("subscribeToUsersPassage");
         SocketioService.setupSocketConnection(token.value, props.room, username.value);
         SocketioService.subscribeToUsersPassage(socketActions);
+        RoomService.fetchRoomById(roomName).then(mapRooms);
 })
 
 onUnmounted(() => SocketioService.disconnect(props.room,username.value));

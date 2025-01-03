@@ -12,13 +12,11 @@ const socketRoutes =  function (io: any, socket: Socket ) {
   socket.on("connectToServer", socketCntr.onConnectToServer);
   socket.on('connect_error', socketCntr.handleErrors)
   socket.on('connect_failed', socketCntr.handleErrors)
-
-
+  socket.on("enteredRoom", socketCntr.onEnteredRoom);
   socket.on("message", socketCntr.onUserMessage);
   socket.on("join", socketCntr.onUserJoin)
   socket.on("leave", socketCntr.onLeave);
   socket.on("disconnect", socketCntr.onDisconnect)
-  // socket.on("enteredRoom", socketCntr.onEnteredRoom)
   socket.on("invite", socketCntr.onInvite)
 
 }

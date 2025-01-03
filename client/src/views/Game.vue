@@ -22,7 +22,6 @@ const started = ref(false);
 
 onMounted(function () {
   if(typeof route.params.id == "string" ){
-    
       gameStore.setGame(route.params.id);
   }
 })

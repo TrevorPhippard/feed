@@ -44,9 +44,18 @@ router.post("/", async (req, res) => {
 
 
 
-router.get("/:id", async (req, res) => {
+router.get("/:room_id", async (req, res) => {
     try {
-        const result = await Controller.getEntryById(req.params.id)
+
+        const room_id = req.params.room_id;
+        const result = await Controller.getEntryByQuery({
+            where: {
+                room_id: {
+                [Op.eq]: room_id,
+              },
+            },
+        })
+
         if (!result) {
             return res.status(404).send("item not found");
         } else {

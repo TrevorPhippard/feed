@@ -25,10 +25,10 @@ function closeModal(){
 
 function joinGame(){
   editorStore.toggleModal(false);
-  // SocketioService.joinRoom(room_id, username)
-  // SocketioService.subscribeToGameActions((_err, data) => {
-  //     console.log(data);
-  // })
+  SocketioService.joinRoom(room_id, username)
+  SocketioService.subscribeToGameActions((_err, data) => {
+      console.log(data);
+  })
 }
 
 </script>

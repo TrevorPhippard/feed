@@ -8,7 +8,7 @@ import { useEditorStore } from "../store/editorStore.ts";
 import SocketUser from "../components/SocketUser.vue";
 
 import SocketioService from "../services/socketio.service.js";
-
+import RoomService from "../services/room.service.js";
 
 const authStore = useAuthStore();
 const EditorStore = useEditorStore();
@@ -19,6 +19,7 @@ const { getusername: username, getToken: token } = storeToRefs(authStore)
 const userList:any = ref({});
 
 const props = defineProps({ lobby: Boolean, text:String, room: String })
+const roomName = props.room;
 
 interface userPassageType{
   username: string;
@@ -31,18 +32,15 @@ interface userPassageType{
 }
 
 function socketActions(_err, message:userPassageType)  {
-    console.log('G',username.value,props.room, message)
+    console.log('G',message)
 
     switch (message.type) {
         case "enteredRoom":
-            const keys = Object.values(message.userList);
-            keys.map((username:any) => {
-                userList.value[username] = { online: true };
-            });
+            RoomService.fetchRoomById(roomName).then(mapRooms);
             break;
 
         case 'join':
-            userList.value[message.username] = { online: true };
+            RoomService.fetchRoomById(roomName).then(mapRooms);
             break;
 
         case 'disconnected':
@@ -62,10 +60,17 @@ function socketActions(_err, message:userPassageType)  {
     }
 }
 
+function mapRooms(activeUsers) {
+    activeUsers.forEach( userInfo => {
+        userList.value[userInfo.username] = { online: true }
+    });
+}
+
 onMounted(function () {
         console.log("subscribeToUsersPassage");
         SocketioService.setupSocketConnection(token.value, props.room, username.value);
         SocketioService.subscribeToGameActions(socketActions);
+        RoomService.fetchRoomById(roomName).then(mapRooms);
 })
 // onUnmounted(() => SocketioService.disconnect(room_id.value,username.value));
 
@@ -73,6 +78,7 @@ onMounted(function () {
 
 <template>
  <div>
+    
     <h3><span class="icons" id="icon-contacts">&#9814;</span>{{text}}:</h3>
     <ul>
         <SocketUser v-for="(info, key) in userList" 
